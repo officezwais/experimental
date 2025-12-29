@@ -6,17 +6,19 @@
     <title>Info - Knowledge Navigators</title>
     <style>
         
-        body::after {
+body::after {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    /* This creates the inner glow effect */
-    box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.3); 
-    pointer-events: none; /* Allows you to click through the glow to the buttons */
-    z-index: 999999; /* Higher than the navbar */
+    /* We pull the element slightly off-screen so the straight edges disappear */
+    top: -50px;
+    left: -50px;
+    right: -50px;
+    bottom: -50px;
+    
+
+    pointer-events: none; 
+    z-index: 999999;
+    background: transparent;
 }
 
         /* --- UNIVERSAL RESET & FONT LOCK --- */
