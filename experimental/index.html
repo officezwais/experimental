@@ -408,13 +408,17 @@ html::after {
     right: -50px;
     bottom: -50px;
     
-        border-radius: 60px; /* Smaller radius for phones */
-        border-width: 30px; /* Thinner border so it doesn't block content */
+    border-radius: 20px; 
+    border: 60px solid rgba(255, 255, 255, 0.1);
     filter: blur(30px);
     
     pointer-events: none; 
     z-index: 999999 !important; /* Forces it to stay above the canvas and hero */
 }
+  body::after {
+        border-radius: 60px; /* Smaller radius for phones */
+        border-width: 30px; /* Thinner border so it doesn't block content */
+    }
 
     /* 3. Navbar Adjustments */
     nav {
