@@ -399,9 +399,19 @@ footer {
 
     /* 2. Fix the White Corners for small screens */
 
-  body::after {
-        border-radius: 60px; /* Smaller radius for phones */
-        border-width: 30px; /* Thinner border so it doesn't block content */
+ body::after {
+        content: ""; /* Ensures it generates */
+        position: fixed;
+        top: -30px;
+        left: -30px;
+        right: -30px;
+        bottom: -30px;
+        border-radius: 60px; 
+        /* Match your desktop logic: uses border + blur for whiteness */
+        border: 30px solid rgba(255, 255, 255, 0.5);
+        filter: blur(20px);
+        pointer-events: none; 
+        z-index: 9999999 !important; /* Forces it above the Map and Hero */
     }
 
     /* 3. Navbar Adjustments */
