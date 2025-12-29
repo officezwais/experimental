@@ -53,6 +53,46 @@
         .project-item:hover { padding-left: 20px; opacity: 0.7; }
         .project-name { font-size: 6vw; line-height: 0.9; font-weight: 900; text-transform: uppercase; }
         .meta { font-size: 18px; font-weight: 700; width: 250px; text-align: right; }
+    @media (max-width: 768px) {
+    /* 1. Adjust the white corners for smaller screens */
+    body::after {
+        border-radius: 60px; /* Smaller radius for phones */
+        border-width: 30px; /* Thinner border so it doesn't block content */
+    }
+
+    /* 2. Adjust Navbar for mobile */
+    nav {
+        padding: 0 20px !important;
+        height: 80px !important;
+    }
+
+    .logo img {
+        height: 60px !important; /* Smaller logo on phones */
+    }
+
+    .menu {
+        gap: 15px !important;
+    }
+
+    .menu a {
+        font-size: 11px !important;
+    }
+
+    /* 3. Scale the Massive Hero Text */
+    .hero-line {
+        font-size: 22vw !important; /* Make it fill the width on portrait */
+        transform: scale(1.1, 1.0) !important; /* Reduce stretch for readability */
+    }
+
+    /* 4. Fix padding for content pages */
+    .container, .main, .content-body {
+        padding: 120px 20px 50px 20px !important;
+    }
+
+    h1 {
+        font-size: 18vw !important;
+    }
+}
     </style>
 </head>
 <body>
