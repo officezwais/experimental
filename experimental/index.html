@@ -398,20 +398,26 @@ footer {
     #hero-bot { margin-left: 5vw !important; }
 
     /* 2. Fix the White Corners for small screens */
-
- body::after {
-        content: ""; /* Ensures it generates */
-        position: fixed;
-        top: -30px;
-        left: -30px;
-        right: -30px;
-        bottom: -30px;
-        border-radius: 60px; 
-        /* Match your desktop logic: uses border + blur for whiteness */
-        border: 30px solid rgba(255, 255, 255, 0.5);
-        filter: blur(20px);
-        pointer-events: none; 
-        z-index: 9999999 !important; /* Forces it above the Map and Hero */
+  /* --- UNIVERSAL ROUNDED WHITE CORNER GLOW --- */
+html::after {
+    content: "";
+    position: fixed;
+    /* Pull slightly off-screen to hide flat edges */
+    top: -50px;
+    left: -50px;
+    right: -50px;
+    bottom: -50px;
+    
+    border-radius: 20px; 
+    border: 60px solid rgba(255, 255, 255, 0.1);
+    filter: blur(30px);
+    
+    pointer-events: none; 
+    z-index: 999999 !important; /* Forces it to stay above the canvas and hero */
+}
+  body::after {
+        border-radius: 60px; /* Smaller radius for phones */
+        border-width: 30px; /* Thinner border so it doesn't block content */
     }
 
     /* 3. Navbar Adjustments */
