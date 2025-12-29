@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Navigators</title>
+    <style>
+/* --- SOLID WHITE ROUNDED CORNERS --- */
+body::after {
+    content: "";
+    position: fixed;
+    /* We pull the element slightly off-screen so the straight edges disappear */
+    top: -50px;
+    left: -50px;
+    right: -50px;
+    bottom: -50px;
+    
+    /* This creates the heavy rounded shape in the corners */
+    border-radius: 180px; 
+    
+    /* We use a thick semi-transparent white border */
+    border: 60px solid rgba(255, 255, 255, 0.5);
+    
+    /* We add a blur ONLY to the border to soften the inside edge */
+    filter: blur(30px);
+    
+    pointer-events: none; 
+    z-index: 999999;
+    background: transparent;
+}
+/* --- GLOBAL STANDARDS --- */
+body {
+    overflow-y: scroll; /* Forces a scrollbar gutter on EVERY page so the navbar stays in the exact same spot */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #ff5429;
+    /* This ensures the font is identical everywhere */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- UNIVERSAL NAVBAR LOCK --- */
+/* --- UNIVERSAL NAVBAR LOCK --- */
+nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100px !important;
+    padding: 0 50px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important; /* Centering vertically */
+    z-index: 99999 !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+    mix-blend-mode: normal !important;
+}
+
+.logo {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important; /* Forces logo to use full nav height for alignment */
+}
+
+.logo img {
+    height: 145px !important; /* Reduced slightly to prevent clipping seen in your screenshot */
+    width: auto !important;
+    display: block !important;
+}
+
+.menu {
+    display: flex !important;
+    gap: 40px !important;
+    align-items: center !important;
+}
+
+.menu a {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, 0.6) !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    line-height: 1 !important; /* Prevents vertical shifting */
+    transition: color 0.3s ease !important;
+}
+
+.menu a:hover {
+    color: #000000 !important;
+}
+
+/* --- SECTION 0: HERO (SPLITTING TEXT) --- */
+header.hero {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff5429;
+    position: relative;
+    z-index: 10; /* Ensures it sits on top of map initially */
+    overflow: hidden;
+}
+
+.hero-line {
+    font-size: 12vw; /* Massive responsive text */
+    line-height: 0.85;
+    font-weight: 2000;
+    letter-spacing: -0.04em;
+    color: #000;
+    margin: 0;
+    white-space: nowrap;
+    will-change: transform;
+}
+
+/* Initial Offsets so they look slightly misaligned */
+#hero-top { margin-right: 15vw; } /* Start slightly left */
+#hero-bot { margin-left: 15vw; }  /* Start slightly right */
+
+@media (max-width: 768px) {
+    .hero-line { font-size: 16vw; } /* Bigger text on mobile */
+}
+
+        /* --- SECTION 1: MAP --- */
+        canvas#mainCanvas {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            background: #ff5429;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- SECTION 2: WOVE ARC (STICKY) --- */
+        .arc-scroll-track {
+            height: 400vh; 
+            position: relative;
+            background-color: #ff5429;
+            z-index: 2;
+        }
+
+        .arc-sticky-view {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .bezel-container {
+            position: absolute;
+            left: -45vh; 
+            top: 10vh;
+            width: 90vh;
+            height: 90vh;
+            border-radius: 50%;
+            border-right: 1px dashed #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bezel-number {
+            position: absolute;
+            right: -50px;
+            font-size: 80px;
+            font-family: 'Courier New', monospace;
+            font-weight: 900;
+            color: #000000;
+            transform-origin: -45vh center;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .bezel-number.active {
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .bezel-content {
+            position: absolute;
+            left: 80vh; /* Pushed right */
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 450px;
+            padding-right: 40px;
+        }
+
+        .bezel-label { font-size: 14px; font-weight: 700; color: #000000; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;}
+        .bezel-title { font-size: 48px; font-weight: 900; margin-bottom: 20px; line-height: 1; }
+        .bezel-desc { font-size: 18px; color: #000000; line-height: 1.5; }
+
+        /* --- SECTION 3: ARTIST GRID --- */
+        .grid-section {
+            min-height: 100vh;
+            background-color: #ff5429; 
+            padding: 100px 50px;
+            box-sizing: border-box;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; 
+        }
+
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 1400px;
+        }
+
+        .pill {
+            display: flex;
+            align-items: center;
+            padding: 6px 25px 6px 6px;
+            border: 1px solid #df461c;
+            border-radius: 50px;
+            background: #eb4722;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .pill:hover {
+            border-color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .pill-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            margin-right: 15px;
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%);
+        }
+
+        .pill-name {
+            font-size: 20px;
+            font-weight: 400;
+            color: #000000;
+            letter-spacing: -0.5px;
+        }
+
+        /* --- SECTION 4: WHISPERS RING --- */
+        .ring-scroll-track {
+            height: 550vh; 
+            position: relative;
+            background: #ff5429; 
+            z-index: 4;
+        }
+
+        .ring-sticky-view {
+            position: sticky;
+            top: 0;
+            height: 150vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .ring-center-content {
+            position: absolute;
+            text-align: center;
+            max-width: 500px;
+            z-index: 10;
+            pointer-events: none; 
+        }
+        .ring-title-main { font-size: 32px; font-weight: 300; margin-bottom: 20px; color: #000000; }
+        .ring-caption { font-size: 14px; color: #000000; font-style: italic; }
+
+        .ring-container {
+            position: relative;
+            width: 70vh; 
+            height: 70vh;
+            border-radius: 50%;
+        }
+
+        .ring-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 130px;
+            margin-left: -50px; 
+            margin-top: -65px; 
+            background-color: #000000;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .ring-item:hover {
+            transform: scale(1.1) !important;
+            z-index: 20;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        /* --- FOOTER --- */
+footer {
+    background-color: #ff5429;
+    color: #000;
+    padding: 100px 50px 50px 50px;
+    position: relative;
+    z-index: 10; /* Ensures it sits on top of everything */
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr; /* Big logo column, two link columns */
+    gap: 60px;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 80px;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    max-width: 300px;
+}
+
+.footer-column h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #000;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #000000;
+}
+
+.footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #000000;
+}
+
+/* Mobile Responsiveness for Footer */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr; /* Stack vertically on mobile */
+        gap: 40px;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<nav>
+   <a href="index.html" class="logo">
+       <img src="./images/logo.png" alt="Knowledge Navigators">
+   </a>
+   <div class="menu">
+       <a href="projects.html">Projects</a>
+       <a href="generic.html?title=Services">Services</a>
+       <a href="generic.html?title=About">About</a>
+       <a href="contact.html">Contact</a>
+   </div>
+</nav>
+
+<header class="hero">
+    <h1 class="hero-line" id="hero-top">KNOWLEDGE</h1>
+    <h1 class="hero-line" id="hero-bot">NAVIGATORS</h1>
+</header>
+
+    <canvas id="mainCanvas"></canvas>
+
+    <section class="arc-scroll-track" id="arcTrack">
+        <div class="arc-sticky-view">
+            <div class="bezel-container" id="bezelWheel"></div>
+            <div class="bezel-content">
+                <div class="bezel-label">Feature Set</div>
+                <div class="bezel-title" id="bezelTitle">01 Flexible</div>
+                <div class="bezel-desc" id="bezelDesc">Flexible for whatever you want to wear. Adapted to your environment and style automatically.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid-section">
+        <div style="margin-bottom: 60px; font-size: 14px; color: #000000; text-transform: uppercase; letter-spacing: 1px;">Contributors</div>
+        <div class="pill-container">
+            <div class="pill"><div class="pill-avatar"></div><span class="pill-name">Vladimir Tatlin</span></div>
+            <div class="pill"><div class="pill-avatar"></div><span class="pill-name">Kazimir Malevich</span></div>
+            <div class="pill"><div class="pill-avatar"></div><span class="pill-name">Alexander Bogdanov</span></div>
+            <div class="pill"><div class="pill-avatar"></div><span class="pill-name">Wassily Kandinsky</span></div>
+            <div class="pill"><div class="pill-avatar"></div><span class="pill-name">Ilya Chashnik</span></div>
+            <div class="pill"><div class="pill-avatar"></div><span class="pill-name">Moisey Feigin</span></div>
+
+        </div>
+    </section>
+
+    <section class="ring-scroll-track" id="ringTrack">
+        <div class="ring-sticky-view">
+            <div class="ring-center-content">
+                <div class="ring-title-main">Whispers is a sequential art game: a chain of fifty contributors creating fifty interlinked original artworks.</div>
+                <div class="ring-caption">More info</div>
+            </div>
+            <div class="ring-container" id="ringContainer"></div>
+        </div>
+    </section>
+
+    <script>
+        // ==========================================
+// SCRIPT 0: HERO ANIMATION (SPLITTING TEXT)
+// ==========================================
+const heroTop = document.getElementById('hero-top');
+const heroBot = document.getElementById('hero-bot');
+
+window.addEventListener('scroll', () => {
+    const scrollVal = window.scrollY;
+    const windowHeight = window.innerHeight;
+
+    // Only animate if we are currently looking at the hero section
+    if (scrollVal < windowHeight) {
+        // Move TOP text to LEFT (Negative X)
+        heroTop.style.transform = `translateX(-${scrollVal * 1.5}px)`;
+        
+        // Move BOTTOM text to RIGHT (Positive X)
+        heroBot.style.transform = `translateX(${scrollVal * 1.5}px)`;
+    }
+});
+        // ==========================================
+        // SCRIPT 1: MAP LOGIC (RESTORED ORIGINAL)
+        // ==========================================
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const baseFontSize = 36;
+        const fontStyle = "900 " + baseFontSize + "px Arial";
+        const hoverScale = 1.35;      
+        const neighborScale = 1.0;    
+        const gapPadding = 10;        
+        const animSpeed = 0.2;        
+        const verticalOffset = 80;    
+        const baseColor = "#000000"; 
+        const activeColor = "#000000";
+
+        const bigWords = ["KNOWLEDGE", "NAVIGATORS", "STRATEGY", "DIGITAL", "INSIGHT", "CREATIVE", "FUTURE", "GROWTH", "VISION"];
+        const mediumWords = ["DATA", "TECH", "CODE", "MEDIA", "BRAND", "DESIGN", "SMART", "GLOBAL", "CLIENT"];
+        const tinyWords = ["AI", "UX", "UI", "VR", "AR", "WE", "IS", "GO", "UP"];
+
+        // Defined images with positions - these create the "holes" in the text
+     const overlayImages = [
+    // Ensure you have a folder named 'image' next to your HTML file
+    { src: './images/1.jpeg', x: 0.15, y: 0.20, width: 30 }, 
+    { src: './images/2.jpeg', x: 0.28, y: 0.55, width: 40 },
+    { src: './images/3.jpeg', x: 0.52, y: 0.35, width: 50 },
+    { src: './images/4.jpeg', x: 0.70, y: 0.25, width: 60 },
+];
+
+        let words = []; 
+        let mouse = { x: -1000, y: -1000 }; 
+
+        const mapImage = new Image();
+        mapImage.src = './images/map.svg'; 
+
+        const imagePromises = overlayImages.map(obj => {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.src = obj.src;
+                img.onload = () => { obj.imgElement = img; resolve(); };
+                img.onerror = () => { resolve(); };
+            });
+        });
+
+        Promise.all([
+            new Promise(r => { mapImage.onload = r; mapImage.onerror = r; }),
+            ...imagePromises
+        ]).then(() => {
+            initMap();
+        });
+
+        function initMap() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const ghostCanvas = document.createElement('canvas');
+            ghostCanvas.width = canvas.width;
+            ghostCanvas.height = canvas.height;
+            const ghostCtx = ghostCanvas.getContext('2d');
+
+            if (mapImage.width > 0 && mapImage.naturalWidth !== 0) {
+                const scale = Math.min(canvas.width / mapImage.width, canvas.height / mapImage.height) * 0.95;
+                const w = mapImage.width * scale;
+                const h = mapImage.height * scale;
+                const x = (canvas.width - w) / 2;
+                const y = ((canvas.height - h) / 2) + verticalOffset;
+                ghostCtx.drawImage(mapImage, x, y, w, h);
+            }
+            
+            const mapData = ghostCtx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+            // Pre-calculate image pixel positions for collision detection
+            overlayImages.forEach(obj => {
+                if(obj.imgElement) {
+                    obj.pixelX = canvas.width * obj.x;
+                    obj.pixelY = (canvas.height * obj.y) + verticalOffset;
+                    const ratio = obj.imgElement.width / obj.imgElement.height;
+                    obj.pixelHeight = obj.width / ratio;
+                    obj.pixelWidth = obj.width; 
+                }
+            });
+
+            ctx.textBaseline = 'middle'; 
+            ctx.font = fontStyle;
+            let bigWordIndex = 0;
+
+            for (let currentY = 0; currentY < canvas.height; currentY += 32) { // Original line height
+                for (let currentX = 0; currentX < canvas.width; currentX++) {
+                    
+                    let chosenWord = null;
+                    let chosenWidth = 0;
+
+                    const bigWord = bigWords[bigWordIndex % bigWords.length];
+                    const bigWidth = ctx.measureText(bigWord).width;
+
+                    // STRICT CHECK: Does it fit on land AND not hit an image?
+                    if (doesWordFit(currentX, currentY, bigWidth, mapData, canvas.width, overlayImages)) {
+                        chosenWord = bigWord;
+                        chosenWidth = bigWidth;
+                        bigWordIndex++;
+                    } else {
+                        const mediumWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
+                        const mediumWidth = ctx.measureText(mediumWord).width;
+                         if (doesWordFit(currentX, currentY, mediumWidth, mapData, canvas.width, overlayImages)) {
+                            chosenWord = mediumWord;
+                            chosenWidth = mediumWidth;
+                        } else {
+                            for(let t = 0; t < tinyWords.length; t++) {
+                                const tinyAttempt = tinyWords[t];
+                                const tinyWidth = ctx.measureText(tinyAttempt).width;
+                                if (doesWordFit(currentX, currentY, tinyWidth, mapData, canvas.width, overlayImages)) {
+                                    chosenWord = tinyAttempt;
+                                    chosenWidth = tinyWidth;
+                                    break; 
+                                }
+                            }
+                        }
+                    }
+
+                    if (chosenWord) {
+                        const cx = currentX + (chosenWidth / 2);
+                        const cy = currentY; 
+                        words.push({ text: chosenWord, ox: currentX, oy: currentY, cx: cx, cy: cy, w: chosenWidth, x: currentX, y: currentY, scale: 1, color: baseColor });
+                        currentX += chosenWidth + 6; 
+                    } else {
+                        currentX += 5;
+                    }
+                }
+            }
+            animate();
+        }
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw images
+    overlayImages.forEach(obj => {
+        if(obj.imgElement) {
+            ctx.drawImage(obj.imgElement, obj.pixelX, obj.pixelY, obj.pixelWidth, obj.pixelHeight);
+        }
+    });
+
+    // Detect Hover
+    let activeWord = null;
+    for (let i = 0; i < words.length; i++) {
+        const w = words[i];
+        if (mouse.x > w.x && mouse.x < w.x + w.w &&
+            mouse.y > w.y - (baseFontSize/2) && mouse.y < w.y + (baseFontSize/2)) {
+            activeWord = w;
+        }
+    }
+
+    if (activeWord) {
+        canvas.style.cursor = 'pointer';
+    } else {
+        canvas.style.cursor = 'default';
+    }
+
+    // Physics & Drawing Loop
+    for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        let targetScale = 1; 
+        let targetColor = baseColor; 
+        let targetX = word.ox; 
+        let targetY = word.oy;
+
+        if (activeWord) {
+            if (word === activeWord) { 
+                targetScale = hoverScale; 
+                targetColor = activeColor; 
+            } else {
+                const dx = word.cx - activeWord.cx;
+                const dy = word.cy - activeWord.cy;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                // --- SETTINGS: ADJUST PUSH STRENGTH HERE ---
+                const pushStrength = 0.1; // Increase this number (e.g. 30 or 50) to push harder!
+                // -------------------------------------------
+
+                const safeDist = (activeWord.w * hoverScale * 0.55) + 
+                                 (word.w * neighborScale * 0.25) + 
+                                 gapPadding + 
+                                 pushStrength; // Added pushStrength here
+
+                if (dist < safeDist) {
+                    const overlap = safeDist - dist;
+                    const nx = dx / dist; 
+                    const ny = dy / dist;
+                    targetX = word.ox + (nx * overlap); 
+                    targetY = word.oy + (ny * overlap);
+                }
+            }
+        }
+        
+        // Ease into position (animSpeed controls how fast they fly away/back)
+        word.scale += (targetScale - word.scale) * animSpeed;
+        word.x += (targetX - word.x) * animSpeed;
+        word.y += (targetY - word.y) * animSpeed;
+
+        ctx.save();
+        const centerX = word.x + (word.w / 2); 
+        const centerY = word.y; 
+        ctx.translate(centerX, centerY); 
+        ctx.scale(word.scale, word.scale); 
+        ctx.translate(-centerX, -centerY);
+        ctx.fillStyle = (word === activeWord) ? targetColor : word.color; 
+        ctx.textBaseline = 'middle'; 
+        ctx.font = fontStyle;
+        
+        if (word === activeWord) { 
+            ctx.shadowColor = "rgba(0,0,0,0)"; 
+            ctx.shadowBlur = 10; 
+            ctx.globalCompositeOperation = "source-over"; 
+        }
+        
+        ctx.fillText(word.text, word.x, word.y);
+        ctx.restore();
+    }
+    requestAnimationFrame(animate);
+}
+// --- CLICK NAVIGATION LOGIC ---
+canvas.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+
+    let clickedWord = null;
+
+    // Check which word was clicked
+    for (let i = 0; i < words.length; i++) {
+        const w = words[i];
+        // Check collision using the word's current position (w.x, w.y) and width (w.w)
+        if (clickX > w.x && clickX < w.x + w.w && 
+            clickY > w.y - (baseFontSize / 2) && clickY < w.y + (baseFontSize / 2)) {
+            clickedWord = w;
+            break;
+        }
+    }
+
+    // Perform Navigation
+    if (clickedWord) {
+        console.log("Navigating to:", clickedWord.text);
+        // This opens generic.html and passes the word in the URL (e.g., ?title=STRATEGY)
+        window.location.href = `generic.html?title=${clickedWord.text}`;
+    }
+});
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect(); mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+        });
+        canvas.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+
+        function doesWordFit(x, y, wordWidth, data, canvasWidth, images) {
+            // 1. Check Collision with Images
+            for(let i=0; i<images.length; i++) {
+                const img = images[i];
+                if (!img.imgElement) continue;
+                // If the word box overlaps the image box + padding
+                if (x < img.pixelX + img.pixelWidth + 5 &&
+                    x + wordWidth > img.pixelX - 5 &&
+                    y + (baseFontSize/2) > img.pixelY - 5 &&
+                    y - (baseFontSize/2) < img.pixelY + img.pixelHeight + 5) {
+                    return false; 
+                }
+            }
+            
+            // 2. Check Land (If map exists)
+            if (mapImage.width > 0 && mapImage.naturalWidth !== 0) {
+                const p1 = isLand(x, y, data, canvasWidth);
+                const p2 = isLand(x + wordWidth, y, data, canvasWidth);
+                const p3 = isLand(x + (wordWidth/2), y, data, canvasWidth);
+                return p1 && p2 && p3;
+            }
+            
+            return true; // Fallback: if no map/collision, allow it (but collision check above might still block it)
+        }
+
+        function isLand(x, y, data, width) {
+            if (x < 0 || x >= width || y < 0 || y >= canvas.height) return false;
+            const index = (Math.floor(y) * width + Math.floor(x)) * 4;
+            return data[index + 3] > 100; 
+        }
+
+        window.addEventListener('resize', () => { if (window.innerWidth !== canvas.width) { words = []; initMap(); }});
+
+
+        // ==========================================
+        // SCRIPT 2: WOVE ARC (STICKY LOGIC)
+        // ==========================================
+        const bezelWheel = document.getElementById('bezelWheel');
+        const bezelTitle = document.getElementById('bezelTitle');
+        const bezelDesc = document.getElementById('bezelDesc');
+        const arcTrack = document.getElementById('arcTrack');
+        
+        const contentData = [
+            { title: "Flexible", desc: "Flexible for whatever you want to wear. Adapted to your environment and style automatically." },
+            { title: "Durable", desc: "Built to last with high-grade materials and water resistance." },
+            { title: "Modular", desc: "Swap components seamlessly to upgrade functionalities on the fly." },
+            { title: "Tactile", desc: "Physical feedback for every interaction, bridging digital and physical worlds." },
+            { title: "Visual", desc: "High-resolution display that curves naturally around your view." },
+            { title: "Sonic", desc: "Immersive audio technology embedded directly into the bezel structure." }
+        ];
+
+        const totalNumbers = contentData.length;
+        const angleStep = 30; 
+        let currentRotation = 0;
+        let targetRotation = 0;
+
+        for(let i=0; i<totalNumbers; i++) {
+            const num = document.createElement('div');
+            num.className = 'bezel-number';
+            num.innerText = '0' + (i+1);
+            num.style.transform = `rotate(${i * angleStep}deg)`;
+            bezelWheel.appendChild(num);
+        }
+
+        window.addEventListener('scroll', () => {
+            const rect = arcTrack.getBoundingClientRect();
+            const viewHeight = window.innerHeight;
+            const totalDist = rect.height - viewHeight;
+            let progress = -rect.top / totalDist;
+            progress = Math.max(0, Math.min(1, progress));
+            targetRotation = -(progress * (angleStep * (totalNumbers - 1)));
+        });
+
+        function animateBezel() {
+            currentRotation += (targetRotation - currentRotation) * 0.1;
+            bezelWheel.style.transform = `rotate(${currentRotation}deg)`;
+            let index = Math.round(Math.abs(currentRotation) / angleStep);
+            index = Math.max(0, Math.min(index, totalNumbers - 1));
+            const numbers = document.querySelectorAll('.bezel-number');
+            numbers.forEach((num, idx) => {
+                if(idx === index) {
+                    num.classList.add('active');
+                    if(bezelTitle.innerText !== `0${idx+1} ${contentData[idx].title}`) {
+                        bezelTitle.innerText = `0${idx+1} ${contentData[idx].title}`;
+                        bezelDesc.innerText = contentData[idx].desc;
+                    }
+                } else { num.classList.remove('active'); }
+            });
+            requestAnimationFrame(animateBezel);
+        }
+        animateBezel();
+
+        // ==========================================
+        // SCRIPT 3: WHISPERS RING (RESPONSIVE)
+        // ==========================================
+        const ringTrack = document.getElementById('ringTrack');
+        const ringContainer = document.getElementById('ringContainer');
+        const itemCount = 20; 
+        let ringRadius = Math.min(window.innerWidth, window.innerHeight) * 2;
+
+        function createRing() {
+            ringContainer.innerHTML = ''; 
+            ringRadius = Math.min(window.innerWidth, window.innerHeight) * 0.6; 
+
+            for(let i = 0; i < itemCount; i++) {
+                const item = document.createElement('div');
+                item.className = 'ring-item';
+                item.style.backgroundImage = `url('https://picsum.photos/200/300?random=${i + 100}')`;
+                const angle = (i / itemCount) * 360;
+                item.style.transform = `rotate(${angle}deg) translate(${ringRadius}px) rotate(90deg)`; 
+                ringContainer.appendChild(item);
+            }
+        }
+
+        createRing();
+        window.addEventListener('resize', createRing);
+
+        window.addEventListener('scroll', () => {
+            const rect = ringTrack.getBoundingClientRect();
+            const viewHeight = window.innerHeight;
+            const totalDist = rect.height - viewHeight;
+            let progress = -rect.top / totalDist;
+            if(progress < -0.2 || progress > 1.2) return;
+            const rotation = progress * 360; 
+            ringContainer.style.transform = `rotate(${rotation}deg)`;
+        });
+
+    </script>
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <div class="footer-logo">Knowledge<br>Navigators</div>
+        </div>
+        <div class="footer-column">
+            <h4>Sitemap</h4>
+            <ul class="footer-links">
+                <li><a href="projects.html">Selected Works</a></li>
+                <li><a href="generic.html?title=Studio">The Studio</a></li>
+                <li><a href="generic.html?title=Services">Services</a></li>
+                <li><a href="generic.html?title=Journal">Journal</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Connect</h4>
+            <ul class="footer-links">
+                <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+                <li><a href="https://twitter.com" target="_blank">Twitter / X</a></li>
+                <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+                <li><a href="contact.html">Email Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div>&copy; 2025 Knowledge Navigators. All rights reserved.</div>
+        <div>Privacy Policy &nbsp;&nbsp; Terms of Service</div>
+    </div>
+</footer>
+</body>
+</html>
