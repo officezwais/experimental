@@ -42,7 +42,6 @@ body {
 }
 
 /* --- UNIVERSAL NAVBAR LOCK --- */
-/* --- UNIVERSAL NAVBAR LOCK --- */
 nav {
     position: fixed !important;
     top: 0 !important;
@@ -155,9 +154,9 @@ header.hero {
         }
 
         .bezel-container {
+            left: -60vh !important;
             position: absolute;
-            left: -45vh; 
-            top: 10vh;
+left: -60vh !important;            top: 10vh;
             width: 90vh;
             height: 90vh;
             border-radius: 50%;
@@ -170,7 +169,8 @@ header.hero {
         .bezel-number {
             position: absolute;
             right: -50px;
-            font-size: 80px;
+            font-size: 50px !important; /* Smaller numbers for mobile */
+        z-index: 1 !important;
             font-family: 'Courier New', monospace;
             font-weight: 900;
             color: #000000;
@@ -184,12 +184,11 @@ header.hero {
         }
 
         .bezel-content {
-            position: absolute;
-            left: 80vh; /* Pushed right */
-            top: 50%;
-            transform: translateY(-50%);
-            max-width: 450px;
-            padding-right: 40px;
+         left: 35vw !important;
+        max-width: 60vw !important;
+        z-index: 10 !important;
+        background: rgba(255, 84, 41, 0.8); /* Semi-opaque orange to help readability */
+        padding: 10px !important;
         }
 
         .bezel-label { font-size: 14px; font-weight: 700; color: #000000; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;}
@@ -416,10 +415,10 @@ footer {
 
     /* 3. Scale the Massive Hero Text */
     .hero-line {
-        font-size: 22vw !important; /* Make it fill the width on portrait */
-        transform: scale(1.1, 1.0) !important; /* Reduce stretch for readability */
+        font-size: 18vw !important; /* Smaller base size */
+        transform: scale(1.1, 1.0) !important; /* Less stretch to prevent horizontal scroll */
+        line-height: 0.9 !important;
     }
-
     /* 4. Fix padding for content pages */
     .container, .main, .content-body {
         padding: 120px 20px 50px 20px !important;
