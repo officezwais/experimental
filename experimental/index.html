@@ -413,15 +413,39 @@ footer {
         pointer-events: none; 
         z-index: 9999999 !important; /* Forces it above the Map and Hero */
     }
-
-    /* 3. Navbar Adjustments */
+/* 2. ADJUST NAVBAR FOR MOBILE */
     nav {
         padding: 0 20px !important;
-        height: 70px !important;
+        height: 80px !important;
     }
-    .logo img { height: 60px !important; }
-    .menu { gap: 15px !important; }
-    .menu a { font-size: 11px !important; }
+
+    .logo img {
+        height: 60px !important;
+    }
+
+    .menu {
+        gap: 15px !important;
+    }
+
+    .menu a {
+        font-size: 11px !important;
+    }
+
+    /* 3. SCALE THE MASSIVE HERO TEXT */
+    /* Reduced to 18vw to ensure it stays within the white corners */
+    .hero-line {
+        font-size: 18vw !important; 
+        transform: scale(1.0, 1.0) !important; 
+        line-height: 0.9 !important;
+    }
+    
+    #hero-top { margin-right: 5vw !important; }
+    #hero-bot { margin-left: 5vw !important; }
+
+    /* 4. FIX PADDING FOR CONTENT PAGES & SECTIONS */
+    .container, .main, .content-body, .grid-section {
+        padding: 100px 20px 40px 20px !important;
+    }
 
     /* 4. Fix Sticky Arc (Bezel) Layering & Positioning */
     .bezel-container {
