@@ -382,11 +382,13 @@ footer {
 /* --- COMPREHENSIVE MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
     /* 1. Prevent Hero Text from overflowing horizontally */
-    .hero-line {
-        font-size: 16vw !important; /* Smaller size to stay within edges */
-        transform: scale(1.0, 1.0) !important; /* Remove the extreme stretch for mobile */
-        line-height: 1.0 !important;
-        letter-spacing: -0.02em !important;
+  .hero-line {
+        font-size: 18vw !important; /* Forces it to fit the screen width */
+        font-weight: 900 !important; 
+        transform: scale(1.0, 1.0); /* Reset the heavy stretch for mobile */
+        display: block;
+        width: 100%;
+        text-align: center;
     }
 
     #hero-top { margin-right: 5vw !important; }
@@ -506,17 +508,15 @@ const heroBot = document.getElementById('hero-bot');
 
 window.addEventListener('scroll', () => {
     const scrollVal = window.scrollY;
-    const windowHeight = window.innerHeight;
+    // Use a smaller multiplier for mobile so it doesn't fly off screen too fast
+    const speed = window.innerWidth < 768 ? 0.8 : 1.5;
 
-    // Only animate if we are currently looking at the hero section
-    if (scrollVal < windowHeight) {
-        // Move TOP text to LEFT (Negative X)
-        heroTop.style.transform = `translateX(-${scrollVal * 1.5}px)`;
-        
-        // Move BOTTOM text to RIGHT (Positive X)
-        heroBot.style.transform = `translateX(${scrollVal * 1.5}px)`;
+    if (scrollVal < window.innerHeight) {
+        heroTop.style.transform = `translateX(-${scrollVal * speed}px)`;
+        heroBot.style.transform = `translateX(${scrollVal * speed}px)`;
     }
 });
+
         // ==========================================
         // SCRIPT 1: MAP LOGIC (RESTORED ORIGINAL)
         // ==========================================
@@ -640,7 +640,21 @@ window.addEventListener('scroll', () => {
                         const cx = currentX + (chosenWidth / 2);
                         const cy = currentY; 
                         words.push({ text: chosenWord, ox: currentX, oy: currentY, cx: cx, cy: cy, w: chosenWidth, x: currentX, y: currentY, scale: 1, color: baseColor });
-                        currentX += chosenWidth + 6; 
+                        const horizontalGap = window.innerWidth < 768 ? 14 : 6; // More space on mobile
+const verticalGap = window.innerWidth < 768 ? 28 : 32; // Tighter lines on mobile
+
+for (let currentY = 0; currentY < canvas.height; currentY += verticalGap) {
+    for (let currentX = 0; currentX < canvas.width; currentX++) {
+        // ... (existing word selection logic) ...
+        
+        if (chosenWord) {
+            // ... (existing word pushing logic) ...
+            currentX += chosenWidth + horizontalGap; 
+        } else {
+            currentX += 5;
+        }
+    }
+} 
                     } else {
                         currentX += 5;
                     }
