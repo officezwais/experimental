@@ -389,6 +389,9 @@ footer {
         display: block;
         width: 100%;
         text-align: center;
+        .arc-scroll-track {
+        height: 200vh !important; /* Cut in half for mobile */
+    }
     }
 
     #hero-top { margin-right: 5vw !important; }
@@ -448,6 +451,14 @@ html::after {
         grid-template-columns: 1fr !important;
         gap: 40px !important;
         padding-bottom: 40px !important;
+    }
+    .ring-scroll-track {
+        height: 250vh !important; /* Cut in half for mobile */
+    }
+    
+    /* Ensure the ring doesn't take up too much vertical space */
+    .ring-sticky-view {
+        height: 100vh !important;
     }
 }
 
