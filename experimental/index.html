@@ -42,7 +42,6 @@ body {
 }
 
 /* --- UNIVERSAL NAVBAR LOCK --- */
-/* --- UNIVERSAL NAVBAR LOCK --- */
 nav {
     position: fixed !important;
     top: 0 !important;
@@ -494,8 +493,9 @@ html::after {
             <div class="bezel-container" id="bezelWheel"></div>
             <div class="bezel-content">
                 <div class="bezel-label">Feature Set</div>
-                <div class="bezel-title" id="bezelTitle">01 Flexible</div>
-                <div class="bezel-desc" id="bezelDesc">Flexible for whatever you want to wear. Adapted to your environment and style automatically.</div>
+                <div class="bezel-title" id="bezelTitle">01 Adaptive</div>
+                <div class="bezel-desc" id="bezelDesc">Adapts to context, culture, and intent.
+Visual systems that reshape themselves across platforms, audiences, and moments.</div>
             </div>
         </div>
     </section>
@@ -516,7 +516,7 @@ html::after {
     <section class="ring-scroll-track" id="ringTrack">
         <div class="ring-sticky-view">
             <div class="ring-center-content">
-                <div class="ring-title-main">Whispers is a sequential art game: a chain of fifty contributors creating fifty interlinked original artworks.</div>
+                <div class="ring-title-main">arteficial artworks.</div>
                 <div class="ring-caption">More info</div>
             </div>
             <div class="ring-container" id="ringContainer"></div>
@@ -549,7 +549,7 @@ window.addEventListener('scroll', () => {
 
         const baseFontSize = 36;
         const fontStyle = "900 " + baseFontSize + "px Arial";
-        const hoverScale = 1.35;      
+        const hoverScale = 1.25;      
         const neighborScale = 1.0;    
         const gapPadding = 10;        
         const animSpeed = 0.2;        
@@ -836,12 +836,12 @@ canvas.addEventListener('click', (e) => {
         const arcTrack = document.getElementById('arcTrack');
         
         const contentData = [
-            { title: "Flexible", desc: "Flexible for whatever you want to wear. Adapted to your environment and style automatically." },
-            { title: "Durable", desc: "Built to last with high-grade materials and water resistance." },
-            { title: "Modular", desc: "Swap components seamlessly to upgrade functionalities on the fly." },
-            { title: "Tactile", desc: "Physical feedback for every interaction, bridging digital and physical worlds." },
-            { title: "Visual", desc: "High-resolution display that curves naturally around your view." },
-            { title: "Sonic", desc: "Immersive audio technology embedded directly into the bezel structure." }
+            { title: "Strategy", desc: "Scaling starts with structure.\nAI-powered positioning, growth logic, and decision systems." },
+            { title: "Intelligence", desc: "Data becomes direction.\nWe turn signals, behavior, and performance into actionable insight." },
+            { title: "Creative", desc: "Creative built to scale.\nAI-generated visuals, narratives, and systems that grow without losing identity." },
+            { title: "Automation", desc: "Growth without friction.\nFrom production to distribution — automated, adaptive, efficient." },
+            { title: "Performance", desc: "Every output is measurable.\nCreative and campaigns continuously optimized by AI." },
+            { title: "Scale", desc: "Systems, not campaigns.\nDesigned for expansion across markets, channels, and audiences." }
         ];
 
         const totalNumbers = contentData.length;
@@ -895,12 +895,28 @@ canvas.addEventListener('click', (e) => {
 
         function createRing() {
             ringContainer.innerHTML = ''; 
-            ringRadius = Math.min(window.innerWidth, window.innerHeight) * 0.6; 
+            const isMobile = window.innerWidth < 768;
+            ringRadius = isMobile ? window.innerWidth * 0.35 : window.innerHeight * 0.4; 
+
+            // YOUR LOCAL IMAGES
+          const myImages = [
+    './images/IMG_2219.JPG', './images/IMG_2220.JPG', './images/IMG_2221.JPG', 
+    './images/IMG_2222.JPG', './images/IMG_2223.JPG', './images/IMG_2224.JPG', 
+    './images/IMG_2225.JPG', './images/IMG_2232.JPG', './images/IMG_2239.JPG',
+    './images/IMG_2240.JPG', './images/IMG_2241.JPG', './images/IMG_2242.JPG', 
+    './images/IMG_2243.JPG'
+];
 
             for(let i = 0; i < itemCount; i++) {
                 const item = document.createElement('div');
                 item.className = 'ring-item';
-                item.style.backgroundImage = `url('https://picsum.photos/200/300?random=${i + 100}')`;
+                
+                // Pick image from list
+                const imgSrc = myImages[i % myImages.length];
+                item.style.backgroundImage = `url('${imgSrc}')`;
+                item.style.backgroundSize = 'cover';
+                item.style.backgroundPosition = 'center';
+
                 const angle = (i / itemCount) * 360;
                 item.style.transform = `rotate(${angle}deg) translate(${ringRadius}px) rotate(90deg)`; 
                 ringContainer.appendChild(item);

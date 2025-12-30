@@ -14,7 +14,14 @@
     right: -50px;
     bottom: -50px;
     
-
+    /* This creates the heavy rounded shape in the corners */
+    border-radius: 180px; 
+    
+    /* We use a thick semi-transparent white border */
+    border: 60px solid rgba(255, 255, 255, 0.5);
+    
+    /* We add a blur ONLY to the border to soften the inside edge */
+    filter: blur(30px);
     
     pointer-events: none; 
     z-index: 999999;
