@@ -121,6 +121,31 @@ header.hero {
 #hero-top { margin-right: 15vw; } /* Start slightly left */
 #hero-bot { margin-left: 15vw; }  /* Start slightly right */
 
+.sub-hero {
+    margin-top: 40px; /* Space below the massive text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.sub-line {
+    font-size: 1.5vw; /* Much smaller than the main hero */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #000;
+    margin: 0;
+    will-change: transform;
+}
+
+@media (max-width: 768px) {
+    .sub-line {
+        font-size: 4vw; /* Slightly larger for readability on phones */
+        letter-spacing: 0.1em;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-line { font-size: 16vw; } /* Bigger text on mobile */
 }
@@ -484,6 +509,11 @@ html::after {
 <header class="hero">
     <h1 class="hero-line" id="hero-top">KNOWLEDGE</h1>
     <h1 class="hero-line" id="hero-bot">NAVIGATORS</h1>
+    
+    <div class="sub-hero">
+        <p class="sub-line" id="sub-left">Scale is a system.</p>
+        <p class="sub-line" id="sub-right">We build it with AI.</p>
+    </div>
 </header>
 
     <canvas id="mainCanvas"></canvas>
@@ -521,20 +551,25 @@ Visual systems that reshape themselves across platforms, audiences, and moments.
     </section>
 
     <script>
-        // ==========================================
-// SCRIPT 0: HERO ANIMATION (SPLITTING TEXT)
-// ==========================================
+// --- SCRIPT 0: HERO & SUB-HERO ANIMATION ---
 const heroTop = document.getElementById('hero-top');
 const heroBot = document.getElementById('hero-bot');
+const subLeft = document.getElementById('sub-left');
+const subRight = document.getElementById('sub-right');
 
 window.addEventListener('scroll', () => {
     const scrollVal = window.scrollY;
-    // Use a smaller multiplier for mobile so it doesn't fly off screen too fast
+    // Use the same speed multiplier for a synchronized "explosion" effect
     const speed = window.innerWidth < 768 ? 0.8 : 1.5;
 
     if (scrollVal < window.innerHeight) {
+        // Main Hero Lines
         heroTop.style.transform = `translateX(-${scrollVal * speed}px)`;
         heroBot.style.transform = `translateX(${scrollVal * speed}px)`;
+        
+        // Sub-Hero Lines (moving in tandem)
+        subLeft.style.transform = `translateX(-${scrollVal * speed}px)`;
+        subRight.style.transform = `translateX(${scrollVal * speed}px)`;
     }
 });
 
