@@ -149,6 +149,33 @@ header.hero {
 @media (max-width: 768px) {
     .hero-line { font-size: 16vw; } /* Bigger text on mobile */
 }
+.transition-text-section {
+    height: 40vh; /* Adjust this to change how long the gap is */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #ff5429;
+    overflow: hidden; /* Critical: hides the text when it's off-screen */
+    position: relative;
+    z-index: 5;
+}
+
+.fly-in-text {
+    font-size: 2.5vw;
+    font-weight: 900;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #000;
+    margin: 0;
+    /* Start position: way off to the left */
+    transform: translateX(100%); 
+    will-change: transform;
+}
+
+@media (max-width: 768px) {
+    .transition-text-section { height: 40vh; }
+    .fly-in-text { font-size: 10vw; }
+}
 
         /* --- SECTION 1: MAP --- */
         canvas#mainCanvas {
@@ -222,7 +249,7 @@ header.hero {
 
         /* --- SECTION 3: ARTIST GRID --- */
         .grid-section {
-            min-height: 100vh;
+            min-height: auto;
             background-color: #ff5429; 
             padding: 100px 50px;
             box-sizing: border-box;
@@ -333,6 +360,8 @@ header.hero {
             z-index: 20;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
+
+        
         /* --- FOOTER --- */
 footer {
     background-color: #ff5429;
@@ -402,7 +431,7 @@ footer {
     color: #000000;
 }
 
-/* Mobile Responsiveness for Footer */
+
 /* --- COMPREHENSIVE MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
     /* 1. Prevent Hero Text from overflowing horizontally */
@@ -515,6 +544,9 @@ html::after {
         <p class="sub-line" id="sub-right">We build it with AI.</p>
     </div>
 </header>
+<section class="transition-text-section">
+    <h2 class="fly-in-text" id="flyText">navigating through a world full of potential</h2>
+</section>
 
     <canvas id="mainCanvas"></canvas>
 
@@ -570,6 +602,28 @@ window.addEventListener('scroll', () => {
         // Sub-Hero Lines (moving in tandem)
         subLeft.style.transform = `translateX(-${scrollVal * speed}px)`;
         subRight.style.transform = `translateX(${scrollVal * speed}px)`;
+    }
+});
+const flyText = document.getElementById('flyText');
+const transitionSection = document.querySelector('.transition-text-section');
+
+window.addEventListener('scroll', () => {
+    // 1. Keep your existing Hero/Sub-Hero code here...
+    
+    // 2. Fly-in Text Logic:
+    const sectionRect = transitionSection.getBoundingClientRect();
+    const viewHeight = window.innerHeight;
+
+    // Check if the section is entering the viewport
+    if (sectionRect.top < viewHeight && sectionRect.bottom > 0) {
+        // Calculate progress (0 at bottom of screen, 1 at top)
+        const progress = (viewHeight - sectionRect.top) / (viewHeight + sectionRect.height);
+        
+        // Map progress to X translation
+        // Starts at -120% and moves to 120% (passing through 0% in the middle)
+        const moveX = (progress * 240) - 120;
+        
+        flyText.style.transform = `translateX(${moveX}%)`;
     }
 });
 
@@ -868,6 +922,7 @@ canvas.addEventListener('click', (e) => {
         const arcTrack = document.getElementById('arcTrack');
         
         const contentData = [
+            { title: "Website building", desc: "Build Interactive and enhanced websites.\nAI-powered building, analytics, and featured systems." },
             { title: "Strategy", desc: "Scaling starts with structure.\nAI-powered positioning, growth logic, and decision systems." },
             { title: "Intelligence", desc: "Data becomes direction.\nWe turn signals, behavior, and performance into actionable insight." },
             { title: "Creative", desc: "Creative built to scale.\nAI-generated visuals, narratives, and systems that grow without losing identity." },
