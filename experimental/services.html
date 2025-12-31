@@ -166,10 +166,10 @@
 <nav>
    <a href="/" class="logo"><img src="./images/logo.png" alt="Logo"></a>
    <div class="menu" id="navMenu">
-       <a href="/projects">Projects</a>
-       <a href="/services">Services</a>
-       <a href="/about">About</a>
-       <a href="/contact">Contact</a>
+       <a href="projects.html">Projects</a>
+       <a href="services.html">Services</a>
+       <a href="about.html">About</a>
+       <a href="contact.html">Contact</a>
    </div>
    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
 </nav>
@@ -235,23 +235,34 @@
 </footer>
 
 <script>
-    // --- MOBILE MENU TOGGLE ---
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
 
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            // Prevent background scrolling when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
 
-    // Close menu when a link is clicked
+    // Close menu automatically if a link is clicked
     document.querySelectorAll('.menu a').forEach(link => {
         link.addEventListener('click', () => {
             menuToggle.classList.remove('active');
             navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
         });
     });
 </script>
+
+
 
 </body>
 </html>

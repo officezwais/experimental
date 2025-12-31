@@ -134,13 +134,51 @@ body::after {
         height: 60px !important; /* Smaller logo on phones */
     }
 
-    .menu {
-        gap: 15px !important;
+   @media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+        z-index: 100000;
+    }
+    
+    .menu-toggle span {
+        width: 30px;
+        height: 3px;
+        background-color: #ff5429; /* Matches your brand orange */
+        transition: 0.3s;
     }
 
-    .menu a {
-        font-size: 11px !important;
+    .menu {
+        display: none !important; /* Hidden by default on mobile */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #000; /* Black background for contrast */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px !important;
+        z-index: 99999;
     }
+
+    .menu.active { 
+        display: flex !important; 
+    }
+
+    .menu a { 
+        font-size: 28px !important; 
+        color: #ff5429 !important; 
+    }
+
+    /* The "X" animation when open */
+    .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+}
 
     /* 3. Scale the Massive Hero Text */
     .hero-line {
@@ -161,14 +199,15 @@ body::after {
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo"><img src="./images/logo.png" alt="Logo"></a>
-        <div class="menu">
-            <a href="projects.html">Projects</a>
-            <a href="services.html">Services</a>
-            <a href="generic.html?title=About">About</a>
-            <a href="contact.html">Contact</a>
-        </div>
-    </nav>
+   <a href="/" class="logo"><img src="./images/logo.png" alt="Logo"></a>
+   <div class="menu" id="navMenu">
+       <a href="projects.html">Projects</a>
+       <a href="services.html">Services</a>
+       <a href="about.html">About</a>
+       <a href="contact.html">Contact</a>
+   </div>
+   <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+</nav>
     <div class="header-section"><h1 id="page-title">Loading...</h1></div>
     <div class="content-body"><p>We deploy custom automation frameworks to ensure exponential growth.</p></div>
     

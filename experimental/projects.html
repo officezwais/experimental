@@ -5,28 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - Knowledge Navigators</title>
     <style>
+        /* --- THE UNIVERSAL WHITE GLOW CORNERS --- */
         body::after {
-    content: "";
-    position: fixed;
-    /* We pull the element slightly off-screen so the straight edges disappear */
-    top: -50px;
-    left: -50px;
-    right: -50px;
-    bottom: -50px;
-    
-    /* This creates the heavy rounded shape in the corners */
-    border-radius: 180px; 
-    
-    /* We use a thick semi-transparent white border */
-    border: 60px solid rgba(255, 255, 255, 0.5);
-    
-    /* We add a blur ONLY to the border to soften the inside edge */
-    filter: blur(30px);
-    
-    pointer-events: none; 
-    z-index: 999999;
-    background: transparent;
-}
+            content: "";
+            position: fixed;
+            top: -50px; left: -50px; right: -50px; bottom: -50px;
+            border-radius: 180px; 
+            border: 60px solid rgba(255, 255, 255, 0.5);
+            filter: blur(30px);
+            pointer-events: none; 
+            z-index: 999999;
+            background: transparent;
+        }
 
         /* --- UNIVERSAL RESET & FONT LOCK --- */
         html { overflow-y: scroll; }
@@ -34,91 +24,157 @@
             margin: 0; padding: 0; overflow-x: hidden; background: #ff5429; color: #000; 
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; 
             -webkit-font-smoothing: antialiased !important;
-            -moz-osx-font-smoothing: grayscale !important;
         }
         
-        /* --- UNIVERSAL NAVBAR LOCK --- */
+        /* --- UNIVERSAL NAVBAR --- */
         nav { 
             position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; 
             height: 100px !important; padding: 0 50px !important; display: flex !important; 
             justify-content: space-between !important; align-items: center !important; 
             z-index: 99999 !important; background: transparent !important; box-sizing: border-box !important;
-            mix-blend-mode: normal !important;
         }
         .logo { display: flex !important; align-items: center !important; }
         .logo img { height: 145px !important; width: auto !important; display: block !important; }
         
-        .menu { display: flex !important; gap: 40px !important; }
+        .menu { display: flex !important; gap: 40px !important; align-items: center; }
         .menu a { 
             text-decoration: none !important; color: rgba(0, 0, 0, 0.6) !important; 
             font-weight: 700 !important; font-size: 14px !important; text-transform: uppercase !important; 
-            letter-spacing: 1px !important; line-height: 1 !important; transition: color 0.3s ease !important; 
+            letter-spacing: 1px !important; transition: color 0.3s ease !important; 
         }
         .menu a:hover { color: #000 !important; }
 
-        /* --- CONTENT --- */
+        /* --- BURGER MENU STYLING --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 100001;
+        }
+        .menu-toggle span {
+            width: 30px; height: 3px; background-color: #000; transition: 0.3s;
+        }
+
+        /* --- PROJECTS LIST CONTENT --- */
         .container { padding: 180px 50px 100px 50px; box-sizing: border-box; }
-        .list-header { display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 20px; font-weight: 900; text-transform: uppercase; }
-        .project-item { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(0,0,0,0.1); padding: 40px 0; text-decoration: none; color: #000; transition: padding-left 0.3s; }
+        .list-header { 
+            display: flex; justify-content: space-between; 
+            border-bottom: 2px solid #000; padding-bottom: 20px; 
+            font-weight: 900; text-transform: uppercase; 
+        }
+        .project-item { 
+            display: flex; justify-content: space-between; align-items: baseline; 
+            border-bottom: 1px solid rgba(0,0,0,0.1); padding: 40px 0; 
+            text-decoration: none; color: #000; transition: padding-left 0.3s; 
+        }
         .project-item:hover { padding-left: 20px; opacity: 0.7; }
         .project-name { font-size: 6vw; line-height: 0.9; font-weight: 900; text-transform: uppercase; }
         .meta { font-size: 18px; font-weight: 700; width: 250px; text-align: right; }
-    @media (max-width: 768px) {
-    /* 1. Adjust the white corners for smaller screens */
 
-    /* 2. Adjust Navbar for mobile */
-    nav {
-        padding: 0 20px !important;
-        height: 80px !important;
-    }
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            body::after { border-radius: 60px; border-width: 30px; }
+            nav { padding: 0 20px !important; height: 80px !important; }
+            .logo img { height: 60px !important; }
 
-    .logo img {
-        height: 60px !important; /* Smaller logo on phones */
-    }
+            .menu-toggle { display: flex; }
+            
+            .menu {
+                display: none !important; /* Hide standard links */
+                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                background: #ff5429; flex-direction: column; justify-content: center;
+                align-items: center; gap: 30px !important; z-index: 99998;
+            }
+            .menu.active { display: flex !important; }
+            .menu a { font-size: 32px !important; color: #000 !important; }
 
-    .menu {
-        gap: 15px !important;
-    }
+            /* Hamburger to X Animation */
+            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-    .menu a {
-        font-size: 11px !important;
-    }
-
-    /* 3. Scale the Massive Hero Text */
-    .hero-line {
-        font-size: 22vw !important; /* Make it fill the width on portrait */
-        transform: scale(1.1, 1.0) !important; /* Reduce stretch for readability */
-    }
-
-    /* 4. Fix padding for content pages */
-    .container, .main, .content-body {
-        padding: 120px 20px 50px 20px !important;
-    }
-
-    h1 {
-        font-size: 18vw !important;
-    }
-}
+            .container { padding: 120px 20px 50px 20px !important; }
+            .project-name { font-size: 12vw; }
+            .meta { font-size: 12px; width: auto; }
+            .list-header { font-size: 12px; }
+        }
     </style>
 </head>
 <body>
+
     <nav>
-        <a href="index.html" class="logo"><img src="./images/logo.png" alt="Logo"></a>
-        <div class="menu">
+        <a href="/" class="logo"><img src="./images/logo.png" alt="Logo"></a>
+        <div class="menu" id="navMenu">
             <a href="projects.html">Projects</a>
             <a href="services.html">Services</a>
-            <a href="generic.html?title=About">About</a>
+            <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
         </div>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
+
+    
+
     <div class="container">
         <div class="list-header"><span>Portfolio</span><span>Industry / Year</span></div>
-        <a href="generic.html?title=Rebecca Schultze" class="project-item"><span class="project-name">Rebecca Schultze</span><span class="meta">PORTFOLIO / 2025</span></a>
-        <a href="generic.html?title=Owego" class="project-item"><span class="project-name">OWEGO</span><span class="meta">FINTECH / 2025</span></a>
-        <a href="generic.html?title=DDD" class="project-item"><span class="project-name">DDD</span><span class="meta">3D DEPLOYMENT / 2025</span></a>
-        <a href="generic.html?title=zwais" class="project-item"><span class="project-name">ZWAIS</span><span class="meta">AI AGENCY / 2025</span></a>
-        <a href="generic.html?title=mtproducts" class="project-item"><span class="project-name">MT PRODUCTS</span><span class="meta">IMPORTER / 2025</span></a>
-
+        
+        <a href="generic.html?title=Rebecca Schultze" class="project-item">
+            <span class="project-name">Rebecca Schultze</span>
+            <span class="meta">PORTFOLIO / 2025</span>
+        </a>
+        
+        <a href="generic.html?title=Owego" class="project-item">
+            <span class="project-name">OWEGO</span>
+            <span class="meta">FINTECH / 2025</span>
+        </a>
+        
+        <a href="generic.html?title=DDD" class="project-item">
+            <span class="project-name">DDD</span>
+            <span class="meta">3D DEPLOYMENT / 2025</span>
+        </a>
+        
+        <a href="generic.html?title=zwais" class="project-item">
+            <span class="project-name">ZWAIS</span>
+            <span class="meta">AI AGENCY / 2025</span>
+        </a>
+        
+        <a href="generic.html?title=mtproducts" class="project-item">
+            <span class="project-name">MT PRODUCTS</span>
+            <span class="meta">IMPORTER / 2025</span>
+        </a>
     </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                
+                // Toggle body scroll
+                if (navMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Close menu if links are clicked
+        document.querySelectorAll('.menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+    </script>
 </body>
 </html>
