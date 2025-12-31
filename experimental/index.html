@@ -173,8 +173,8 @@ header.hero {
 }
 
 @media (max-width: 768px) {
-    .transition-text-section { height: 10vh; }
-    .fly-in-text { font-size: 5vw; }
+    .transition-text-section { height: 5vh; }
+    .fly-in-text { font-size: 3vw; }
 }
 
         /* --- SECTION 1: MAP --- */
@@ -517,6 +517,12 @@ html::after {
     .ring-sticky-view {
         height: 100vh !important;
     }
+    .ring-item {
+    width: 140px !important;  /* Bigger on mobile */
+    height: 180px !important;
+    margin-left: -70px !important; 
+    margin-top: -90px !important;
+}
 }
 
     </style>
@@ -980,35 +986,41 @@ canvas.addEventListener('click', (e) => {
         const itemCount = 20; 
         let ringRadius = Math.min(window.innerWidth, window.innerHeight) * 2;
 
-        function createRing() {
-            ringContainer.innerHTML = ''; 
-            const isMobile = window.innerWidth < 768;
-            ringRadius = isMobile ? window.innerWidth * 0.35 : window.innerHeight * 0.4; 
+function createRing() {
+    ringContainer.innerHTML = ''; 
+    const isMobile = window.innerWidth < 768;
 
-            // YOUR LOCAL IMAGES
-          const myImages = [
-    './images/IMG_2219.JPG', './images/IMG_2220.JPG', './images/IMG_2221.JPG', 
-    './images/IMG_2222.JPG', './images/IMG_2223.JPG', './images/IMG_2224.JPG', 
-    './images/IMG_2225.JPG', './images/IMG_2232.JPG', './images/IMG_2239.JPG',
-    './images/IMG_2240.JPG', './images/IMG_2241.JPG', './images/IMG_2242.JPG', 
-    './images/IMG_2243.JPG'
-];
 
-            for(let i = 0; i < itemCount; i++) {
-                const item = document.createElement('div');
-                item.className = 'ring-item';
-                
-                // Pick image from list
-                const imgSrc = myImages[i % myImages.length];
-                item.style.backgroundImage = `url('${imgSrc}')`;
-                item.style.backgroundSize = 'cover';
-                item.style.backgroundPosition = 'center';
+    // 2. Adjust radius for phone vs desktop
+    const ringRadius = isMobile ? window.innerWidth * 0.35 : window.innerHeight * 0.4; 
 
-                const angle = (i / itemCount) * 360;
-                item.style.transform = `rotate(${angle}deg) translate(${ringRadius}px) rotate(90deg)`; 
-                ringContainer.appendChild(item);
-            }
-        }
+    const myImages = [
+        './images/IMG_2219.JPG', './images/IMG_2220.JPG', './images/IMG_2221.JPG', 
+        './images/IMG_2222.JPG', './images/IMG_2223.JPG', './images/IMG_2224.JPG', 
+        './images/IMG_2225.JPG', './images/IMG_2232.JPG', './images/IMG_2239.JPG',
+        './images/IMG_2240.JPG', './images/IMG_2241.JPG', './images/IMG_2242.JPG', 
+        './images/IMG_2243.JPG'
+    ];
+
+    for(let i = 0; i < itemCount; i++) {
+        const item = document.createElement('div');
+        item.className = 'ring-item';
+        
+        const imgSrc = myImages[i % myImages.length];
+        
+        item.style.backgroundImage = `url('${imgSrc}')`;
+        item.style.backgroundSize = 'cover';
+        item.style.backgroundPosition = 'center';
+
+        // 3. The angle now divides by the dynamic itemCount
+        const angle = (i / itemCount) * 360;
+        
+        item.style.transform = `rotate(${angle}deg) translate(${ringRadius}px) rotate(90deg)`; 
+        
+        ringContainer.appendChild(item);
+    }
+}
+
 
         createRing();
         window.addEventListener('resize', createRing);
