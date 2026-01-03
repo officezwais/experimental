@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowledge Navigators</title>
@@ -16,7 +17,7 @@ body::after {
     bottom: -50px;
     
     /* This creates the heavy rounded shape in the corners */
-    border-radius: 180px; 
+    border-radius: 120px; 
     
     /* We use a thick semi-transparent white border */
     border: 60px solid rgba(255, 255, 255, 0.5);
@@ -175,6 +176,17 @@ header.hero {
 @media (max-width: 768px) {
     .transition-text-section { height: 5vh; }
     .fly-in-text { font-size: 3vw; }
+}
+
+/* This grid stays fixed while content scrolls over it, creating depth */
+.bg-grid {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-size: 50px 50px; /* Technical Grid size */
+    z-index: -1;
+    pointer-events: none;
 }
 
         /* --- SECTION 1: MAP --- */
@@ -360,6 +372,8 @@ header.hero {
             z-index: 20;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
+
+        
 
         
         /* --- FOOTER --- */
@@ -918,6 +932,18 @@ canvas.addEventListener('click', (e) => {
 
         window.addEventListener('resize', () => { if (window.innerWidth !== canvas.width) { words = []; initMap(); }});
 
+// A slightly tighter, heavier scroll than Seated
+const lenis = new Lenis({
+    duration: 1.5, // Slower duration = heavier feel
+    easing: (t) => 1 - Math.pow(1 - t, 4), // Tech easing
+    direction: 'vertical',
+    smooth: true,
+});
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
         // ==========================================
         // SCRIPT 2: WOVE ARC (STICKY LOGIC)
@@ -1036,34 +1062,38 @@ function createRing() {
         });
 
     </script>
-<footer>
-    <div class="footer-content">
-        <div class="footer-column">
-            <div class="footer-logo">Knowledge<br>Navigators</div>
-        </div>
-        <div class="footer-column">
-            <h4>Sitemap</h4>
-            <ul class="footer-links">
-                <li><a href="projects.html">Selected Works</a></li>
-                <li><a href="generic.html?title=Studio">The Studio</a></li>
-                <li><a href="generic.html?title=Services">Services</a></li>
-                <li><a href="generic.html?title=Journal">Journal</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h4>Connect</h4>
-            <ul class="footer-links">
-                <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
-                <li><a href="https://twitter.com" target="_blank">Twitter / X</a></li>
-                <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-                <li><a href="contact.html">Email Us</a></li>
-            </ul>
-        </div>
+<footer style="background: #000; color: #ff5429; padding: 100px 50px; border-top: 5px solid #ff5429;">
+    <div style="font-family: 'Courier New'; margin-bottom: 20px;">// END_OF_STREAM</div>
+    
+    <div class="giant-cta">
+        INITIALIZE<br>CONTACT
+        <span class="blinking-cursor">_</span>
     </div>
-    <div class="footer-bottom">
-        <div>&copy; 2025 Knowledge Navigators. All rights reserved.</div>
-        <div>Privacy Policy &nbsp;&nbsp; Terms of Service</div>
-    </div>
+    
+    <a href="mailto:hello@knowledge-navigators.com" class="terminal-btn">
+        [ EXECUTE MAILTO ]
+    </a>
 </footer>
+
+<style>
+.giant-cta {
+    font-size: 10vw; font-weight: 900; line-height: 0.9;
+    margin-bottom: 50px; color: #fff;
+}
+.blinking-cursor {
+    color: #ff5429;
+    animation: blink 1s infinite;
+}
+.terminal-btn {
+    font-family: 'Courier New', monospace;
+    font-size: 24px;
+    color: #000; background: #ff5429;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-weight: 700;
+}
+.terminal-btn:hover { background: #fff; }
+@keyframes blink { 50% { opacity: 0; } }
+</style>
 </body>
 </html>

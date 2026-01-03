@@ -18,15 +18,15 @@
             background: transparent;
         }
 
-        /* --- UNIVERSAL RESET & FONT LOCK --- */
-        html { overflow-y: scroll; }
+        /* --- UNIVERSAL RESET --- */
+        html { overflow-y: scroll; scroll-behavior: smooth; }
         body { 
             margin: 0; padding: 0; overflow-x: hidden; background: #ff5429; color: #000; 
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; 
             -webkit-font-smoothing: antialiased !important;
         }
         
-        /* --- UNIVERSAL NAVBAR --- */
+        /* --- NAVBAR --- */
         nav { 
             position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; 
             height: 100px !important; padding: 0 50px !important; display: flex !important; 
@@ -44,60 +44,118 @@
         }
         .menu a:hover { color: #000 !important; }
 
-        /* --- BURGER MENU STYLING --- */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            z-index: 100001;
-        }
-        .menu-toggle span {
-            width: 30px; height: 3px; background-color: #000; transition: 0.3s;
+        /* --- BURGER MENU --- */
+        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 100001; }
+        .menu-toggle span { width: 30px; height: 3px; background-color: #000; transition: 0.3s; }
+
+        /* --- SCANNER LIST STYLES (NEW) --- */
+        .container { 
+            padding: 180px 0 100px 0; /* Full width lines, padding handled inside rows */
+            box-sizing: border-box; 
+            position: relative;
+            min-height: 100vh;
         }
 
-        /* --- PROJECTS LIST CONTENT --- */
-        .container { padding: 180px 50px 100px 50px; box-sizing: border-box; }
         .list-header { 
             display: flex; justify-content: space-between; 
-            border-bottom: 2px solid #000; padding-bottom: 20px; 
+            padding: 0 50px 20px 50px;
+            border-bottom: 4px solid #000; /* Thick header line */
             font-weight: 900; text-transform: uppercase; 
+            font-family: 'Courier New', monospace; /* Tech font */
+            font-size: 14px;
         }
-        .project-item { 
-            display: flex; justify-content: space-between; align-items: baseline; 
-            border-bottom: 1px solid rgba(0,0,0,0.1); padding: 40px 0; 
-            text-decoration: none; color: #000; transition: padding-left 0.3s; 
-        }
-        .project-item:hover { padding-left: 20px; opacity: 0.7; }
-        .project-name { font-size: 6vw; line-height: 0.9; font-weight: 900; text-transform: uppercase; }
-        .meta { font-size: 18px; font-weight: 700; width: 250px; text-align: right; }
 
-        /* --- MOBILE RESPONSIVENESS --- */
+        /* The Data Row (Replaces Project Item) */
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 40px 50px;
+            border-bottom: 1px solid #000;
+            text-decoration: none;
+            color: #000;
+            cursor: crosshair; /* The "Scanner" Cursor */
+            transition: background 0.2s, color 0.2s;
+            position: relative;
+            background: #ff5429; /* Solid BG */
+        }
+
+        .data-row:hover {
+            background: #000; /* Invert on hover */
+            color: #ff5429;
+        }
+
+        .data-row:hover .row-id, 
+        .data-row:hover .row-title, 
+        .data-row:hover .row-meta {
+            color: #ff5429;
+        }
+
+        .row-id { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; width: 100px; }
+        .row-title { font-size: 5vw; font-weight: 900; text-transform: uppercase; line-height: 0.9; flex-grow: 1; }
+        .row-meta { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; text-align: right; }
+
+        /* --- THE FLOATING SCANNER WINDOW --- */
+        .scan-viewer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 350px; height: 250px;
+            pointer-events: none; /* Ignore clicks so you can click the link */
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.2s, transform 0.1s; /* Fast follow */
+            z-index: 9999;
+            border: 2px solid #000; 
+            background: #000;
+            overflow: hidden;
+        }
+        
+        .scan-viewer.active { opacity: 1; transform: scale(1); }
+
+        .scan-img {
+            width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0.9;
+        }
+
+        /* The Crosshair Overlay inside the image */
+        .scan-crosshair {
+            position: absolute; top: 50%; left: 50%;
+            width: 20px; height: 20px;
+            transform: translate(-50%, -50%);
+        }
+        .scan-crosshair::before { content: ""; position: absolute; top: 9px; left: -10px; width: 40px; height: 2px; background: #ff5429; }
+        .scan-crosshair::after { content: ""; position: absolute; left: 9px; top: -10px; height: 40px; width: 2px; background: #ff5429; }
+
+        .scan-data {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            font-family: 'Courier New', monospace; font-size: 10px;
+            background: #000; color: #ff5429; padding: 4px;
+            text-transform: uppercase;
+        }
+
+        /* --- MOBILE --- */
         @media (max-width: 768px) {
-            body::after { border-radius: 60px; border-width: 30px; }
+            .scan-viewer { display: none !important; } /* Hide floater on mobile */
+            .row-title { font-size: 10vw; }
+            .data-row { padding: 30px 20px; flex-direction: column; gap: 10px; }
+            .row-id { margin-bottom: 10px; opacity: 0.6; }
+            .list-header { padding: 0 20px 20px 20px; }
+            
+            /* Navbar Mobile */
             nav { padding: 0 20px !important; height: 80px !important; }
             .logo img { height: 60px !important; }
-
             .menu-toggle { display: flex; }
-            
             .menu {
-                display: none !important; /* Hide standard links */
-                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                display: none !important; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
                 background: #ff5429; flex-direction: column; justify-content: center;
                 align-items: center; gap: 30px !important; z-index: 99998;
             }
             .menu.active { display: flex !important; }
             .menu a { font-size: 32px !important; color: #000 !important; }
-
-            /* Hamburger to X Animation */
             .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
             .menu-toggle.active span:nth-child(2) { opacity: 0; }
             .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
-
-            .container { padding: 120px 20px 50px 20px !important; }
-            .project-name { font-size: 12vw; }
-            .meta { font-size: 12px; width: auto; }
-            .list-header { font-size: 12px; }
         }
     </style>
 </head>
@@ -112,44 +170,57 @@
             <a href="contact.html">Contact</a>
         </div>
         <div class="menu-toggle" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </div>
     </nav>
 
-    
-
     <div class="container">
-        <div class="list-header"><span>Portfolio</span><span>Industry / Year</span></div>
         
-        <a href="generic.html?title=Rebecca Schultze" class="project-item">
-            <span class="project-name">Rebecca Schultze</span>
-            <span class="meta">PORTFOLIO / 2025</span>
+        <div class="list-header">
+            <span>// DATABASE_INDEX</span>
+            <span>STATUS / YEAR</span>
+        </div>
+
+        <div class="scan-viewer">
+            <div class="scan-img" id="scanImg"></div>
+            <div class="scan-crosshair"></div>
+            <div class="scan-data">TARGET_ACQUIRED</div>
+        </div>
+
+        <a href="generic.html?title=Rebecca Schultze" class="data-row" data-img="./images/IMG_2219.JPG">
+            <span class="row-id">SYS.001</span>
+            <span class="row-title">Rebecca Schultze</span>
+            <span class="row-meta">PORTFOLIO // 2025</span>
+        </a>
+
+        <a href="generic.html?title=Owego" class="data-row" data-img="./images/IMG_2220.JPG">
+            <span class="row-id">SYS.002</span>
+            <span class="row-title">OWEGO</span>
+            <span class="row-meta">FINTECH // 2025</span>
+        </a>
+
+        <a href="generic.html?title=DDD" class="data-row" data-img="./images/IMG_2221.JPG">
+            <span class="row-id">SYS.003</span>
+            <span class="row-title">DDD</span>
+            <span class="row-meta">DEPLOYMENT // 2025</span>
+        </a>
+
+        <a href="generic.html?title=zwais" class="data-row" data-img="./images/IMG_2222.JPG">
+            <span class="row-id">SYS.004</span>
+            <span class="row-title">ZWAIS</span>
+            <span class="row-meta">AGENCY // 2025</span>
         </a>
         
-        <a href="generic.html?title=Owego" class="project-item">
-            <span class="project-name">OWEGO</span>
-            <span class="meta">FINTECH / 2025</span>
+        <a href="generic.html?title=mtproducts" class="data-row" data-img="./images/IMG_2223.JPG">
+            <span class="row-id">SYS.005</span>
+            <span class="row-title">MT PRODUCTS</span>
+            <span class="row-meta">IMPORTER // 2025</span>
         </a>
-        
-        <a href="generic.html?title=DDD" class="project-item">
-            <span class="project-name">DDD</span>
-            <span class="meta">3D DEPLOYMENT / 2025</span>
-        </a>
-        
-        <a href="generic.html?title=zwais" class="project-item">
-            <span class="project-name">ZWAIS</span>
-            <span class="meta">AI AGENCY / 2025</span>
-        </a>
-        
-        <a href="generic.html?title=mtproducts" class="project-item">
-            <span class="project-name">MT PRODUCTS</span>
-            <span class="meta">IMPORTER / 2025</span>
-        </a>
+
     </div>
 
     <script>
+        // --- BURGER MENU LOGIC ---
         const menuToggle = document.getElementById('menuToggle');
         const navMenu = document.getElementById('navMenu');
 
@@ -167,12 +238,42 @@
             });
         }
 
-        // Close menu if links are clicked
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', () => {
                 menuToggle.classList.remove('active');
                 navMenu.classList.remove('active');
                 document.body.style.overflow = 'auto';
+            });
+        });
+
+        // --- SCANNER LOGIC (FLOATING IMAGE) ---
+        const scanViewer = document.querySelector('.scan-viewer');
+        const scanImg = document.getElementById('scanImg');
+        const scanData = document.querySelector('.scan-data');
+        const rows = document.querySelectorAll('.data-row');
+
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                const imgSrc = row.getAttribute('data-img');
+                const sysId = row.querySelector('.row-id').innerText;
+                
+                scanImg.style.backgroundImage = `url('${imgSrc}')`;
+                scanData.innerText = `TARGET: ${sysId}`;
+                scanViewer.classList.add('active');
+            });
+            
+            row.addEventListener('mouseleave', () => {
+                scanViewer.classList.remove('active');
+            });
+            
+            row.addEventListener('mousemove', (e) => {
+                // Offset the viewer so it floats near the cursor
+                // We add some distance so it doesn't cover the exact word you're reading
+                const x = e.clientX + 40;
+                const y = e.clientY - 150;
+                
+                // Use translate3d for better performance
+                scanViewer.style.transform = `translate3d(${x}px, ${y}px, 0)`;
             });
         });
     </script>
