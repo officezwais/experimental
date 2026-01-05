@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Detail | Knowledge Navigators</title>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <style>
+        /* --- 1. UNIVERSAL GLOW --- */
+        body::after {
+            content: ""; position: fixed;
+            top: -50px; left: -50px; right: -50px; bottom: -50px;
+            border-radius: 180px; 
+            border: 60px solid rgba(255, 255, 255, 0.25);
+            filter: blur(30px); pointer-events: none; z-index: 999999;
+            background: transparent;
+        }
+
+        /* --- 2. GLOBAL STANDARDS --- */
+        body {
+            margin: 0; padding: 0; overflow-x: hidden;
+            background-color: #ff5429; color: #000;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 3. NAVBAR (FIXED 100PX) --- */
+        nav {
+            position: fixed !important; top: 0 !important; left: 0 !important;
+            width: 100% !important; height: 100px !important;
+            padding: 0 50px !important; display: flex !important; justify-content: space-between !important;
+            align-items: center !important; z-index: 99999 !important; box-sizing: border-box !important;
+        }
+        .logo img { height: 145px; display: block; }
+        .menu { display: flex; gap: 40px; }
+        .menu a {
+            text-decoration: none; color: rgba(0, 0, 0, 0.6); font-weight: 700;
+            font-size: 14px; text-transform: uppercase; transition: color 0.3s;
+        }
+        .menu a:hover { color: #000; }
+
+        /* BURGER MENU */
+        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1000001; }
+        .menu-toggle span { width: 30px; height: 3px; background: #000; transition: 0.3s; }
+
+        /* --- 4. HERO SECTION --- */
+        header.detail-hero {
+            padding-top: 180px; padding-bottom: 80px;
+            padding-left: 50px; padding-right: 50px;
+            border-bottom: 4px solid #000;
+        }
+        .sys-id { font-family: 'Courier New', monospace; font-weight: 700; margin-bottom: 20px; display: block; }
+        .hero-line {
+            font-size: 10vw; line-height: 0.85; font-weight: 900;
+            letter-spacing: -0.04em; margin: 0; text-transform: uppercase;
+        }
+
+        /* --- 5. CONTENT GRID --- */
+        .detail-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            min-height: 80vh;
+        }
+
+        .left-col {
+            padding: 60px 50px;
+            border-right: 2px solid #000;
+            display: flex; flex-direction: column;
+        }
+        .right-col {
+            padding: 0;
+        }
+
+        .section-label { font-family: 'Courier New'; font-weight: 700; margin-bottom: 30px; opacity: 0.6; }
+        .big-desc { font-size: 2rem; font-weight: 500; line-height: 1.3; max-width: 90%; }
+
+        /* Deliverables List */
+        .deliverable-item {
+            padding: 40px 50px;
+            border-bottom: 1px solid #000;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: background 0.3s;
+        }
+        .deliverable-item:hover { background: #000; color: #ff5429; }
+        .d-name { font-size: 1.5rem; font-weight: 700; text-transform: uppercase; }
+        .d-icon { font-family: 'Courier New'; font-weight: 900; }
+
+        /* --- 6. IMAGE STRIP --- */
+        .image-strip {
+            display: flex; height: 60vh;
+            border-top: 4px solid #000;
+            border-bottom: 4px solid #000;
+            overflow: hidden;
+        }
+        .strip-img {
+            flex: 1; border-right: 2px solid #000;
+            background-size: cover; background-position: center;
+            filter: grayscale(100%); transition: filter 0.3s;
+        }
+        .strip-img:hover { filter: grayscale(0%); }
+        .strip-img:last-child { border-right: none; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #000; color: #ff5429; padding: 100px 50px;
+            border-top: 5px solid #ff5429; position: relative; z-index: 10;
+        }
+        .giant-cta { font-size: 10vw; font-weight: 900; line-height: 0.9; margin-bottom: 50px; color: #fff; }
+        .blinking-cursor { color: #ff5429; animation: blink 1s infinite; }
+        .terminal-btn {
+            font-family: 'Courier New', monospace; font-size: 24px;
+            color: #000; background: #ff5429; padding: 15px 30px;
+            text-decoration: none; font-weight: 700;
+        }
+        .terminal-btn:hover { background: #fff; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; height: 80px; }
+            .logo img { height: 60px; }
+            
+            header.detail-hero { padding: 140px 20px 40px 20px; }
+            .hero-line { font-size: 14vw; }
+            
+            .detail-grid { grid-template-columns: 1fr; }
+            .left-col { padding: 40px 20px; border-right: none; border-bottom: 2px solid #000; }
+            .big-desc { font-size: 1.2rem; }
+            .deliverable-item { padding: 30px 20px; }
+            
+            .image-strip { flex-direction: column; height: auto; }
+            .strip-img { height: 300px; border-right: none; border-bottom: 2px solid #000; }
+            
+            .menu-toggle { display: flex; }
+            .menu { display: none !important; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ff5429; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
+            .menu.active { display: flex !important; }
+            .menu a { font-size: 32px !important; color: #000 !important; }
+            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+   <a href="/" class="logo"><img src="./images/logo.png" alt="Logo"></a>
+   <div class="menu" id="navMenu">
+       <a href="projects.html">Projects</a>
+       <a href="services.html">Services</a>
+       <a href="about.html">About</a>
+       <a href="contact.html">Contact</a>
+   </div>
+   <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+</nav>
+
+<header class="detail-hero">
+    <span class="sys-id" id="svc-id">// LOADING...</span>
+    <h1 class="hero-line" id="svc-title">INITIALIZING</h1>
+</header>
+
+<div class="detail-grid">
+    <div class="left-col">
+        <span class="section-label">// CORE_LOGIC</span>
+        <p class="big-desc" id="svc-desc">
+            Fetching system parameters...
+        </p>
+    </div>
+
+    <div class="right-col" id="svc-list">
+        </div>
+</div>
+
+<div class="image-strip" id="svc-gallery">
+    </div>
+
+<footer>
+    <div style="font-family: 'Courier New'; margin-bottom: 20px;">// END_OF_STREAM</div>
+    <div class="giant-cta">
+        START<br>PROJECT
+        <span class="blinking-cursor">_</span>
+    </div>
+    <a href="contact.html" class="terminal-btn">[ INITIATE ]</a>
+</footer>
+
+<script>
+    // 1. BURGER MENU
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    if(menuToggle){
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    // 2. LENIS SCROLL
+    const lenis = new Lenis({ duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4), smooth: true });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
+    // 3. DYNAMIC CONTENT LOGIC
+    const services = {
+        'visuals': {
+            id: 'SYS.VISUAL.01',
+            title: 'AI IMAGE\nSYNTHESIS',
+            desc: 'We replace traditional photography with synthetic pipelines. Infinite iterations, impossible environments, and perfect brand consistency without a physical shoot.',
+            items: ['Campaign Imagery', 'Social Assets', 'Lookbooks', 'Product Mockups'],
+            images: ['./images/IMG_2219.JPG', './images/IMG_2220.JPG', './images/IMG_2221.JPG']
+        },
+        'web': {
+            id: 'SYS.WEB.02',
+            title: 'WEB\nINFRASTRUCTURE',
+            desc: 'Brutalist, high-performance web architecture. We build digital artifacts that do not just display information, but perform as active systems.',
+            items: ['UX / UI Design', 'Frontend Dev', '3D Integration', 'CMS Architecture'],
+            images: ['./images/IMG_2222.JPG', './images/IMG_2223.JPG', './images/IMG_2224.JPG']
+        },
+        'strategy': {
+            id: 'SYS.STRAT.03',
+            title: 'BRAND\nSTRATEGY',
+            desc: 'Defining the coordinates. We analyze market noise to position your brand in clear white space, ensuring every output aligns with a core logic.',
+            items: ['Market Analysis', 'Visual Identity', 'Tone of Voice', 'Growth Roadmap'],
+            images: ['./images/IMG_2225.JPG', './images/IMG_2232.JPG', './images/IMG_2239.JPG']
+        }
+    };
+
+    // Parse URL
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get('type') || 'web'; // Default fallback
+    const data = services[type] || services['web'];
+
+    // Populate Data
+    document.getElementById('svc-id').innerText = `// ${data.id}`;
+    document.getElementById('svc-title').innerText = data.title;
+    document.getElementById('svc-desc').innerText = data.desc;
+
+    // Populate List
+    const listContainer = document.getElementById('svc-list');
+    data.items.forEach(item => {
+        listContainer.innerHTML += `
+            <div class="deliverable-item">
+                <span class="d-name">${item}</span>
+                <span class="d-icon">[+]</span>
+            </div>
+        `;
+    });
+
+    // Populate Images
+    const galleryContainer = document.getElementById('svc-gallery');
+    data.images.forEach(img => {
+        galleryContainer.innerHTML += `<div class="strip-img" style="background-image: url('${img}');"></div>`;
+    });
+
+</script>
+
+</body>
+</html>

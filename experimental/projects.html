@@ -3,154 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Knowledge Navigators</title>
+    <title>Projects | Knowledge Navigators</title>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <style>
-        /* --- THE UNIVERSAL WHITE GLOW CORNERS --- */
+        /* --- 1. UNIVERSAL GLOW --- */
         body::after {
-            content: "";
-            position: fixed;
+            content: ""; position: fixed;
             top: -50px; left: -50px; right: -50px; bottom: -50px;
             border-radius: 180px; 
-            border: 60px solid rgba(255, 255, 255, 0.5);
-            filter: blur(30px);
-            pointer-events: none; 
-            z-index: 999999;
+            border: 60px solid rgba(255, 255, 255, 0.25);
+            filter: blur(30px); pointer-events: none; z-index: 999999;
             background: transparent;
         }
 
-        /* --- UNIVERSAL RESET --- */
-        html { overflow-y: scroll; scroll-behavior: smooth; }
-        body { 
-            margin: 0; padding: 0; overflow-x: hidden; background: #ff5429; color: #000; 
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; 
-            -webkit-font-smoothing: antialiased !important;
+        /* --- 2. GLOBAL STANDARDS --- */
+        body {
+            margin: 0; padding: 0; overflow-x: hidden;
+            background-color: #ff5429; color: #000;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
-        
-        /* --- NAVBAR --- */
-        nav { 
-            position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; 
-            height: 100px !important; padding: 0 50px !important; display: flex !important; 
-            justify-content: space-between !important; align-items: center !important; 
-            z-index: 99999 !important; background: transparent !important; box-sizing: border-box !important;
-        }
-        .logo { display: flex !important; align-items: center !important; }
-        .logo img { height: 145px !important; width: auto !important; display: block !important; }
-        
-        .menu { display: flex !important; gap: 40px !important; align-items: center; }
-        .menu a { 
-            text-decoration: none !important; color: rgba(0, 0, 0, 0.6) !important; 
-            font-weight: 700 !important; font-size: 14px !important; text-transform: uppercase !important; 
-            letter-spacing: 1px !important; transition: color 0.3s ease !important; 
-        }
-        .menu a:hover { color: #000 !important; }
 
-        /* --- BURGER MENU --- */
-        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 100001; }
-        .menu-toggle span { width: 30px; height: 3px; background-color: #000; transition: 0.3s; }
+        /* --- 3. NAVBAR (FIXED) --- */
+        nav {
+            position: fixed !important; top: 0; left: 0; width: 100%; height: 100px;
+            padding: 0 50px; display: flex; justify-content: space-between;
+            align-items: center; z-index: 99999; box-sizing: border-box;
+        }
+        .logo img { height: 145px; display: block; }
+        .menu { display: flex; gap: 40px; }
+        .menu a {
+            text-decoration: none; color: rgba(0,0,0,0.6); font-weight: 700;
+            font-size: 14px; text-transform: uppercase; transition: color 0.3s;
+        }
+        .menu a:hover { color: #000; }
 
-        /* --- SCANNER LIST STYLES (NEW) --- */
-        .container { 
-            padding: 180px 0 100px 0; /* Full width lines, padding handled inside rows */
-            box-sizing: border-box; 
-            position: relative;
+        /* BURGER MENU */
+        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1000001; }
+        .menu-toggle span { width: 30px; height: 3px; background: #000; transition: 0.3s; }
+
+        /* --- 4. MASSIVE HEADLINE (LEFT ALIGNED) --- */
+        header.page-hero {
+            padding-top: 180px; 
+            padding-bottom: 80px;
+            padding-left: 50px; /* Aligns with Left Edge */
+            padding-right: 50px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start; /* Pushes text to Left */
+            text-align: left;
+        }
+        .hero-line {
+            font-size: 12vw; line-height: 0.85; font-weight: 900;
+            letter-spacing: -0.04em; margin: 0; text-transform: uppercase;
+        }
+
+        /* --- 5. THE EXPANDING ARCHIVE --- */
+        .archive-container {
             min-height: 100vh;
+            display: flex; flex-direction: column;
+            border-top: 4px solid #000; /* Separator line */
         }
 
-        .list-header { 
-            display: flex; justify-content: space-between; 
-            padding: 0 50px 20px 50px;
-            border-bottom: 4px solid #000; /* Thick header line */
-            font-weight: 900; text-transform: uppercase; 
-            font-family: 'Courier New', monospace; /* Tech font */
-            font-size: 14px;
+        .project-row {
+            position: relative; border-bottom: 1px solid #000;
+            overflow: hidden; height: 100px; /* Closed Height */
+            transition: height 0.5s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s;
+            cursor: pointer; display: flex; flex-direction: column;
+            text-decoration: none; color: #000;
+        }
+        .project-row:hover {
+            height: 60vh; /* Open Height */
+            background: #000; color: #ff5429;
         }
 
-        /* The Data Row (Replaces Project Item) */
-        .data-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding: 40px 50px;
-            border-bottom: 1px solid #000;
-            text-decoration: none;
-            color: #000;
-            cursor: crosshair; /* The "Scanner" Cursor */
-            transition: background 0.2s, color 0.2s;
-            position: relative;
-            background: #ff5429; /* Solid BG */
+        .row-bar {
+            height: 100px; padding: 0 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 10; position: relative;
         }
+        .row-title { font-size: 4vw; font-weight: 900; text-transform: uppercase; line-height: 1; }
+        .row-meta { font-family: 'Courier New'; font-size: 14px; font-weight: 700; }
 
-        .data-row:hover {
-            background: #000; /* Invert on hover */
-            color: #ff5429;
-        }
-
-        .data-row:hover .row-id, 
-        .data-row:hover .row-title, 
-        .data-row:hover .row-meta {
-            color: #ff5429;
-        }
-
-        .row-id { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; width: 100px; }
-        .row-title { font-size: 5vw; font-weight: 900; text-transform: uppercase; line-height: 0.9; flex-grow: 1; }
-        .row-meta { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; text-align: right; }
-
-        /* --- THE FLOATING SCANNER WINDOW --- */
-        .scan-viewer {
-            position: fixed;
-            top: 0; left: 0;
-            width: 350px; height: 250px;
-            pointer-events: none; /* Ignore clicks so you can click the link */
-            opacity: 0;
-            transform: scale(0.8);
-            transition: opacity 0.2s, transform 0.1s; /* Fast follow */
-            z-index: 9999;
-            border: 2px solid #000; 
-            background: #000;
-            overflow: hidden;
-        }
-        
-        .scan-viewer.active { opacity: 1; transform: scale(1); }
-
-        .scan-img {
-            width: 100%; height: 100%;
+        /* Hidden Image */
+        .row-image {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            opacity: 0.9;
+            opacity: 0; transition: opacity 0.3s 0.1s; z-index: 1;
+            filter: grayscale(100%);
         }
+        .project-row:hover .row-image { opacity: 0.4; }
 
-        /* The Crosshair Overlay inside the image */
-        .scan-crosshair {
-            position: absolute; top: 50%; left: 50%;
-            width: 20px; height: 20px;
-            transform: translate(-50%, -50%);
+        /* Floating View Text */
+        .view-indicator {
+            position: absolute; bottom: 40px; right: 50px;
+            font-size: 24px; font-weight: 700; opacity: 0;
+            transform: translateY(20px); transition: 0.5s 0.2s; z-index: 10;
         }
-        .scan-crosshair::before { content: ""; position: absolute; top: 9px; left: -10px; width: 40px; height: 2px; background: #ff5429; }
-        .scan-crosshair::after { content: ""; position: absolute; left: 9px; top: -10px; height: 40px; width: 2px; background: #ff5429; }
-
-        .scan-data {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            font-family: 'Courier New', monospace; font-size: 10px;
-            background: #000; color: #ff5429; padding: 4px;
-            text-transform: uppercase;
-        }
+        .project-row:hover .view-indicator { opacity: 1; transform: translateY(0); }
 
         /* --- MOBILE --- */
         @media (max-width: 768px) {
-            .scan-viewer { display: none !important; } /* Hide floater on mobile */
-            .row-title { font-size: 10vw; }
-            .data-row { padding: 30px 20px; flex-direction: column; gap: 10px; }
-            .row-id { margin-bottom: 10px; opacity: 0.6; }
-            .list-header { padding: 0 20px 20px 20px; }
+            nav { padding: 0 20px; height: 80px; }
+            .logo img { height: 60px; }
             
-            /* Navbar Mobile */
-            nav { padding: 0 20px !important; height: 80px !important; }
-            .logo img { height: 60px !important; }
+            /* Adjust Hero Padding for Mobile */
+            header.page-hero { padding-left: 20px; padding-right: 20px; }
+            .hero-line { font-size: 16vw; }
+            
+            .project-row { height: 80px; }
+            .row-bar { padding: 0 20px; }
+            .row-title { font-size: 8vw; }
+            .project-row:hover { height: 40vh; }
+            .view-indicator { right: 20px; bottom: 20px; font-size: 18px; }
+            
             .menu-toggle { display: flex; }
-            .menu {
-                display: none !important; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-                background: #ff5429; flex-direction: column; justify-content: center;
-                align-items: center; gap: 30px !important; z-index: 99998;
-            }
+            .menu { display: none !important; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ff5429; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
             .menu.active { display: flex !important; }
             .menu a { font-size: 32px !important; color: #000 !important; }
             .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
@@ -169,113 +136,81 @@
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
         </div>
-        <div class="menu-toggle" id="menuToggle">
-            <span></span><span></span><span></span>
-        </div>
+        <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
     </nav>
 
-    <div class="container">
+    <header class="page-hero">
+        <h1 class="hero-line">SELECTED</h1>
+        <h1 class="hero-line">PROJECTS</h1>
+    </header>
+
+    
+
+    <div class="archive-container">
         
-        <div class="list-header">
-            <span>// DATABASE_INDEX</span>
-            <span>STATUS / YEAR</span>
-        </div>
-
-        <div class="scan-viewer">
-            <div class="scan-img" id="scanImg"></div>
-            <div class="scan-crosshair"></div>
-            <div class="scan-data">TARGET_ACQUIRED</div>
-        </div>
-
-        <a href="generic.html?title=Rebecca Schultze" class="data-row" data-img="./images/IMG_2219.JPG">
-            <span class="row-id">SYS.001</span>
-            <span class="row-title">Rebecca Schultze</span>
-            <span class="row-meta">PORTFOLIO // 2025</span>
+        <a href="generic.html?title=Rebecca" class="project-row">
+            <div class="row-image" style="background-image: url('./images/IMG_2219.JPG');"></div>
+            <div class="row-bar">
+                <span class="row-title">REBECCA SCHULTZE</span>
+                <span class="row-meta">PORTFOLIO</span>
+            </div>
+            <div class="view-indicator">OPEN CASE STUDY -></div>
         </a>
 
-        <a href="generic.html?title=Owego" class="data-row" data-img="./images/IMG_2220.JPG">
-            <span class="row-id">SYS.002</span>
-            <span class="row-title">OWEGO</span>
-            <span class="row-meta">FINTECH // 2025</span>
+        <a href="generic.html?title=Owego" class="project-row">
+            <div class="row-image" style="background-image: url('./images/IMG_2220.JPG');"></div>
+            <div class="row-bar">
+                <span class="row-title">OWEGO FINTECH</span>
+                <span class="row-meta">STRATEGY</span>
+            </div>
+            <div class="view-indicator">OPEN CASE STUDY -></div>
         </a>
 
-        <a href="generic.html?title=DDD" class="data-row" data-img="./images/IMG_2221.JPG">
-            <span class="row-id">SYS.003</span>
-            <span class="row-title">DDD</span>
-            <span class="row-meta">DEPLOYMENT // 2025</span>
+        <a href="generic.html?title=DDD" class="project-row">
+            <div class="row-image" style="background-image: url('./images/IMG_2221.JPG');"></div>
+            <div class="row-bar">
+                <span class="row-title">DDD DEPLOYMENT</span>
+                <span class="row-meta">WEBGL / 3D</span>
+            </div>
+            <div class="view-indicator">OPEN CASE STUDY -></div>
         </a>
 
-        <a href="generic.html?title=zwais" class="data-row" data-img="./images/IMG_2222.JPG">
-            <span class="row-id">SYS.004</span>
-            <span class="row-title">ZWAIS</span>
-            <span class="row-meta">AGENCY // 2025</span>
+        <a href="generic.html?title=Zwais" class="project-row">
+            <div class="row-image" style="background-image: url('./images/IMG_2222.JPG');"></div>
+            <div class="row-bar">
+                <span class="row-title">ZWAIS AGENCY</span>
+                <span class="row-meta">AUTOMATION</span>
+            </div>
+            <div class="view-indicator">OPEN CASE STUDY -></div>
         </a>
-        
-        <a href="generic.html?title=mtproducts" class="data-row" data-img="./images/IMG_2223.JPG">
-            <span class="row-id">SYS.005</span>
-            <span class="row-title">MT PRODUCTS</span>
-            <span class="row-meta">IMPORTER // 2025</span>
+
+        <a href="generic.html?title=MT" class="project-row">
+            <div class="row-image" style="background-image: url('./images/IMG_2223.JPG');"></div>
+            <div class="row-bar">
+                <span class="row-title">MT PRODUCTS</span>
+                <span class="row-meta">ECOMMERCE</span>
+            </div>
+            <div class="view-indicator">OPEN CASE STUDY -></div>
         </a>
 
     </div>
 
     <script>
-        // --- BURGER MENU LOGIC ---
+        // Burger Menu
         const menuToggle = document.getElementById('menuToggle');
         const navMenu = document.getElementById('navMenu');
-
         if (menuToggle) {
             menuToggle.addEventListener('click', () => {
                 menuToggle.classList.toggle('active');
                 navMenu.classList.toggle('active');
-                
-                // Toggle body scroll
-                if (navMenu.classList.contains('active')) {
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    document.body.style.overflow = 'auto';
-                }
+                document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
             });
         }
 
-        document.querySelectorAll('.menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-        });
-
-        // --- SCANNER LOGIC (FLOATING IMAGE) ---
-        const scanViewer = document.querySelector('.scan-viewer');
-        const scanImg = document.getElementById('scanImg');
-        const scanData = document.querySelector('.scan-data');
-        const rows = document.querySelectorAll('.data-row');
-
-        rows.forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                const imgSrc = row.getAttribute('data-img');
-                const sysId = row.querySelector('.row-id').innerText;
-                
-                scanImg.style.backgroundImage = `url('${imgSrc}')`;
-                scanData.innerText = `TARGET: ${sysId}`;
-                scanViewer.classList.add('active');
-            });
-            
-            row.addEventListener('mouseleave', () => {
-                scanViewer.classList.remove('active');
-            });
-            
-            row.addEventListener('mousemove', (e) => {
-                // Offset the viewer so it floats near the cursor
-                // We add some distance so it doesn't cover the exact word you're reading
-                const x = e.clientX + 40;
-                const y = e.clientY - 150;
-                
-                // Use translate3d for better performance
-                scanViewer.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-            });
-        });
+        // Lenis Scroll
+        const lenis = new Lenis({ duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4), smooth: true });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
     </script>
 </body>
 </html>
