@@ -21,7 +21,6 @@
             margin: 0; padding: 0; overflow-x: hidden;
             background-color: #ff5429; color: #000;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
         }
 
         /* --- 3. NAVBAR (FIXED) --- */
@@ -46,11 +45,11 @@
         header.page-hero {
             padding-top: 180px; 
             padding-bottom: 80px;
-            padding-left: 50px;
+            padding-left: 50px; /* Aligns with Left Edge */
             padding-right: 50px;
             display: flex; 
             flex-direction: column; 
-            align-items: flex-start;
+            align-items: flex-start; /* Pushes text to Left */
             text-align: left;
         }
         .hero-line {
@@ -62,7 +61,7 @@
         .archive-container {
             min-height: 100vh;
             display: flex; flex-direction: column;
-            border-top: 4px solid #000;
+            border-top: 4px solid #000; /* Separator line */
         }
 
         .project-row {
@@ -72,9 +71,7 @@
             cursor: pointer; display: flex; flex-direction: column;
             text-decoration: none; color: #000;
         }
-
-        /* HOVER OR ACTIVE STATE (FOR MOBILE) */
-        .project-row:hover, .project-row.mobile-active {
+        .project-row:hover {
             height: 60vh; /* Open Height */
             background: #000; color: #ff5429;
         }
@@ -94,9 +91,7 @@
             opacity: 0; transition: opacity 0.3s 0.1s; z-index: 1;
             filter: grayscale(100%);
         }
-        
-        /* Reveal Image on Hover or Active */
-        .project-row:hover .row-image, .project-row.mobile-active .row-image { opacity: 0.4; }
+        .project-row:hover .row-image { opacity: 0.4; }
 
         /* Floating View Text */
         .view-indicator {
@@ -104,23 +99,21 @@
             font-size: 24px; font-weight: 700; opacity: 0;
             transform: translateY(20px); transition: 0.5s 0.2s; z-index: 10;
         }
-        
-        /* Reveal Text on Hover or Active */
-        .project-row:hover .view-indicator, .project-row.mobile-active .view-indicator { opacity: 1; transform: translateY(0); }
+        .project-row:hover .view-indicator { opacity: 1; transform: translateY(0); }
 
         /* --- MOBILE --- */
         @media (max-width: 768px) {
             nav { padding: 0 20px; height: 80px; }
             .logo img { height: 60px; }
             
-            /* Adjusted Padding & Size */
+            /* Adjust Hero Padding for Mobile */
             header.page-hero { padding-left: 20px; padding-right: 20px; }
-            .hero-line { font-size: 14vw; } /* Slightly smaller to fit */
+            .hero-line { font-size: 16vw; }
             
             .project-row { height: 80px; }
             .row-bar { padding: 0 20px; }
             .row-title { font-size: 8vw; }
-            .project-row:hover, .project-row.mobile-active { height: 50vh; }
+            .project-row:hover { height: 40vh; }
             .view-indicator { right: 20px; bottom: 20px; font-size: 18px; }
             
             .menu-toggle { display: flex; }
@@ -218,31 +211,6 @@
         const lenis = new Lenis({ duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4), smooth: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
-
-        // --- MOBILE DOUBLE-TAP LOGIC ---
-        document.addEventListener("DOMContentLoaded", () => {
-            // Only run on small screens
-            if (window.innerWidth <= 768) {
-                const rows = document.querySelectorAll('.project-row');
-
-                rows.forEach(row => {
-                    row.addEventListener('click', (e) => {
-                        // Check if this specific row is already active
-                        if (!row.classList.contains('mobile-active')) {
-                            // FIRST TAP: Expand
-                            e.preventDefault(); // Prevent navigation
-                            
-                            // Close all others first (Accordion behavior)
-                            rows.forEach(r => r.classList.remove('mobile-active'));
-                            
-                            // Open this one
-                            row.classList.add('mobile-active');
-                        } 
-                        // SECOND TAP: Default link behavior (Navigate)
-                    });
-                });
-            }
-        });
     </script>
 </body>
 </html>

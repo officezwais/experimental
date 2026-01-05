@@ -6,62 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowledge Navigators</title>
     <style>
-/* --- SOLID WHITE ROUNDED CORNERS (RESTORED TO 120PX) --- */
-body::after {
-    content: "";
-    position: fixed;
-    top: -50px;
-    left: -50px;
-    right: -50px;
-    bottom: -50px;
-    
-    border-radius: 120px; 
-    
-    border: 60px solid rgba(255, 255, 255, 0.5);
-    filter: blur(30px);
-    pointer-events: none; 
-    z-index: 999999;
-    background: transparent;
-}
-
-/* --- GLOBAL STANDARDS --- */
+/* --- 1. GLOBAL STANDARDS --- */
 body {
-    overflow-y: scroll;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+    overflow-y: scroll; margin: 0; padding: 0; overflow-x: hidden;
     background-color: #ff5429;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- UNIVERSAL NAVBAR LOCK --- */
+/* --- 2. UNIVERSAL ROUNDED WHITE CORNERS (180px) --- */
+body::after {
+    content: ""; position: fixed;
+    top: -50px; left: -50px; right: -50px; bottom: -50px;
+    border-radius: 180px; 
+    border: 60px solid rgba(255, 255, 255, 0.25);
+    filter: blur(30px); pointer-events: none; z-index: 999999;
+    background: transparent;
+}
+
+/* --- 3. NAVBAR LOCK (FIXED 100PX) --- */
 nav {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100px !important;
+    position: fixed !important; top: 0 !important; left: 0 !important;
+    width: 100% !important; height: 100px !important;
     padding: 0 50px !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    z-index: 99999 !important;
-    background: transparent !important;
-    box-sizing: border-box !important;
-    mix-blend-mode: normal !important;
+    display: flex !important; justify-content: space-between !important;
+    align-items: center !important; z-index: 99999 !important;
+    background: transparent !important; box-sizing: border-box !important;
 }
 
-.logo { display: flex !important; align-items: center !important; height: 100% !important; }
 .logo img { height: 145px !important; width: auto !important; display: block !important; }
 
 .menu { display: flex !important; gap: 40px !important; align-items: center !important; }
 .menu a {
     text-decoration: none !important; color: rgba(0, 0, 0, 0.6) !important;
     font-weight: 700 !important; font-size: 14px !important;
-    text-transform: uppercase !important; letter-spacing: 1px !important;
-    line-height: 1 !important; transition: color 0.3s ease !important;
+    text-transform: uppercase !important; transition: color 0.3s ease !important;
 }
 .menu a:hover { color: #000000 !important; }
 
@@ -69,7 +48,7 @@ nav {
 .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1000001; }
 .menu-toggle span { width: 30px; height: 3px; background-color: #000; transition: 0.3s; }
 
-/* --- HERO SECTION --- */
+/* --- 4. HERO SECTION --- */
 header.hero {
     height: 100vh; width: 100%; display: flex; flex-direction: column;
     justify-content: center; align-items: center;
@@ -85,9 +64,9 @@ header.hero {
 #hero-bot { margin-left: 15vw; }
 
 .sub-hero { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.sub-line { font-size: 1.5vw; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #000; margin: 0; will-change: transform; }
+.sub-line { font-size: 1.5vw; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #000; margin: 0; }
 
-/* --- TRANSITION TEXT --- */
+/* --- 5. TRANSITION TEXT --- */
 .transition-text-section {
     height: 40vh; width: 100%; display: flex; align-items: center;
     background-color: #ff5429; overflow: hidden; position: relative; z-index: 5;
@@ -98,16 +77,17 @@ header.hero {
     transform: translateX(100%); will-change: transform;
 }
 
-/* --- MAP --- */
+/* --- 6. MAP --- */
 canvas#mainCanvas { width: 100vw; height: 100vh; display: block; background: #ff5429; position: relative; z-index: 1; }
 
-/* --- BEZEL / ARC --- */
+/* --- 7. BEZEL / ARC --- */
 .arc-scroll-track { height: 400vh; position: relative; background-color: #ff5429; z-index: 2; }
 .arc-sticky-view { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; display: flex; align-items: center; }
 
 .bezel-container {
     position: absolute; left: -45vh; top: 10vh; width: 90vh; height: 90vh;
-    border-radius: 50%; border-right: 1px dashed #000000;
+    border-radius: 50%; 
+    border-right: 1px dashed #000000; 
     display: flex; align-items: center; justify-content: center;
 }
 .bezel-number {
@@ -125,7 +105,7 @@ canvas#mainCanvas { width: 100vw; height: 100vh; display: block; background: #ff
 .bezel-title { font-size: 48px; font-weight: 900; margin-bottom: 20px; line-height: 1; }
 .bezel-desc { font-size: 18px; color: #000000; line-height: 1.5; }
 
-/* --- CONTRIBUTORS --- */
+/* --- 8. CONTRIBUTORS --- */
 .grid-section { padding: 100px 50px; background: #ff5429; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 3; }
 .pill-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 1400px; }
 .pill {
@@ -141,24 +121,28 @@ canvas#mainCanvas { width: 100vw; height: 100vh; display: block; background: #ff
 }
 .pill-name { font-size: 20px; font-weight: 400; color: #000000; letter-spacing: -0.5px; }
 
-/* --- FOOTER --- */
+/* --- 9. TERMINAL FOOTER --- */
 footer {
     background: #000; color: #ff5429; padding: 100px 50px;
     border-top: 5px solid #ff5429; position: relative; z-index: 10;
 }
-.giant-cta { font-size: 10vw; font-weight: 900; line-height: 0.9; margin-bottom: 50px; color: #fff; }
+.giant-cta {
+    font-size: 10vw; font-weight: 900; line-height: 0.9;
+    margin-bottom: 50px; color: #fff;
+}
 .blinking-cursor { color: #ff5429; animation: blink 1s infinite; }
-.terminal-btn { font-family: 'Courier New', monospace; font-size: 24px; color: #000; background: #ff5429; padding: 15px 30px; text-decoration: none; font-weight: 700; }
+.terminal-btn {
+    font-family: 'Courier New', monospace; font-size: 24px;
+    color: #000; background: #ff5429; padding: 15px 30px;
+    text-decoration: none; font-weight: 700;
+}
 .terminal-btn:hover { background: #fff; }
 @keyframes blink { 50% { opacity: 0; } }
 
 /* --- MOBILE --- */
 @media (max-width: 768px) {
-    .hero-line { font-size: 16vw; }
-    .sub-line { font-size: 4vw; }
     nav { padding: 0 20px !important; height: 80px !important; }
     .logo img { height: 60px !important; }
-    
     .menu-toggle { display: flex; }
     .menu { display: none !important; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ff5429; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
     .menu.active { display: flex !important; }
@@ -167,14 +151,17 @@ footer {
     .menu-toggle.active span:nth-child(2) { opacity: 0; }
     .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
+    .hero-line { font-size: 16vw !important; }
+    .sub-line { font-size: 4vw; }
+    
+    /* Bezel Mobile */
     .bezel-container { left: -65vh !important; top: 5vh !important; }
+    .bezel-number { font-size: 50px !important; z-index: 1 !important; }
     .bezel-content { left: 30vw !important; max-width: 65vw !important; background: rgba(255, 84, 41, 0.9); padding: 15px !important; }
 }
     </style>
 </head>
 <body>
-
-
 
 <nav>
    <a href="/" class="logo"><img src="./images/logo.png" alt="Knowledge Navigators"></a>
@@ -215,10 +202,24 @@ footer {
 
 <section class="grid-section">
     <div style="margin-bottom: 60px; font-size: 14px; color: #000000; text-transform: uppercase; letter-spacing: 1px;">Contributors</div>
+    
     <div class="pill-container">
-        <div class="pill"><div class="pill-avatar"></div><span class="pill-name">Chris Schultze</span></div>
-        <div class="pill"><div class="pill-avatar"></div><span class="pill-name">Matthias Kubalek</span></div>
-        <div class="pill"><div class="pill-avatar"></div><span class="pill-name">Meico Rerop</span></div>
+        
+        <a href="about.html" class="pill" style="text-decoration: none;">
+            <div class="pill-avatar" style="background-image: url('./images/chris.png');"></div>
+            <span class="pill-name">Chris Schultze</span>
+        </a>
+
+        <a href="about.html" class="pill" style="text-decoration: none;">
+            <div class="pill-avatar" style="background-image: url('./images/matze.png');"></div>
+            <span class="pill-name">Matthias Kubalek</span>
+        </a>
+
+        <a href="about.html" class="pill" style="text-decoration: none;">
+            <div class="pill-avatar" style="background-image: url('./images/meico.png');"></div>
+            <span class="pill-name">Meico Rerop</span>
+        </a>
+
     </div>
 </section>
 
@@ -228,7 +229,7 @@ footer {
         INITIALIZE<br>CONTACT
         <span class="blinking-cursor">_</span>
     </div>
-    <a href="mailto:hello@knowledgenavigators.com" class="terminal-btn">[ EXECUTE MAILTO ]</a>
+    <a href="mailto:hello@knowledge-navigators.com" class="terminal-btn">[ EXECUTE MAILTO ]</a>
 </footer>
 
 <script>
@@ -272,9 +273,12 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// --- 4. MAP LOGIC (YOUR ORIGINAL ENGINE + NEW CONTENT) ---
+// ==========================================
+// 4. MAP LOGIC (RESTORED OLD ENGINE, NEW DATA)
+// ==========================================
 const canvas = document.getElementById('mainCanvas');
 const ctx = canvas.getContext('2d');
+
 const baseFontSize = 36;
 const fontStyle = "900 " + baseFontSize + "px Arial";
 const hoverScale = 1.25;      
@@ -285,12 +289,11 @@ const verticalOffset = 80;
 const baseColor = "#000000"; 
 const activeColor = "#000000";
 
-// NEW WORDS
+// --- NEW DATA (Using your new words) ---
 const bigWords = ["WEBSITES", "IMAGES", "STRATEGY", "AI_AGENTS", "3D_DESIGN", "SYSTEMS"];
 const mediumWords = ["MOTION", "BRANDING", "UI/UX", "DATA", "AUTOMATION", "VIDEO"];
 const tinyWords = ["API", "VR", "AR", "APP", "SEO"];
 
-// LINK MAPPING
 const serviceLinks = {
     "WEBSITES": "web", "IMAGES": "visuals", "STRATEGY": "strategy", 
     "AI_AGENTS": "web", "3D_DESIGN": "web", "SYSTEMS": "strategy",
@@ -298,6 +301,7 @@ const serviceLinks = {
     "UI/UX": "web", "DATA": "strategy", "AUTOMATION": "strategy"
 };
 
+// --- IMAGES / HOLES ---
 const overlayImages = [
     { src: './images/1.jpeg', x: 0.15, y: 0.20, width: 30 }, 
     { src: './images/2.jpeg', x: 0.28, y: 0.55, width: 40 },
@@ -310,8 +314,22 @@ let mouse = { x: -1000, y: -1000 };
 const mapImage = new Image();
 mapImage.src = './images/map.svg'; 
 
-const imagePromises = overlayImages.map(obj => new Promise(r => { const i = new Image(); i.src = obj.src; i.onload = () => { obj.imgElement = i; r(); }; i.onerror = r; }));
-Promise.all([new Promise(r => mapImage.onload = r), ...imagePromises]).then(initMap);
+const imagePromises = overlayImages.map(obj => {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = obj.src;
+        img.onload = () => { obj.imgElement = img; resolve(); };
+        img.onerror = () => { resolve(); };
+    });
+});
+
+Promise.all([
+    new Promise(r => { mapImage.onload = r; mapImage.onerror = r; }),
+    ...imagePromises
+]).then(() => {
+    initMap();
+});
 
 function initMap() {
     canvas.width = window.innerWidth;
@@ -320,120 +338,229 @@ function initMap() {
     ghostCanvas.width = canvas.width;
     ghostCanvas.height = canvas.height;
     const ghostCtx = ghostCanvas.getContext('2d');
-    if (mapImage.width > 0) {
+
+    if (mapImage.width > 0 && mapImage.naturalWidth !== 0) {
         const scale = Math.min(canvas.width / mapImage.width, canvas.height / mapImage.height) * 0.95;
-        const w = mapImage.width * scale; const h = mapImage.height * scale;
-        ghostCtx.drawImage(mapImage, (canvas.width-w)/2, ((canvas.height-h)/2)+verticalOffset, w, h);
+        const w = mapImage.width * scale;
+        const h = mapImage.height * scale;
+        const x = (canvas.width - w) / 2;
+        const y = ((canvas.height - h) / 2) + verticalOffset;
+        ghostCtx.drawImage(mapImage, x, y, w, h);
     }
+    
     const mapData = ghostCtx.getImageData(0, 0, canvas.width, canvas.height).data;
-    overlayImages.forEach(obj => { if(obj.imgElement) { obj.pixelX = canvas.width * obj.x; obj.pixelY = (canvas.height * obj.y) + verticalOffset; const r = obj.imgElement.width / obj.imgElement.height; obj.pixelHeight = obj.width / r; obj.pixelWidth = obj.width; } });
-    
-    ctx.textBaseline = 'middle'; ctx.font = fontStyle;
+
+    // Pre-calculate image pixel positions
+    overlayImages.forEach(obj => {
+        if(obj.imgElement) {
+            obj.pixelX = canvas.width * obj.x;
+            obj.pixelY = (canvas.height * obj.y) + verticalOffset;
+            const ratio = obj.imgElement.width / obj.imgElement.height;
+            obj.pixelHeight = obj.width / ratio;
+            obj.pixelWidth = obj.width; 
+        }
+    });
+
+    ctx.textBaseline = 'middle'; 
+    ctx.font = fontStyle;
     let bigWordIndex = 0;
-    
-    // --- EXACT DENSE LOOP FROM YOUR CODE ---
-    for (let currentY = 0; currentY < canvas.height; currentY += 32) {
+
+    // --- RESTORED LOGIC LOOP (THE FIX) ---
+    for (let currentY = 0; currentY < canvas.height; currentY += 32) { 
         for (let currentX = 0; currentX < canvas.width; currentX++) {
-            let chosenWord = null, chosenWidth = 0;
+            
+            let chosenWord = null;
+            let chosenWidth = 0;
+
             const bigWord = bigWords[bigWordIndex % bigWords.length];
             const bigWidth = ctx.measureText(bigWord).width;
 
+            // 1. Try Big Word
             if (doesWordFit(currentX, currentY, bigWidth, mapData, canvas.width, overlayImages)) {
-                chosenWord = bigWord; chosenWidth = bigWidth; bigWordIndex++;
+                chosenWord = bigWord;
+                chosenWidth = bigWidth;
+                bigWordIndex++;
             } else {
+                // 2. Try Random Medium Word
                 const mediumWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
                 const mediumWidth = ctx.measureText(mediumWord).width;
-                if (doesWordFit(currentX, currentY, mediumWidth, mapData, canvas.width, overlayImages)) {
-                    chosenWord = mediumWord; chosenWidth = mediumWidth;
+                    if (doesWordFit(currentX, currentY, mediumWidth, mapData, canvas.width, overlayImages)) {
+                    chosenWord = mediumWord;
+                    chosenWidth = mediumWidth;
                 } else {
-                    const tiny = tinyWords[Math.floor(Math.random() * tinyWords.length)];
-                    const tinyW = ctx.measureText(tiny).width;
-                    if (doesWordFit(currentX, currentY, tinyW, mapData, canvas.width, overlayImages)) {
-                        chosenWord = tiny; chosenWidth = tinyW; 
+                    // 3. Loop through ALL Tiny Words (This creates the density!)
+                    for(let t = 0; t < tinyWords.length; t++) {
+                        const tinyAttempt = tinyWords[t];
+                        const tinyWidth = ctx.measureText(tinyAttempt).width;
+                        if (doesWordFit(currentX, currentY, tinyWidth, mapData, canvas.width, overlayImages)) {
+                            chosenWord = tinyAttempt;
+                            chosenWidth = tinyWidth;
+                            break; 
+                        }
                     }
                 }
             }
+
             if (chosenWord) {
-                const cx = currentX + (chosenWidth / 2); const cy = currentY; 
+                const cx = currentX + (chosenWidth / 2);
+                const cy = currentY; 
                 words.push({ text: chosenWord, ox: currentX, oy: currentY, cx: cx, cy: cy, w: chosenWidth, x: currentX, y: currentY, scale: 1, color: baseColor });
                 currentX += chosenWidth + 6; 
-            } else { currentX += 5; }
+            } else {
+                currentX += 5;
+            }
         }
     }
     animate();
 }
 
-function doesWordFit(x, y, w, data, cw, imgs) {
-    for(let i=0; i<imgs.length; i++) {
-        const img = imgs[i]; if (!img.imgElement) continue;
-        if (x < img.pixelX + img.pixelWidth + 5 && x + w > img.pixelX - 5 && y + 18 > img.pixelY - 5 && y - 18 < img.pixelY + img.pixelHeight + 5) return false; 
-    }
-    if (mapImage.width > 0) {
-        if (x < 0 || x >= cw || y < 0 || y >= canvas.height) return false;
-        const index = (Math.floor(y) * cw + Math.floor(x)) * 4;
-        return data[index + 3] > 100; 
-    }
-    return true;
-}
-
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    overlayImages.forEach(obj => { if(obj.imgElement) ctx.drawImage(obj.imgElement, obj.pixelX, obj.pixelY, obj.pixelWidth, obj.pixelHeight); });
 
+    // Draw images
+    overlayImages.forEach(obj => {
+        if(obj.imgElement) {
+            ctx.drawImage(obj.imgElement, obj.pixelX, obj.pixelY, obj.pixelWidth, obj.pixelHeight);
+        }
+    });
+
+    // Detect Hover
     let activeWord = null;
     for (let i = 0; i < words.length; i++) {
         const w = words[i];
-        if (mouse.x > w.x && mouse.x < w.x + w.w && mouse.y > w.y - 18 && mouse.y < w.y + 18) activeWord = w;
+        if (mouse.x > w.x && mouse.x < w.x + w.w &&
+            mouse.y > w.y - (baseFontSize/2) && mouse.y < w.y + (baseFontSize/2)) {
+            activeWord = w;
+        }
     }
-    canvas.style.cursor = activeWord ? 'pointer' : 'default';
 
+    if (activeWord) {
+        canvas.style.cursor = 'pointer';
+    } else {
+        canvas.style.cursor = 'default';
+    }
+
+    // Physics & Drawing Loop
     for (let i = 0; i < words.length; i++) {
         const word = words[i];
-        let tScale = 1; let tColor = baseColor; let tX = word.ox; let tY = word.oy;
+        let targetScale = 1; 
+        let targetColor = baseColor; 
+        let targetX = word.ox; 
+        let targetY = word.oy;
 
         if (activeWord) {
-            if (word === activeWord) { tScale = hoverScale; tColor = activeColor; } 
-            else {
-                const dx = word.cx - activeWord.cx; const dy = word.cy - activeWord.cy;
+            if (word === activeWord) { 
+                targetScale = hoverScale; 
+                targetColor = activeColor; 
+            } else {
+                const dx = word.cx - activeWord.cx;
+                const dy = word.cy - activeWord.cy;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                const pushStrength = 0.1;
-                const safeDist = (activeWord.w * hoverScale * 0.55) + (word.w * neighborScale * 0.25) + gapPadding + pushStrength;
+
+                // ADJUST PUSH STRENGTH HERE
+                const pushStrength = 0.1; 
+
+                const safeDist = (activeWord.w * hoverScale * 0.55) + 
+                                 (word.w * neighborScale * 0.25) + 
+                                 gapPadding + 
+                                 pushStrength;
+
                 if (dist < safeDist) {
                     const overlap = safeDist - dist;
-                    const nx = dx / dist; const ny = dy / dist;
-                    tX = w.ox + (nx * overlap); tY = w.oy + (ny * overlap);
+                    const nx = dx / dist; 
+                    const ny = dy / dist;
+                    targetX = word.ox + (nx * overlap); 
+                    targetY = word.oy + (ny * overlap);
                 }
             }
         }
-        w.scale += (tScale - word.scale) * animSpeed;
-        w.x += (tX - w.x) * animSpeed;
-        w.y += (tY - w.y) * animSpeed;
+        
+        word.scale += (targetScale - word.scale) * animSpeed;
+        word.x += (targetX - word.x) * animSpeed;
+        word.y += (targetY - word.y) * animSpeed;
 
         ctx.save();
-        const centerX = w.x + (w.w / 2); const centerY = w.y; 
-        ctx.translate(centerX, centerY); ctx.scale(w.scale, w.scale); ctx.translate(-centerX, -centerY);
-        ctx.fillStyle = (w === activeWord) ? tColor : w.color; 
+        const centerX = word.x + (word.w / 2); 
+        const centerY = word.y; 
+        ctx.translate(centerX, centerY); 
+        ctx.scale(word.scale, word.scale); 
+        ctx.translate(-centerX, -centerY);
+        ctx.fillStyle = (word === activeWord) ? targetColor : word.color; 
+        ctx.textBaseline = 'middle'; 
         ctx.font = fontStyle;
-        ctx.fillText(w.text, w.x, w.y);
+        
+        if (word === activeWord) { 
+            ctx.shadowColor = "rgba(0,0,0,0)"; 
+            ctx.shadowBlur = 10; 
+            ctx.globalCompositeOperation = "source-over"; 
+        }
+        
+        ctx.fillText(word.text, word.x, word.y);
         ctx.restore();
     }
     requestAnimationFrame(animate);
 }
 
-// CLICK LOGIC
+// --- CLICK NAVIGATION LOGIC ---
 canvas.addEventListener('click', (e) => {
-    const r = canvas.getBoundingClientRect(); const cx = e.clientX - r.left; const cy = e.clientY - r.top;
-    for (let w of words) {
-        if (cx > w.x && cx < w.x + w.w && cy > w.y - 18 && cy < w.y + 18) {
-            const type = serviceLinks[w.text] || 'web';
-            window.location.href = `service-detail.html?type=${type}`;
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+
+    let clickedWord = null;
+    for (let i = 0; i < words.length; i++) {
+        const w = words[i];
+        if (clickX > w.x && clickX < w.x + w.w && 
+            clickY > w.y - (baseFontSize / 2) && clickY < w.y + (baseFontSize / 2)) {
+            clickedWord = w;
             break;
         }
     }
+
+    if (clickedWord) {
+        // Link logic from current code
+        const type = serviceLinks[clickedWord.text] || 'web';
+        window.location.href = `service-detail.html?type=${type}`;
+    }
 });
-canvas.addEventListener('mousemove', e => { const r=canvas.getBoundingClientRect(); mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top; });
-canvas.addEventListener('mouseleave', () => { mouse.x=-1000; mouse.y=-1000; });
+
+canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect(); mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+});
+canvas.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+
+function doesWordFit(x, y, wordWidth, data, canvasWidth, images) {
+    // 1. Check Collision with Images
+    for(let i=0; i<images.length; i++) {
+        const img = images[i];
+        if (!img.imgElement) continue;
+        if (x < img.pixelX + img.pixelWidth + 5 &&
+            x + wordWidth > img.pixelX - 5 &&
+            y + (baseFontSize/2) > img.pixelY - 5 &&
+            y - (baseFontSize/2) < img.pixelY + img.pixelHeight + 5) {
+            return false; 
+        }
+    }
+    
+    // 2. Check Land (If map exists)
+    if (mapImage.width > 0 && mapImage.naturalWidth !== 0) {
+        const p1 = isLand(x, y, data, canvasWidth);
+        const p2 = isLand(x + wordWidth, y, data, canvasWidth);
+        const p3 = isLand(x + (wordWidth/2), y, data, canvasWidth);
+        return p1 && p2 && p3;
+    }
+    
+    return true; 
+}
+
+function isLand(x, y, data, width) {
+    if (x < 0 || x >= width || y < 0 || y >= canvas.height) return false;
+    const index = (Math.floor(y) * width + Math.floor(x)) * 4;
+    return data[index + 3] > 100; 
+}
+
 window.addEventListener('resize', () => { if (window.innerWidth !== canvas.width) { words = []; initMap(); }});
+
 
 // --- 5. BEZEL LOGIC (UPDATED TEXTS) ---
 const bezelWheel=document.getElementById('bezelWheel');
