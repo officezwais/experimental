@@ -113,22 +113,6 @@
             letter-spacing: -0.04em; margin: 0; text-transform: uppercase;
         }
 
-        /* --- 4. TERMINAL FILTER BAR --- */
-        .system-bar {
-            border-top: 2px solid #000;
-            border-bottom: 2px solid #000;
-            padding: 15px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            font-family: 'Courier New', monospace; font-weight: 700;
-            text-transform: uppercase; 
-            background: var(--brand-orange);
-            position: relative; top: 100px; z-index: 90; 
-        }
-        .sys-left { display: flex; gap: 30px; }
-        .sys-item { display: flex; align-items: center; gap: 10px; }
-        .blink { animation: blinker 1s linear infinite; width: 10px; height: 10px; background: #000; border-radius: 50%; display: inline-block; }
-        @keyframes blinker { 50% { opacity: 0; } }
-
         /* --- 5. THE ARCHIVE LIST --- */
         .archive-list {
             position: relative;
@@ -255,16 +239,6 @@
             <h1 class="hero-line">PROJECTS</h1>
         </div>
     </header>
-
-    <div class="system-bar">
-        <div class="sys-left">
-            <div class="sys-item"><span class="blink"></span> SYSTEM_ONLINE</div>
-            <div class="sys-item">[ 04_RECORDS_FOUND ]</div>
-        </div>
-        <div class="sys-right">
-            SORT_BY: [ DATE_DESC ] // MODE: [ VISUAL ]
-        </div>
-    </div>
 
     <div class="archive-list">
         

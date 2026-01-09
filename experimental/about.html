@@ -117,22 +117,6 @@
         }
         .hero-line:nth-child(2) { animation-delay: 0.3s; }
 
-        /* --- 4. TERMINAL SYSTEM BAR --- */
-        .system-bar {
-            border-top: 2px solid var(--brand-orange);
-            border-bottom: 2px solid var(--brand-orange);
-            padding: 15px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            font-family: 'Courier New', monospace; font-weight: 700;
-            text-transform: uppercase; color: #000;
-            background: var(--brand-orange); /* Orange Bar, Black Text */
-            position: relative; top: 100px; z-index: 90; 
-        }
-        .sys-left { display: flex; gap: 30px; }
-        .sys-item { display: flex; align-items: center; gap: 10px; }
-        .blink { animation: blinker 1s linear infinite; width: 10px; height: 10px; background: #000; border-radius: 50%; display: inline-block; }
-        @keyframes blinker { 50% { opacity: 0; } }
-
         /* --- 5. THE BENTO GRID --- */
         .system-grid-section {
             padding: 50px;
@@ -166,7 +150,7 @@
         .grid-box:hover .box-label { color: #000; border-color: #000; }
 
         .box-label { 
-            font-family: 'Courier New'; font-size: 12px; margin-bottom: 20px; 
+            font-family: 'Courier New'; font-size: 14px; margin-bottom: 20px; 
             font-weight: 700; opacity: 0.8; border: 1px solid var(--brand-orange); 
             padding: 2px 8px; border-radius: 10px; align-self: flex-start;
         }
@@ -267,16 +251,6 @@
             <h1 class="hero-line">ARCHITECTURE</h1>
         </div>
     </header>
-
-    <div class="system-bar">
-        <div class="sys-left">
-            <div class="sys-item"><span class="blink"></span> DATABASE_LIVE</div>
-            <div class="sys-item">[ 06_NODES_ACTIVE ]</div>
-        </div>
-        <div class="sys-right">
-            THEME: [ DARK_MODE ] // SECURITY: [ HIGH ]
-        </div>
-    </div>
 
     <main class="system-grid-section">
         <div class="system-grid">
