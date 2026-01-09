@@ -3,133 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Knowledge Navigators Archive.">
     <title>Projects | Knowledge Navigators</title>
+    
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
     <style>
-        /* --- 1. UNIVERSAL GLOW --- */
+        /* --- 1. GLOBAL VARIABLES & RESET --- */
+        :root {
+            --brand-orange: #ff5429;
+            --brand-black: #000000;
+            --brand-white: #ffffff;
+        }
+
+        body {
+            margin: 0; padding: 0; overflow-x: hidden;
+            background-color: var(--brand-orange);
+            color: var(--brand-black);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        * { box-sizing: border-box; }
+
+        /* ATMOSPHERE GLOW */
         body::after {
             content: ""; position: fixed;
             top: -50px; left: -50px; right: -50px; bottom: -50px;
             border-radius: 180px; 
             border: 60px solid rgba(255, 255, 255, 0.25);
-            filter: blur(30px); pointer-events: none; z-index: 999999;
+            filter: blur(40px); pointer-events: none; z-index: 999999;
             background: transparent;
         }
 
-        /* --- 2. GLOBAL STANDARDS --- */
-        body {
-            margin: 0; padding: 0; overflow-x: hidden;
-            background-color: #ff5429; color: #000;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        /* GRID BACKGROUND - Send to back */
+        .page-grid-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 0; 
+            pointer-events: none;
         }
 
-        /* --- 3. NAVBAR (FIXED) --- */
+        /* --- 2. NAVBAR --- */
         nav {
-            position: fixed !important; top: 0; left: 0; width: 100%; height: 100px;
-            padding: 0 50px; display: flex; justify-content: space-between;
-            align-items: center; z-index: 99999; box-sizing: border-box;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100px;
+            padding: 0 50px;
+            display: flex; justify-content: space-between;
+            align-items: center; 
+            z-index: 1000; /* High Z-index */
         }
-        .logo img { height: 145px; display: block; }
-        .menu { display: flex; gap: 40px; }
+
+        .logo img { 
+            height: 145px; 
+            width: auto; 
+            display: block; 
+            object-fit: contain; 
+        }
+
+        .menu { display: flex; gap: 40px; align-items: center; }
         .menu a {
-            text-decoration: none; color: rgba(0,0,0,0.6); font-weight: 700;
-            font-size: 14px; text-transform: uppercase; transition: color 0.3s;
+            text-decoration: none; color: rgba(0,0,0,0.6);
+            font-weight: 700; font-size: 14px;
+            text-transform: uppercase; transition: color 0.3s;
         }
-        .menu a:hover { color: #000; }
+        .menu a:hover { color: var(--brand-black); }
 
-        /* BURGER MENU */
         .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1000001; }
-        .menu-toggle span { width: 30px; height: 3px; background: #000; transition: 0.3s; }
+        .menu-toggle span { width: 30px; height: 3px; background: var(--brand-black); transition: 0.3s; }
 
-        /* --- 4. MASSIVE HEADLINE (LEFT ALIGNED) --- */
+        /* --- 3. HERO SECTION --- */
         header.page-hero {
-            padding-top: 180px; 
-            padding-bottom: 80px;
-            padding-left: 50px; /* Aligns with Left Edge */
-            padding-right: 50px;
-            display: flex; 
-            flex-direction: column; 
-            align-items: flex-start; /* Pushes text to Left */
-            text-align: left;
+            position: relative;
+            padding: 240px 50px 80px 50px; 
+            display: flex; flex-direction: column; justify-content: center;
+            overflow: hidden;
+            z-index: 10;
         }
+
+        /* Marquee Background */
+        .bg-marquee-container {
+            position: absolute; top: 50%; left: -20%; width: 140%;
+            transform: translateY(-50%) rotate(5deg) scale(1.1);
+            white-space: nowrap; overflow: hidden;
+            z-index: -1; 
+            pointer-events: none; opacity: 0.08; 
+        }
+        .bg-marquee-text {
+            font-size: 20vw; font-weight: 900; color: #000;
+            display: inline-block; animation: scrollMarquee 40s linear infinite;
+        }
+        @keyframes scrollMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        .hero-content { position: relative; z-index: 2; }
+
+        .hero-label {
+            font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700;
+            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
+            border: 1px solid #000; padding: 5px 15px; border-radius: 20px;
+            display: inline-block; background: rgba(255,255,255,0.2);
+        }
+
         .hero-line {
-            font-size: 12vw; line-height: 0.85; font-weight: 900;
+            font-size: clamp(3.5rem, 11vw, 13rem); 
+            line-height: 0.85; font-weight: 900;
             letter-spacing: -0.04em; margin: 0; text-transform: uppercase;
         }
 
-        /* --- 5. THE EXPANDING ARCHIVE --- */
-        .archive-container {
-            min-height: 100vh;
-            display: flex; flex-direction: column;
-            border-top: 4px solid #000; /* Separator line */
+        /* --- 4. TERMINAL FILTER BAR --- */
+        .system-bar {
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+            padding: 15px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Courier New', monospace; font-weight: 700;
+            text-transform: uppercase; 
+            background: var(--brand-orange);
+            position: relative; top: 100px; z-index: 90; 
+        }
+        .sys-left { display: flex; gap: 30px; }
+        .sys-item { display: flex; align-items: center; gap: 10px; }
+        .blink { animation: blinker 1s linear infinite; width: 10px; height: 10px; background: #000; border-radius: 50%; display: inline-block; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* --- 5. THE ARCHIVE LIST --- */
+        .archive-list {
+            position: relative;
+            z-index: 20;
+            background: var(--brand-orange); 
+            width: 100%;
         }
 
         .project-row {
-            position: relative; border-bottom: 1px solid #000;
-            overflow: hidden; height: 100px; /* Closed Height */
-            transition: height 0.5s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s;
-            cursor: pointer; display: flex; flex-direction: column;
-            text-decoration: none; color: #000;
+            position: relative; 
+            border-bottom: 1px solid var(--brand-black);
+            /* UPDATED: Fixed height for smooth transition */
+            height: 180px; 
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer; 
+            display: block; 
+            text-decoration: none; 
+            color: var(--brand-black);
+            overflow: hidden;
+            background: transparent;
+            opacity: 1; 
         }
+
         .project-row:hover {
-            height: 60vh; /* Open Height */
-            background: #000; color: #ff5429;
+            /* UPDATED: Expand on hover */
+            height: 450px;
+            background: var(--brand-black); 
+            color: var(--brand-orange);
+            padding-left: 20px; 
         }
 
-        .row-bar {
-            height: 100px; padding: 0 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 10; position: relative;
+        .row-grid {
+            display: grid;
+            grid-template-columns: 0.5fr 3fr 1.5fr 0.5fr;
+            align-items: center;
+            height: 100%; 
+            padding: 0 50px;
+            position: relative; z-index: 5;
         }
-        .row-title { font-size: 4vw; font-weight: 900; text-transform: uppercase; line-height: 1; }
-        .row-meta { font-family: 'Courier New'; font-size: 14px; font-weight: 700; }
 
-        /* Hidden Image */
-        .row-image {
+        .row-id { font-family: 'Courier New'; font-size: 16px; opacity: 0.6; }
+        
+        .row-title-wrapper { display: flex; flex-direction: column; gap: 5px; }
+        .row-client { font-size: clamp(2rem, 4vw, 4rem); font-weight: 900; line-height: 0.9; text-transform: uppercase; }
+        .row-desc { font-family: 'Courier New'; font-size: 14px; opacity: 0.8; max-width: 400px; }
+
+        .row-tags { display: flex; flex-wrap: wrap; gap: 10px; font-family: 'Courier New'; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .tag { border: 1px solid currentColor; padding: 4px 10px; border-radius: 20px; }
+
+        .row-icon { font-size: 40px; justify-self: end; transition: transform 0.3s; }
+        .project-row:hover .row-icon { transform: rotate(-45deg) scale(1.2); }
+
+        /* Hover Image */
+        .row-bg-img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 0.3s 0.1s; z-index: 1;
-            filter: grayscale(100%);
+            opacity: 0; z-index: 0; filter: grayscale(100%);
+            transition: opacity 0.5s ease;
         }
-        .project-row:hover .row-image { opacity: 0.4; }
+        .project-row:hover .row-bg-img { opacity: 0.3; } 
 
-        /* Floating View Text */
-        .view-indicator {
-            position: absolute; bottom: 40px; right: 50px;
-            font-size: 24px; font-weight: 700; opacity: 0;
-            transform: translateY(20px); transition: 0.5s 0.2s; z-index: 10;
-        }
-        .project-row:hover .view-indicator { opacity: 1; transform: translateY(0); }
+        /* --- 6. FOOTER --- */
+        footer { background: #000; color: var(--brand-orange); padding: 100px 50px 50px 50px; position: relative; z-index: 30; }
+        .giant-cta { font-size: clamp(3rem, 10vw, 12rem); font-weight: 900; line-height: 0.85; margin-bottom: 50px; color: #fff; letter-spacing: -0.02em; }
+        .terminal-btn { font-family: 'Courier New', monospace; font-size: 20px; color: #000; background: var(--brand-orange); padding: 15px 30px; text-decoration: none; font-weight: 700; display: inline-block; }
+        .terminal-btn:hover { background: #fff; }
 
         /* --- MOBILE --- */
         @media (max-width: 768px) {
             nav { padding: 0 20px; height: 80px; }
-            .logo img { height: 60px; }
+            .logo img { height: 80px; }
             
-            /* Adjust Hero Padding for Mobile */
-            header.page-hero { padding-left: 20px; padding-right: 20px; }
-            .hero-line { font-size: 16vw; }
+            header.page-hero { padding: 180px 20px 60px 20px; }
+            .bg-marquee-text { font-size: 30vw; }
             
-            .project-row { height: 80px; }
-            .row-bar { padding: 0 20px; }
-            .row-title { font-size: 8vw; }
-            .project-row:hover { height: 40vh; }
-            .view-indicator { right: 20px; bottom: 20px; font-size: 18px; }
+            .system-bar { padding: 15px 20px; font-size: 12px; top: 80px; }
+            .sys-right { display: none; }
             
+            /* UPDATED: Reset height for mobile so it doesn't get stuck */
+            .project-row { height: auto !important; min-height: 180px; }
+            .project-row:hover { height: auto !important; padding-left: 0; }
+
+            .row-grid { 
+                grid-template-columns: 1fr auto; 
+                grid-template-rows: auto auto auto;
+                padding: 30px 20px; height: auto; gap: 15px;
+            }
+            .row-id { display: none; }
+            .row-title-wrapper { grid-column: 1 / -1; }
+            .row-tags { grid-column: 1 / 2; }
+            .row-icon { grid-column: 2 / 3; align-self: end; }
+            
+            
+            .menu { display: none; }
+            .menu.active { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--brand-orange); flex-direction: column; justify-content: center; gap: 20px; z-index: 1000000; }
+            .menu.active a { font-size: 30px; color: #000; }
             .menu-toggle { display: flex; }
-            .menu { display: none !important; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ff5429; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
-            .menu.active { display: flex !important; }
-            .menu a { font-size: 32px !important; color: #000 !important; }
-            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-            .menu-toggle.active span:nth-child(2) { opacity: 0; }
-            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
         }
     </style>
 </head>
 <body>
 
+    <div class="page-grid-bg"></div>
+
     <nav>
-        <a href="/" class="logo"><img src="./images/logo.png" alt="Logo"></a>
+        <a href="/" class="logo"><img src="./images/logo.png" alt="Knowledge Navigators"></a>
         <div class="menu" id="navMenu">
             <a href="projects.html">Projects</a>
             <a href="services.html">Services</a>
@@ -140,54 +245,107 @@
     </nav>
 
     <header class="page-hero">
-        <h1 class="hero-line">SELECTED</h1>
-        <h1 class="hero-line">PROJECTS</h1>
+        <div class="bg-marquee-container">
+            <div class="bg-marquee-text">ARCHIVE // ARCHIVE // ARCHIVE // ARCHIVE //</div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-label">[ DATABASE_ACCESS_GRANTED ]</div>
+            <h1 class="hero-line">SELECTED</h1>
+            <h1 class="hero-line">PROJECTS</h1>
+        </div>
     </header>
 
-    
+    <div class="system-bar">
+        <div class="sys-left">
+            <div class="sys-item"><span class="blink"></span> SYSTEM_ONLINE</div>
+            <div class="sys-item">[ 04_RECORDS_FOUND ]</div>
+        </div>
+        <div class="sys-right">
+            SORT_BY: [ DATE_DESC ] // MODE: [ VISUAL ]
+        </div>
+    </div>
 
-    <div class="archive-container">
+    <div class="archive-list">
         
-        <a href="https://www.rebecca-schultze.com/" class="project-row">
-            <div class="row-image" style="background-image: url('./images/RS.png');"></div>
-            <div class="row-bar">
-                <span class="row-title">REBECCA SCHULTZE</span>
-                <span class="row-meta">PORTFOLIO</span>
+        <a href="https://www.rebecca-schultze.com/" target="_blank" class="project-row">
+            <div class="row-bg-img" style="background-image: url('./images/RS.png');"></div>
+            <div class="row-grid">
+                <span class="row-id">ID:001</span>
+                <div class="row-title-wrapper">
+                    <span class="row-client">Rebecca Schultze</span>
+                    <span class="row-desc">High-fashion portfolio development with minimal footprint.</span>
+                </div>
+                <div class="row-tags">
+                    <span class="tag">DEV</span>
+                    <span class="tag">UX/UI</span>
+                    <span class="tag">BRANDING</span>
+                </div>
+                <span class="row-icon">→</span>
             </div>
-            <div class="view-indicator">OPEN CASE STUDY -></div>
         </a>
 
-        <a href="https://www.owego.io/" class="project-row">
-            <div class="row-image" style="background-image: url('./images/OG.png');"></div>
-            <div class="row-bar">
-                <span class="row-title">OWEGO FINTECH</span>
-                <span class="row-meta">STRATEGY</span>
+        <a href="https://www.owego.io/" target="_blank" class="project-row">
+            <div class="row-bg-img" style="background-image: url('./images/OG.png');"></div>
+            <div class="row-grid">
+                <span class="row-id">ID:002</span>
+                <div class="row-title-wrapper">
+                    <span class="row-client">Owego Fintech</span>
+                    <span class="row-desc">AI-driven financial strategy and automated positioning.</span>
+                </div>
+                <div class="row-tags">
+                    <span class="tag">STRATEGY</span>
+                    <span class="tag">AI_MODELS</span>
+                    <span class="tag">WEB</span>
+                </div>
+                <span class="row-icon">→</span>
             </div>
-            <div class="view-indicator">OPEN CASE STUDY -></div>
         </a>
 
-        <a href="https://www.christophmarlon.com/page9.html" class="project-row">
-            <div class="row-image" style="background-image: url('./images/CM.png');"></div>
-            <div class="row-bar">
-                <span class="row-title">CHRISTOPH MARLON</span>
-                <span class="row-meta">PORTFOLIO</span>
+        <a href="https://www.christophmarlon.com/page9.html" target="_blank" class="project-row">
+            <div class="row-bg-img" style="background-image: url('./images/CM.png');"></div>
+            <div class="row-grid">
+                <span class="row-id">ID:003</span>
+                <div class="row-title-wrapper">
+                    <span class="row-client">Christoph Marlon</span>
+                    <span class="row-desc">Experimental web design and creative direction.</span>
+                </div>
+                <div class="row-tags">
+                    <span class="tag">CREATIVE_DIR</span>
+                    <span class="tag">WEBGL</span>
+                    <span class="tag">DESIGN</span>
+                </div>
+                <span class="row-icon">→</span>
             </div>
-            <div class="view-indicator">OPEN CASE STUDY -></div>
         </a>
 
-        <a href="https://www.werbemittelimport.de/" class="project-row">
-            <div class="row-image" style="background-image: url('./images/WI.png');"></div>
-            <div class="row-bar">
-                <span class="row-title">WERBEMITTELIMPORT</span>
-                <span class="row-meta">ECOMMERCE</span>
+        <a href="https://www.werbemittelimport.de/" target="_blank" class="project-row">
+            <div class="row-bg-img" style="background-image: url('./images/WI.png');"></div>
+            <div class="row-grid">
+                <span class="row-id">ID:004</span>
+                <div class="row-title-wrapper">
+                    <span class="row-client">Werbemittelimport</span>
+                    <span class="row-desc">Large scale B2B ecommerce architecture.</span>
+                </div>
+                <div class="row-tags">
+                    <span class="tag">ECOMMERCE</span>
+                    <span class="tag">AUTOMATION</span>
+                    <span class="tag">SCALING</span>
+                </div>
+                <span class="row-icon">→</span>
             </div>
-            <div class="view-indicator">OPEN CASE STUDY -></div>
         </a>
 
     </div>
 
+    <footer>
+        <div style="font-family: 'Courier New'; margin-bottom: 20px;">// END_OF_LOGS</div>
+        <div class="giant-cta">INITIALIZE<br>CONTACT</div>
+        <a href="mailto:hello@knowledge-navigators.com" class="terminal-btn">[ EXECUTE MAILTO ]</a>
+    </footer>
+
     <script>
-        // Burger Menu
+        // --- BURGER MENU ---
         const menuToggle = document.getElementById('menuToggle');
         const navMenu = document.getElementById('navMenu');
         if (menuToggle) {
@@ -198,10 +356,27 @@
             });
         }
 
-        // Lenis Scroll
+        // --- LENIS SCROLL ---
         const lenis = new Lenis({ duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4), smooth: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
+
+        // --- GSAP ANIMATIONS ---
+        // Header Text Entrance
+        gsap.from(".hero-line", {
+            y: 100, opacity: 0, duration: 1, stagger: 0.1, ease: "power4.out", delay: 0.2
+        });
+        
+        // List Items Entrance
+        gsap.from(".project-row", {
+            y: 50, 
+            opacity: 0, 
+            duration: 0.8, 
+            stagger: 0.15, 
+            ease: "power2.out", 
+            delay: 0.6,
+            clearProps: "all" 
+        });
     </script>
 </body>
 </html>

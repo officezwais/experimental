@@ -3,107 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Operational Protocols of Knowledge Navigators.">
     <title>Services | Knowledge Navigators</title>
+    
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
     <style>
-        /* --- THE UNIVERSAL WHITE GLOW CORNERS --- */
-        body::after {
-            content: "";
-            position: fixed;
-            top: -50px; left: -50px; right: -50px; bottom: -50px;
-            border-radius: 180px; 
-            border: 60px solid rgba(255, 255, 255, 0.25);
-            filter: blur(30px);
-            pointer-events: none; 
-            z-index: 999999;
-            background: transparent;
+        /* --- 1. GLOBAL VARIABLES & RESET --- */
+        :root {
+            --brand-orange: #ff5429;
+            --brand-black: #000000;
+            --brand-white: #ffffff;
         }
 
-        /* --- GLOBAL SETTINGS --- */
         body {
             margin: 0; padding: 0; overflow-x: hidden;
-            background-color: #ff5429; /* Orange Background */
-            color: #000; /* Black Text */
+            background-color: var(--brand-orange);
+            color: var(--brand-black);
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
+        * { box-sizing: border-box; }
 
-        /* --- NAVBAR --- */
+        /* ATMOSPHERE GLOW */
+        body::after {
+            content: ""; position: fixed;
+            top: -50px; left: -50px; right: -50px; bottom: -50px;
+            border-radius: 180px; 
+            border: 60px solid rgba(255, 255, 255, 0.25);
+            filter: blur(40px); pointer-events: none; z-index: 999999;
+            background: transparent;
+        }
+
+        /* GRID BACKGROUND */
+        .page-grid-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 0; 
+            pointer-events: none;
+        }
+
+        /* --- 2. NAVBAR --- */
         nav {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100px;
-            padding: 0 50px; display: flex; justify-content: space-between;
-            align-items: center; z-index: 99999; box-sizing: border-box;
-            background: transparent; /* Transparent on Orange */
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100px;
+            padding: 0 50px;
+            display: flex; justify-content: space-between;
+            align-items: center; 
+            z-index: 1000;
         }
+
         .logo img { 
-            height: 145px; width: auto; display: block; 
-            /* No filter needed since logo should be black on orange */
+            height: 145px; 
+            width: auto; 
+            display: block; 
+            object-fit: contain; 
         }
+
         .menu { display: flex; gap: 40px; align-items: center; }
         .menu a {
-            text-decoration: none; color: rgba(0, 0, 0, 0.6);
-            font-weight: 700; font-size: 14px; text-transform: uppercase;
-            transition: color 0.3s;
+            text-decoration: none; color: rgba(0,0,0,0.6);
+            font-weight: 700; font-size: 14px;
+            text-transform: uppercase; transition: color 0.3s;
         }
-        .menu a:hover { color: #000; }
+        .menu a:hover { color: var(--brand-black); }
 
-        /* BURGER MENU */
-        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 100001; }
-        .menu-toggle span { width: 30px; height: 3px; background: #000; transition: 0.3s; }
+        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1000001; }
+        .menu-toggle span { width: 30px; height: 3px; background: var(--brand-black); transition: 0.3s; }
 
-        /* --- DIRECTORY LAYOUT (THE NEW HUB) --- */
+        /* --- 3. HERO SECTION (Layout Fixed) --- */
+        header.page-hero {
+            position: relative;
+            /* UPDATED: Increased padding to stop overlap with Navbar */
+            padding: 280px 50px 80px 50px; 
+            display: flex; flex-direction: column; justify-content: center;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        /* Marquee Background */
+        .bg-marquee-container {
+            position: absolute; top: 50%; left: -20%; width: 140%;
+            transform: translateY(-50%) rotate(-5deg) scale(1.1);
+            white-space: nowrap; overflow: hidden;
+            z-index: -1; 
+            pointer-events: none; opacity: 0.08; 
+        }
+        .bg-marquee-text {
+            font-size: 20vw; font-weight: 900; color: #000;
+            display: inline-block; animation: scrollMarquee 50s linear infinite;
+        }
+        @keyframes scrollMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        .hero-content { position: relative; z-index: 2; }
+
+        .hero-label {
+            font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700;
+            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
+            border: 1px solid #000; padding: 5px 15px; border-radius: 20px;
+            display: inline-block; background: rgba(255,255,255,0.2);
+        }
+
+        .hero-line {
+            font-size: clamp(3.5rem, 11vw, 12rem); 
+            line-height: 0.85; font-weight: 900;
+            letter-spacing: -0.04em; margin: 0; text-transform: uppercase;
+            
+            /* CSS Animation instead of JS */
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+        }
+        .hero-line:nth-child(2) { animation-delay: 0.3s; }
+
+        /* --- 4. TERMINAL SYSTEM BAR --- */
+        .system-bar {
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+            padding: 15px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Courier New', monospace; font-weight: 700;
+            text-transform: uppercase; 
+            background: var(--brand-orange);
+            position: relative; top: 100px; z-index: 90; 
+        }
+        .sys-left { display: flex; gap: 30px; }
+        .sys-item { display: flex; align-items: center; gap: 10px; }
+        .blink { animation: blinker 1s linear infinite; width: 10px; height: 10px; background: #000; border-radius: 50%; display: inline-block; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* --- 5. DIRECTORY LAYOUT --- */
         .directory-section {
-            padding: 180px 0 100px 0;
-            min-height: 100vh;
-            background: #ff5429;
-            color: #000;
+            position: relative;
+            z-index: 20;
+            background: var(--brand-orange);
+            padding-bottom: 100px;
         }
 
         .dir-category {
-            padding: 0 50px;
-            margin-bottom: 80px;
+            padding: 80px 50px 0 50px;
         }
 
         .cat-title {
-            font-size: 14px;
+            font-size: 16px;
             font-family: 'Courier New', monospace;
-            border-bottom: 4px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 15px;
+            margin-bottom: 0;
             font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex; justify-content: space-between;
         }
 
         .service-row {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            padding: 30px 0;
-            border-bottom: 1px solid #000;
+            padding: 40px 20px 40px 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.3);
             text-decoration: none;
-            color: #000;
+            color: var(--brand-black);
             cursor: crosshair;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             position: relative;
+            
+            /* FAIL-SAFE VISIBILITY: CSS Animation */
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.5s;
         }
+        /* Stagger the delay slightly for effect */
+        .service-row:nth-child(2) { animation-delay: 0.6s; }
+        .service-row:nth-child(3) { animation-delay: 0.7s; }
+
+        .service-row:last-child { border-bottom: none; }
 
         .service-row:hover {
-            padding-left: 20px;
-            background: #000;
-            color: #ff5429; /* Invert on hover */
+            padding-left: 40px;
+            padding-right: 40px;
+            background: var(--brand-black);
+            color: var(--brand-orange);
         }
 
-        .svc-name { font-size: 4vw; font-weight: 900; text-transform: uppercase; line-height: 0.9; }
+        .svc-name { font-size: clamp(2rem, 4vw, 5rem); font-weight: 900; text-transform: uppercase; line-height: 0.9; }
         .svc-desc { 
-            font-family: 'Courier New'; font-size: 14px; width: 300px; text-align: right; 
-            opacity: 0.7;
+            font-family: 'Courier New'; font-size: 16px; width: 400px; text-align: right; 
+            opacity: 0.7; transition: 0.3s;
         }
-        .service-row:hover .svc-desc { color: #ff5429; opacity: 1; }
+        .service-row:hover .svc-desc { color: var(--brand-orange); opacity: 1; }
 
-        /* --- THE FLOATING SCANNER WINDOW --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 6. THE FLOATING SCANNER WINDOW --- */
         .scan-viewer {
-            position: fixed; top: 0; left: 0; width: 350px; height: 250px;
+            position: fixed; top: 0; left: 0; width: 400px; height: 300px;
             pointer-events: none; opacity: 0; transform: scale(0.8);
-            transition: opacity 0.2s, transform 0.1s; z-index: 9999;
+            transition: opacity 0.2s, transform 0.1s linear; 
+            z-index: 9999;
             border: 2px solid #000; background: #000; overflow: hidden;
+            box-shadow: 20px 20px 0px rgba(0,0,0,0.3);
         }
         .scan-viewer.active { opacity: 1; transform: scale(1); }
         .scan-img {
@@ -111,139 +217,208 @@
         }
         .scan-crosshair {
             position: absolute; top: 50%; left: 50%;
-            width: 20px; height: 20px; transform: translate(-50%, -50%);
+            width: 40px; height: 40px; transform: translate(-50%, -50%);
+            border: 1px solid rgba(255, 84, 41, 0.5); border-radius: 50%;
         }
-        .scan-crosshair::before { content: ""; position: absolute; top: 9px; left: -10px; width: 40px; height: 2px; background: #ff5429; }
-        .scan-crosshair::after { content: ""; position: absolute; left: 9px; top: -10px; height: 40px; width: 2px; background: #ff5429; }
+        .scan-crosshair::before { content: ""; position: absolute; top: 50%; left: -20px; width: 80px; height: 1px; background: var(--brand-orange); }
+        .scan-crosshair::after { content: ""; position: absolute; left: 50%; top: -20px; height: 80px; width: 1px; background: var(--brand-orange); }
 
         .scan-data {
             position: absolute; bottom: 0; left: 0; width: 100%;
-            font-family: 'Courier New', monospace; font-size: 10px;
-            background: #000; color: #ff5429; padding: 4px; text-transform: uppercase;
+            font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700;
+            background: var(--brand-orange); color: #000; padding: 8px; text-transform: uppercase;
+            border-top: 2px solid #000;
         }
+
+        /* --- 7. FOOTER --- */
+        footer { background: #000; color: var(--brand-orange); padding: 100px 50px 50px 50px; position: relative; z-index: 30; }
+        .giant-cta { font-size: clamp(3rem, 10vw, 12rem); font-weight: 900; line-height: 0.85; margin-bottom: 50px; color: #fff; letter-spacing: -0.02em; }
+        .terminal-btn { font-family: 'Courier New', monospace; font-size: 20px; color: #000; background: var(--brand-orange); padding: 15px 30px; text-decoration: none; font-weight: 700; display: inline-block; }
+        .terminal-btn:hover { background: #fff; }
 
         /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
-            nav { height: 80px; padding: 0 20px; }
-            .logo img { height: 60px; }
+            nav { padding: 0 20px; height: 80px; }
+            .logo img { height: 80px; }
             
-            .dir-category { padding: 0 20px; }
-            .service-row { flex-direction: column; gap: 10px; }
+            header.page-hero { padding: 180px 20px 60px 20px; }
+            .bg-marquee-text { font-size: 30vw; }
+            .system-bar { padding: 15px 20px; font-size: 12px; top: 80px; }
+            .sys-right { display: none; }
+
+            .dir-category { padding: 40px 20px 0 20px; }
+            
+            .service-row { flex-direction: column; gap: 10px; padding: 30px 10px; }
+            .service-row:hover { padding-left: 10px; padding-right: 10px; }
+            
             .svc-name { font-size: 8vw; }
-            .svc-desc { width: 100%; text-align: left; }
+            .svc-desc { width: 100%; text-align: left; font-size: 14px; opacity: 0.8; }
             
+            /* Hide Hover Preview on Mobile */
+            .scan-viewer { display: none; }
+            
+            .menu { display: none; }
+            .menu.active { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--brand-orange); flex-direction: column; justify-content: center; gap: 20px; z-index: 1000000; }
+            .menu.active a { font-size: 30px; color: #000; }
             .menu-toggle { display: flex; }
-            .menu { display: none !important; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ff5429; flex-direction: column; justify-content: center; align-items: center; z-index: 99998; }
-            .menu.active { display: flex !important; }
-            .menu a { font-size: 32px !important; color: #000 !important; }
-            
         }
     </style>
 </head>
 <body>
 
-<nav>
-   <a href="/" class="logo"><img src="./images/logo.png" alt="Logo"></a>
-   <div class="menu" id="navMenu">
-       <a href="projects.html">Projects</a>
-       <a href="services.html">Services</a>
-       <a href="about.html">About</a>
-       <a href="contact.html">Contact</a>
-   </div>
-   <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
-</nav>
+    <div class="page-grid-bg"></div>
 
-<div class="directory-section">
-    
-    <div style="padding: 0 50px; margin-bottom: 60px;">
-        <h1 style="font-size: 12vw; line-height: 0.85; font-weight: 900; letter-spacing: -0.04em; margin: 0; text-transform: uppercase;">PROTOCOL<br>DIRECTORY</h1>
-    </div>
+    <nav>
+       <a href="/" class="logo"><img src="./images/logo.png" alt="Knowledge Navigators Logo"></a>
+       <div class="menu" id="navMenu">
+           <a href="projects.html">Projects</a>
+           <a href="services.html">Services</a>
+           <a href="about.html">About</a>
+           <a href="contact.html">Contact</a>
+       </div>
+       <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+    </nav>
 
-    <div class="dir-category">
-        <div class="cat-title">// 01_VISUAL_SYNTHESIS</div>
+    <header class="page-hero">
+        <div class="bg-marquee-container">
+            <div class="bg-marquee-text">PROTOCOLS // PROTOCOLS // PROTOCOLS // PROTOCOLS //</div>
+        </div>
         
-        <a href="service-detail.html?type=visuals" class="service-row" data-img="./images/IMG_2219.JPG">
-            <span class="svc-name">AI Image Generation</span>
-            <span class="svc-desc">Campaign assets, lookbooks, and synthetic photography.</span>
-        </a>
+        <div class="hero-content">
+            <div class="hero-label">[ OPERATIONAL_CAPABILITIES ]</div>
+            <h1 class="hero-line">PROTOCOL</h1>
+            <h1 class="hero-line">DIRECTORY</h1>
+        </div>
+    </header>
 
-        <a href="service-detail.html?type=visuals" class="service-row" data-img="./images/video.mp4">
-            <span class="svc-name">Motion & Video</span>
-            <span class="svc-desc">Generative video and motion graphics.</span>
-        </a>
+    <div class="system-bar">
+        <div class="sys-left">
+            <div class="sys-item"><span class="blink"></span> MODULES_LOADED</div>
+            <div class="sys-item">[ 03_CATEGORIES ]</div>
+        </div>
+        <div class="sys-right">
+            STATUS: [ AVAILABLE_FOR_DEPLOYMENT ]
+        </div>
     </div>
 
-    <div class="dir-category">
-        <div class="cat-title">// 02_DIGITAL_INFRASTRUCTURE</div>
+    <main class="directory-section">
+
+        <section class="dir-category">
+            <div class="cat-title"><span>// 01_VISUAL_SYNTHESIS</span><span>[ RENDER_ENGINE ]</span></div>
+            
+            <a href="contact.html" class="service-row" data-img="./images/IMG_2219.JPG">
+                <span class="svc-name">AI Image Gen</span>
+                <span class="svc-desc">Campaign assets, lookbooks, and synthetic photography trained on custom LoRAs.</span>
+            </a>
+
+            <a href="contact.html" class="service-row" data-img="./images/video.mp4">
+                <span class="svc-name">Motion & Video</span>
+                <span class="svc-desc">Generative video, motion graphics, and post-production automation.</span>
+            </a>
+        </section>
+
+        <section class="dir-category">
+            <div class="cat-title"><span>// 02_DIGITAL_INFRASTRUCTURE</span><span>[ ARCHITECTURE ]</span></div>
+            
+            <a href="contact.html" class="service-row" data-img="./images/RS.png">
+                <span class="svc-name">Web Architecture</span>
+                <span class="svc-desc">High-performance, headless web builds. React, Next.js, and WebGL.</span>
+            </a>
+
+            <a href="contact.html" class="service-row" data-img="./images/orange1.png">
+                <span class="svc-name">3D Environments</span>
+                <span class="svc-desc">Immersive assets and interactive product visualizations.</span>
+            </a>
+        </section>
+
+        <section class="dir-category">
+            <div class="cat-title"><span>// 03_SYSTEM_LOGIC</span><span>[ STRATEGY_CORE ]</span></div>
+            
+            <a href="contact.html" class="service-row" data-img="./images/orange1.png">
+                <span class="svc-name">Brand Strategy</span>
+                <span class="svc-desc">Data-backed positioning, voice development, and market mapping.</span>
+            </a>
+            
+            <a href="contact.html" class="service-row" data-img="./images/OG.png">
+                <span class="svc-name">Venture Building</span>
+                <span class="svc-desc">End-to-end incubation. From MVP to market dominance.</span>
+            </a>
+        </section>
+
+        <div class="scan-viewer">
+            <div class="scan-img" id="scanImg"></div>
+            <div class="scan-crosshair"></div>
+            <div class="scan-data">TARGET_ACQUIRED: <span id="scanText">PROTOCOL_01</span></div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div style="font-family: 'Courier New'; margin-bottom: 20px;">// END_OF_DIRECTORY</div>
+        <div class="giant-cta">INITIALIZE<br>CONTACT</div>
+        <a href="mailto:hello@knowledge-navigators.com" class="terminal-btn">[ EXECUTE MAILTO ]</a>
+    </footer>
+
+    <script>
+        // --- BURGER MENU LOGIC ---
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                if (navMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // --- LENIS SMOOTH SCROLL ---
+        const lenis = new Lenis({ duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4), smooth: true });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // --- SCANNER LOGIC (HOVER PREVIEW) ---
+        const scanViewer = document.querySelector('.scan-viewer');
+        const scanImg = document.getElementById('scanImg');
+        const scanText = document.getElementById('scanText');
+        const rows = document.querySelectorAll('.service-row');
         
-        <a href="service-detail.html?type=web" class="service-row" data-img="./images/RS.png">
-            <span class="svc-name">Website Building</span>
-            <span class="svc-desc">High-performance, brutalist web architecture.</span>
-        </a>
+        // Function to move scanner
+        const moveScanner = (e) => {
+            const x = e.clientX + 30; // Offset from cursor
+            const y = e.clientY - 150; // Center vertically
+            
+            // GSAP for smoother tracking
+            gsap.to(scanViewer, {
+                x: x,
+                y: y,
+                duration: 0.2, /* fast response */
+                ease: "power2.out"
+            });
+        };
 
-        <a href="service-detail.html?type=web" class="service-row" data-img="./images/orange1.png">
-            <span class="svc-name">3D Environments</span>
-            <span class="svc-desc">WebGL experiences and immersive assets.</span>
-        </a>
-    </div>
-
-    <div class="dir-category">
-        <div class="cat-title">// 03_SYSTEM_LOGIC</div>
-        
-        <a href="service-detail.html?type=strategy" class="service-row" data-img="./images/orange1.png">
-            <span class="svc-name">Brand Strategy</span>
-            <span class="svc-desc">Positioning, voice, and market mapping.</span>
-        </a>
-    </div>
-
-    <div class="scan-viewer">
-        <div class="scan-img" id="scanImg"></div>
-        <div class="scan-crosshair"></div>
-        <div class="scan-data">SELECT_PROTOCOL</div>
-    </div>
-
-</div>
-
-<script>
-    // --- BURGER MENU LOGIC ---
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            if (navMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                const imgSrc = row.getAttribute('data-img');
+                const svcName = row.querySelector('.svc-name').innerText;
+                
+                scanImg.style.backgroundImage = `url('${imgSrc}')`;
+                scanText.innerText = svcName;
+                scanViewer.classList.add('active');
+                
+                document.addEventListener('mousemove', moveScanner);
+            });
+            
+            row.addEventListener('mouseleave', () => {
+                scanViewer.classList.remove('active');
+                document.removeEventListener('mousemove', moveScanner);
+            });
         });
-    }
-
-    // --- SCANNER LOGIC (HOVER PREVIEW) ---
-    const scanViewer = document.querySelector('.scan-viewer');
-    const scanImg = document.getElementById('scanImg');
-    const rows = document.querySelectorAll('.service-row');
-
-    rows.forEach(row => {
-        row.addEventListener('mouseenter', () => {
-            const imgSrc = row.getAttribute('data-img');
-            scanImg.style.backgroundImage = `url('${imgSrc}')`;
-            scanViewer.classList.add('active');
-        });
-        
-        row.addEventListener('mouseleave', () => {
-            scanViewer.classList.remove('active');
-        });
-        
-        row.addEventListener('mousemove', (e) => {
-            const x = e.clientX + 40;
-            const y = e.clientY - 150;
-            scanViewer.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-        });
-    });
-</script>
+    </script>
 
 </body>
 </html>
