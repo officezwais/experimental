@@ -180,6 +180,10 @@
             letter-spacing: 1px;
             display: flex; justify-content: space-between;
         }
+        
+        /* HEADER LOGIC (Desktop/Mobile Swap) */
+        .mobile-text { display: none; }
+        .desktop-tag { display: inline-block; }
 
         .service-row {
             display: flex;
@@ -272,6 +276,11 @@
 
             .dir-category { padding: 40px 20px 0 20px; }
             
+            /* Header Text Swap Logic */
+            .desktop-text { display: none; }
+            .desktop-tag { display: none; }
+            .mobile-text { display: inline-block; }
+
             /* Stack rows vertically on mobile */
             .service-row { flex-direction: column; gap: 10px; padding: 30px 10px; align-items: flex-start; }
             .service-row:hover { padding-left: 10px; padding-right: 10px; background: transparent; color: var(--brand-black); }
@@ -321,7 +330,11 @@
     <main class="directory-section">
 
         <section class="dir-category">
-            <div class="cat-title"><span>// 01_VISUAL_SYNTHESIS</span><span>[ RENDER_ENGINE ]</span></div>
+            <div class="cat-title">
+                <span class="desktop-text">// 01_VISUAL_SYNTHESIS</span>
+                <span class="mobile-text">// 01_VISUALS</span>
+                <span class="desktop-tag">[ RENDER_ENGINE ]</span>
+            </div>
             
             <a href="contact.html" class="service-row" data-img="./images/IMG_2219.JPG" aria-label="Learn about AI Image Generation">
                 <span class="svc-name">AI Image Gen</span>
@@ -335,7 +348,11 @@
         </section>
 
         <section class="dir-category">
-            <div class="cat-title"><span>// 02_DIGITAL_INFRASTRUCTURE</span><span>[ ARCHITECTURE ]</span></div>
+            <div class="cat-title">
+                <span class="desktop-text">// 02_DIGITAL_INFRASTRUCTURE</span>
+                <span class="mobile-text">// 02_INFRASTRUCTURE</span>
+                <span class="desktop-tag">[ ARCHITECTURE ]</span>
+            </div>
             
             <a href="contact.html" class="service-row" data-img="./images/RS.png" aria-label="Learn about Web Architecture">
                 <span class="svc-name">Web Architecture</span>
@@ -349,7 +366,11 @@
         </section>
 
         <section class="dir-category">
-            <div class="cat-title"><span>// 03_SYSTEM_LOGIC</span><span>[ STRATEGY_CORE ]</span></div>
+            <div class="cat-title">
+                <span class="desktop-text">// 03_SYSTEM_LOGIC</span>
+                <span class="mobile-text">// 03_LOGIC</span>
+                <span class="desktop-tag">[ STRATEGY_CORE ]</span>
+            </div>
             
             <a href="contact.html" class="service-row" data-img="./images/orange1.png" aria-label="Learn about Brand Strategy">
                 <span class="svc-name">Brand Strategy</span>
