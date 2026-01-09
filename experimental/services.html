@@ -2,10 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Operational Protocols of Knowledge Navigators.">
-    <title>Services | Knowledge Navigators</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Services | Knowledge Navigators AI Protocols</title>
     
+    <meta name="description" content="Operational Protocols. We offer AI image generation, synthetic video pipelines, headless web architecture, and venture building strategies.">
+    <meta name="keywords" content="AI Services, Generative AI, Web Architecture, Brand Strategy, Venture Building, Synthetic Media, WebGL">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ff5429">
+    <link rel="canonical" href="https://knowledge-navigators.com/services.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://knowledge-navigators.com/services.html">
+    <meta property="og:title" content="Services | Knowledge Navigators">
+    <meta property="og:description" content="Operational Capabilities: Visual Synthesis, Digital Infrastructure, and System Logic.">
+    <meta property="og:image" content="./images/og-services.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "Service",
+          "name": "AI Image Generation",
+          "description": "Campaign assets and synthetic photography trained on custom LoRAs."
+        },
+        {
+          "@type": "Service",
+          "name": "Web Architecture",
+          "description": "High-performance, headless web builds using React and WebGL."
+        },
+        {
+          "@type": "Service",
+          "name": "Venture Building",
+          "description": "End-to-end incubation from MVP to market dominance."
+        }
+      ]
+    }
+    </script>
+
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
@@ -26,7 +61,7 @@
         }
         * { box-sizing: border-box; }
 
-        /* ATMOSPHERE GLOW */
+        /* ATMOSPHERE GLOW - Desktop Only */
         body::after {
             content: ""; position: fixed;
             top: -50px; left: -50px; right: -50px; bottom: -50px;
@@ -58,10 +93,7 @@
         }
 
         .logo img { 
-            height: 145px; 
-            width: auto; 
-            display: block; 
-            object-fit: contain; 
+            height: 145px; width: auto; display: block; object-fit: contain; 
         }
 
         .menu { display: flex; gap: 40px; align-items: center; }
@@ -72,13 +104,18 @@
         }
         .menu a:hover { color: var(--brand-black); }
 
-        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1000001; }
+        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1000001; padding: 10px; }
         .menu-toggle span { width: 30px; height: 3px; background: var(--brand-black); transition: 0.3s; }
+        
+        /* Burger Animation */
+        .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-        /* --- 3. HERO SECTION (Layout Fixed) --- */
+
+        /* --- 3. HERO SECTION --- */
         header.page-hero {
             position: relative;
-            /* UPDATED: Increased padding to stop overlap with Navbar */
             padding: 280px 50px 80px 50px; 
             display: flex; flex-direction: column; justify-content: center;
             overflow: hidden;
@@ -113,7 +150,7 @@
             line-height: 0.85; font-weight: 900;
             letter-spacing: -0.04em; margin: 0; text-transform: uppercase;
             
-            /* CSS Animation instead of JS */
+            /* CSS Animation */
             opacity: 0;
             animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.2s;
@@ -152,26 +189,29 @@
             border-bottom: 1px solid rgba(0,0,0,0.3);
             text-decoration: none;
             color: var(--brand-black);
-            cursor: crosshair;
+            cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             position: relative;
             
-            /* FAIL-SAFE VISIBILITY: CSS Animation */
+            /* CSS Animation */
             opacity: 0;
             animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.5s;
         }
-        /* Stagger the delay slightly for effect */
         .service-row:nth-child(2) { animation-delay: 0.6s; }
         .service-row:nth-child(3) { animation-delay: 0.7s; }
 
         .service-row:last-child { border-bottom: none; }
 
-        .service-row:hover {
-            padding-left: 40px;
-            padding-right: 40px;
-            background: var(--brand-black);
-            color: var(--brand-orange);
+        /* Desktop Hover Only */
+        @media (hover: hover) {
+            .service-row:hover {
+                padding-left: 40px;
+                padding-right: 40px;
+                background: var(--brand-black);
+                color: var(--brand-orange);
+            }
+            .service-row:hover .svc-desc { color: var(--brand-orange); opacity: 1; }
         }
 
         .svc-name { font-size: clamp(2rem, 4vw, 5rem); font-weight: 900; text-transform: uppercase; line-height: 0.9; }
@@ -179,7 +219,6 @@
             font-family: 'Courier New'; font-size: 16px; width: 400px; text-align: right; 
             opacity: 0.7; transition: 0.3s;
         }
-        .service-row:hover .svc-desc { color: var(--brand-orange); opacity: 1; }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -220,31 +259,35 @@
         .terminal-btn { font-family: 'Courier New', monospace; font-size: 20px; color: #000; background: var(--brand-orange); padding: 15px 30px; text-decoration: none; font-weight: 700; display: inline-block; }
         .terminal-btn:hover { background: #fff; }
 
-        /* --- MOBILE RESPONSIVENESS --- */
+        /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 768px) {
+            /* Performance */
+            body::after { display: none; }
+            
             nav { padding: 0 20px; height: 80px; }
             .logo img { height: 80px; }
             
             header.page-hero { padding: 180px 20px 60px 20px; }
             .bg-marquee-text { font-size: 30vw; }
-            .system-bar { padding: 15px 20px; font-size: 12px; top: 80px; }
-            .sys-right { display: none; }
 
             .dir-category { padding: 40px 20px 0 20px; }
             
-            .service-row { flex-direction: column; gap: 10px; padding: 30px 10px; }
-            .service-row:hover { padding-left: 10px; padding-right: 10px; }
+            /* Stack rows vertically on mobile */
+            .service-row { flex-direction: column; gap: 10px; padding: 30px 10px; align-items: flex-start; }
+            .service-row:hover { padding-left: 10px; padding-right: 10px; background: transparent; color: var(--brand-black); }
             
-            .svc-name { font-size: 8vw; }
-            .svc-desc { width: 100%; text-align: left; font-size: 14px; opacity: 0.8; }
+            .svc-name { font-size: 32px; }
+            .svc-desc { width: 100%; text-align: left; font-size: 16px; opacity: 0.8; }
             
-            /* Hide Hover Preview on Mobile */
-            .scan-viewer { display: none; }
+            /* Hide Hover Scanner on Mobile (Performance) */
+            .scan-viewer { display: none !important; }
             
             .menu { display: none; }
             .menu.active { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--brand-orange); flex-direction: column; justify-content: center; gap: 20px; z-index: 1000000; }
             .menu.active a { font-size: 30px; color: #000; }
             .menu-toggle { display: flex; }
+            
+            footer { padding: 60px 20px; }
         }
     </style>
 </head>
@@ -253,18 +296,18 @@
     <div class="page-grid-bg"></div>
 
     <nav>
-       <a href="/" class="logo"><img src="./images/logo.png" alt="Knowledge Navigators Logo"></a>
-       <div class="menu" id="navMenu">
+       <a href="/" class="logo"><img src="./images/logo.png" alt="Knowledge Navigators"></a>
+       <div class="menu" id="navMenu" role="navigation">
            <a href="projects.html">Projects</a>
            <a href="services.html">Services</a>
            <a href="about.html">About</a>
            <a href="contact.html">Contact</a>
        </div>
-       <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+       <div class="menu-toggle" id="menuToggle" aria-label="Toggle Menu" role="button" tabindex="0"><span></span><span></span><span></span></div>
     </nav>
 
     <header class="page-hero">
-        <div class="bg-marquee-container">
+        <div class="bg-marquee-container" aria-hidden="true">
             <div class="bg-marquee-text">PROTOCOLS // PROTOCOLS // PROTOCOLS // PROTOCOLS //</div>
         </div>
         
@@ -280,12 +323,12 @@
         <section class="dir-category">
             <div class="cat-title"><span>// 01_VISUAL_SYNTHESIS</span><span>[ RENDER_ENGINE ]</span></div>
             
-            <a href="contact.html" class="service-row" data-img="./images/IMG_2219.JPG">
+            <a href="contact.html" class="service-row" data-img="./images/IMG_2219.JPG" aria-label="Learn about AI Image Generation">
                 <span class="svc-name">AI Image Gen</span>
                 <span class="svc-desc">Campaign assets, lookbooks, and synthetic photography trained on custom LoRAs.</span>
             </a>
 
-            <a href="contact.html" class="service-row" data-img="./images/video.mp4">
+            <a href="contact.html" class="service-row" data-img="./images/video.mp4" aria-label="Learn about Motion and Video">
                 <span class="svc-name">Motion & Video</span>
                 <span class="svc-desc">Generative video, motion graphics, and post-production automation.</span>
             </a>
@@ -294,12 +337,12 @@
         <section class="dir-category">
             <div class="cat-title"><span>// 02_DIGITAL_INFRASTRUCTURE</span><span>[ ARCHITECTURE ]</span></div>
             
-            <a href="contact.html" class="service-row" data-img="./images/RS.png">
+            <a href="contact.html" class="service-row" data-img="./images/RS.png" aria-label="Learn about Web Architecture">
                 <span class="svc-name">Web Architecture</span>
                 <span class="svc-desc">High-performance, headless web builds. React, Next.js, and WebGL.</span>
             </a>
 
-            <a href="contact.html" class="service-row" data-img="./images/orange1.png">
+            <a href="contact.html" class="service-row" data-img="./images/orange1.png" aria-label="Learn about 3D Environments">
                 <span class="svc-name">3D Environments</span>
                 <span class="svc-desc">Immersive assets and interactive product visualizations.</span>
             </a>
@@ -308,12 +351,12 @@
         <section class="dir-category">
             <div class="cat-title"><span>// 03_SYSTEM_LOGIC</span><span>[ STRATEGY_CORE ]</span></div>
             
-            <a href="contact.html" class="service-row" data-img="./images/orange1.png">
+            <a href="contact.html" class="service-row" data-img="./images/orange1.png" aria-label="Learn about Brand Strategy">
                 <span class="svc-name">Brand Strategy</span>
                 <span class="svc-desc">Data-backed positioning, voice development, and market mapping.</span>
             </a>
             
-            <a href="contact.html" class="service-row" data-img="./images/OG.png">
+            <a href="contact.html" class="service-row" data-img="./images/OG.png" aria-label="Learn about Venture Building">
                 <span class="svc-name">Venture Building</span>
                 <span class="svc-desc">End-to-end incubation. From MVP to market dominance.</span>
             </a>
@@ -350,48 +393,56 @@
             });
         }
 
-        // --- LENIS SMOOTH SCROLL ---
-        const lenis = new Lenis({ duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4), smooth: true });
+        // --- LENIS SMOOTH SCROLL (Mobile Optimized) ---
+        const lenis = new Lenis({ 
+            duration: 1.5, 
+            easing: (t) => 1 - Math.pow(1 - t, 4), 
+            smooth: true,
+            touchMultiplier: 2
+        });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // --- SCANNER LOGIC (HOVER PREVIEW) ---
-        const scanViewer = document.querySelector('.scan-viewer');
-        const scanImg = document.getElementById('scanImg');
-        const scanText = document.getElementById('scanText');
-        const rows = document.querySelectorAll('.service-row');
-        
-        // Function to move scanner
-        const moveScanner = (e) => {
-            const x = e.clientX + 30; // Offset from cursor
-            const y = e.clientY - 150; // Center vertically
+        // --- SCANNER LOGIC (DESKTOP ONLY) ---
+        // Only initialize scanner if not on mobile for performance
+        if (window.innerWidth > 768) {
+            const scanViewer = document.querySelector('.scan-viewer');
+            const scanImg = document.getElementById('scanImg');
+            const scanText = document.getElementById('scanText');
+            const rows = document.querySelectorAll('.service-row');
             
-            // GSAP for smoother tracking
-            gsap.to(scanViewer, {
-                x: x,
-                y: y,
-                duration: 0.2, /* fast response */
-                ease: "power2.out"
-            });
-        };
+            // Function to move scanner
+            const moveScanner = (e) => {
+                const x = e.clientX + 30; // Offset from cursor
+                const y = e.clientY - 150; // Center vertically
+                
+                // GSAP for smoother tracking
+                gsap.to(scanViewer, {
+                    x: x,
+                    y: y,
+                    duration: 0.2, /* fast response */
+                    ease: "power2.out"
+                });
+            };
 
-        rows.forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                const imgSrc = row.getAttribute('data-img');
-                const svcName = row.querySelector('.svc-name').innerText;
+            rows.forEach(row => {
+                row.addEventListener('mouseenter', () => {
+                    const imgSrc = row.getAttribute('data-img');
+                    const svcName = row.querySelector('.svc-name').innerText;
+                    
+                    scanImg.style.backgroundImage = `url('${imgSrc}')`;
+                    scanText.innerText = svcName;
+                    scanViewer.classList.add('active');
+                    
+                    document.addEventListener('mousemove', moveScanner);
+                });
                 
-                scanImg.style.backgroundImage = `url('${imgSrc}')`;
-                scanText.innerText = svcName;
-                scanViewer.classList.add('active');
-                
-                document.addEventListener('mousemove', moveScanner);
+                row.addEventListener('mouseleave', () => {
+                    scanViewer.classList.remove('active');
+                    document.removeEventListener('mousemove', moveScanner);
+                });
             });
-            
-            row.addEventListener('mouseleave', () => {
-                scanViewer.classList.remove('active');
-                document.removeEventListener('mousemove', moveScanner);
-            });
-        });
+        }
     </script>
 
 </body>

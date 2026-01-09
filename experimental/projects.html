@@ -2,9 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Knowledge Navigators Archive.">
-    <title>Projects | Knowledge Navigators</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Selected Projects | Knowledge Navigators Archive</title>
+    
+    <meta name="description" content="A curated archive of AI-driven ventures, B2B ecommerce architectures, and WebGL experiences built by Knowledge Navigators.">
+    <meta name="keywords" content="AI Projects, Venture Building, WebGL, Ecommerce, Fintech, Portfolio, Case Studies">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ff5429">
+    <link rel="canonical" href="https://knowledge-navigators.com/projects.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://knowledge-navigators.com/projects.html">
+    <meta property="og:title" content="Selected Projects | Knowledge Navigators">
+    <meta property="og:description" content="Database Access Granted: Review our architectural work in AI and Web.">
+    <meta property="og:image" content="./images/og-projects.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Rebecca Schultze Portfolio",
+          "url": "https://www.rebecca-schultze.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Owego Fintech",
+          "url": "https://www.owego.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Christoph Marlon",
+          "url": "https://www.christophmarlon.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Werbemittelimport B2B",
+          "url": "https://www.werbemittelimport.de/"
+        }
+      ]
+    }
+    </script>
     
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -26,7 +70,7 @@
         }
         * { box-sizing: border-box; }
 
-        /* ATMOSPHERE GLOW */
+        /* ATMOSPHERE GLOW - Desktop Only */
         body::after {
             content: ""; position: fixed;
             top: -50px; left: -50px; right: -50px; bottom: -50px;
@@ -54,14 +98,12 @@
             padding: 0 50px;
             display: flex; justify-content: space-between;
             align-items: center; 
-            z-index: 1000; /* High Z-index */
+            z-index: 1000; 
         }
 
         .logo img { 
-            height: 145px; 
-            width: auto; 
-            display: block; 
-            object-fit: contain; 
+            height: 145px; width: auto; 
+            display: block; object-fit: contain; 
         }
 
         .menu { display: flex; gap: 40px; align-items: center; }
@@ -72,8 +114,13 @@
         }
         .menu a:hover { color: var(--brand-black); }
 
-        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1000001; }
+        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1000001; padding: 10px; }
         .menu-toggle span { width: 30px; height: 3px; background: var(--brand-black); transition: 0.3s; }
+        
+        /* Burger Animation */
+        .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
         /* --- 3. HERO SECTION --- */
         header.page-hero {
@@ -124,7 +171,6 @@
         .project-row {
             position: relative; 
             border-bottom: 1px solid var(--brand-black);
-            /* UPDATED: Fixed height for smooth transition */
             height: 180px; 
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             cursor: pointer; 
@@ -136,12 +182,16 @@
             opacity: 1; 
         }
 
-        .project-row:hover {
-            /* UPDATED: Expand on hover */
-            height: 450px;
-            background: var(--brand-black); 
-            color: var(--brand-orange);
-            padding-left: 20px; 
+        /* Hover only on non-touch devices */
+        @media (hover: hover) {
+            .project-row:hover {
+                height: 450px;
+                background: var(--brand-black); 
+                color: var(--brand-orange);
+                padding-left: 20px; 
+            }
+            .project-row:hover .row-icon { transform: rotate(-45deg) scale(1.2); }
+            .project-row:hover .row-bg-img { opacity: 0.3; } 
         }
 
         .row-grid {
@@ -163,16 +213,14 @@
         .tag { border: 1px solid currentColor; padding: 4px 10px; border-radius: 20px; }
 
         .row-icon { font-size: 40px; justify-self: end; transition: transform 0.3s; }
-        .project-row:hover .row-icon { transform: rotate(-45deg) scale(1.2); }
 
-        /* Hover Image */
+        /* Background Image Logic */
         .row-bg-img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
             opacity: 0; z-index: 0; filter: grayscale(100%);
             transition: opacity 0.5s ease;
         }
-        .project-row:hover .row-bg-img { opacity: 0.3; } 
 
         /* --- 6. FOOTER --- */
         footer { background: #000; color: var(--brand-orange); padding: 100px 50px 50px 50px; position: relative; z-index: 30; }
@@ -180,36 +228,53 @@
         .terminal-btn { font-family: 'Courier New', monospace; font-size: 20px; color: #000; background: var(--brand-orange); padding: 15px 30px; text-decoration: none; font-weight: 700; display: inline-block; }
         .terminal-btn:hover { background: #fff; }
 
-        /* --- MOBILE --- */
+        /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 768px) {
+            /* Disable heavy blur */
+            body::after { display: none; }
+
             nav { padding: 0 20px; height: 80px; }
             .logo img { height: 80px; }
             
             header.page-hero { padding: 180px 20px 60px 20px; }
             .bg-marquee-text { font-size: 30vw; }
             
-            .system-bar { padding: 15px 20px; font-size: 12px; top: 80px; }
-            .sys-right { display: none; }
-            
-            /* UPDATED: Reset height for mobile so it doesn't get stuck */
-            .project-row { height: auto !important; min-height: 180px; }
-            .project-row:hover { height: auto !important; padding-left: 0; }
-
-            .row-grid { 
-                grid-template-columns: 1fr auto; 
-                grid-template-rows: auto auto auto;
-                padding: 30px 20px; height: auto; gap: 15px;
+            /* Mobile List Styling */
+            .project-row { 
+                height: auto !important; 
+                min-height: auto;
+                padding-bottom: 30px;
             }
-            .row-id { display: none; }
-            .row-title-wrapper { grid-column: 1 / -1; }
-            .row-tags { grid-column: 1 / 2; }
-            .row-icon { grid-column: 2 / 3; align-self: end; }
+            /* Show faint image on mobile permanently for visual interest */
+            .row-bg-img { opacity: 0.05; }
             
+            .row-grid { 
+                display: flex; flex-direction: column;
+                align-items: flex-start;
+                padding: 30px 20px; gap: 20px;
+            }
             
+            .row-id { display: inline-block; margin-bottom: 10px; font-size: 12px; border: 1px solid #000; padding: 2px 8px; border-radius: 4px; }
+            .row-title-wrapper { width: 100%; }
+            .row-client { font-size: 32px; margin-bottom: 10px; display: block; }
+            .row-desc { font-size: 16px; opacity: 1; }
+            .row-tags { margin-top: 10px; opacity: 0.7; }
+            
+            /* Arrow adjustment */
+            .row-icon { 
+                position: absolute; top: 30px; right: 20px; 
+                transform: rotate(-45deg); /* Always angled on mobile to suggest click */
+                font-size: 30px;
+            }
+            
+            /* Mobile Menu */
             .menu { display: none; }
             .menu.active { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--brand-orange); flex-direction: column; justify-content: center; gap: 20px; z-index: 1000000; }
             .menu.active a { font-size: 30px; color: #000; }
             .menu-toggle { display: flex; }
+            
+            /* Footer */
+            footer { padding: 60px 20px; }
         }
     </style>
 </head>
@@ -219,17 +284,17 @@
 
     <nav>
         <a href="/" class="logo"><img src="./images/logo.png" alt="Knowledge Navigators"></a>
-        <div class="menu" id="navMenu">
+        <div class="menu" id="navMenu" role="navigation">
             <a href="projects.html">Projects</a>
             <a href="services.html">Services</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
         </div>
-        <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+        <div class="menu-toggle" id="menuToggle" aria-label="Toggle Menu" role="button" tabindex="0"><span></span><span></span><span></span></div>
     </nav>
 
     <header class="page-hero">
-        <div class="bg-marquee-container">
+        <div class="bg-marquee-container" aria-hidden="true">
             <div class="bg-marquee-text">ARCHIVE // ARCHIVE // ARCHIVE // ARCHIVE //</div>
         </div>
         
@@ -242,7 +307,7 @@
 
     <div class="archive-list">
         
-        <a href="https://www.rebecca-schultze.com/" target="_blank" class="project-row">
+        <a href="https://www.rebecca-schultze.com/" target="_blank" rel="noopener noreferrer" class="project-row" aria-label="View Rebecca Schultze Project">
             <div class="row-bg-img" style="background-image: url('./images/RS.png');"></div>
             <div class="row-grid">
                 <span class="row-id">ID:001</span>
@@ -259,7 +324,7 @@
             </div>
         </a>
 
-        <a href="https://www.owego.io/" target="_blank" class="project-row">
+        <a href="https://www.owego.io/" target="_blank" rel="noopener noreferrer" class="project-row" aria-label="View Owego Fintech Project">
             <div class="row-bg-img" style="background-image: url('./images/OG.png');"></div>
             <div class="row-grid">
                 <span class="row-id">ID:002</span>
@@ -276,7 +341,7 @@
             </div>
         </a>
 
-        <a href="https://www.christophmarlon.com/page9.html" target="_blank" class="project-row">
+        <a href="https://www.christophmarlon.com/page9.html" target="_blank" rel="noopener noreferrer" class="project-row" aria-label="View Christoph Marlon Project">
             <div class="row-bg-img" style="background-image: url('./images/CM.png');"></div>
             <div class="row-grid">
                 <span class="row-id">ID:003</span>
@@ -293,7 +358,7 @@
             </div>
         </a>
 
-        <a href="https://www.werbemittelimport.de/" target="_blank" class="project-row">
+        <a href="https://www.werbemittelimport.de/" target="_blank" rel="noopener noreferrer" class="project-row" aria-label="View Werbemittelimport Project">
             <div class="row-bg-img" style="background-image: url('./images/WI.png');"></div>
             <div class="row-grid">
                 <span class="row-id">ID:004</span>
@@ -330,8 +395,13 @@
             });
         }
 
-        // --- LENIS SCROLL ---
-        const lenis = new Lenis({ duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4), smooth: true });
+        // --- LENIS SCROLL (Mobile Optimized) ---
+        const lenis = new Lenis({ 
+            duration: 1.5, 
+            easing: (t) => 1 - Math.pow(1 - t, 4), 
+            smooth: true,
+            touchMultiplier: 2
+        });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
