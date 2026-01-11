@@ -3,42 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Knowledge Navigators | AI Venture Architects & Scaling</title>
+    <title>Knowledge Navigators | Scale is Plannable</title>
     
-    <meta name="description" content="We replace agency bloat with autonomous agents, synthetic media pipelines, and predictive strategy. Knowledge Navigators: Scaling ventures from MVP to Exit with AI.">
-    <meta name="keywords" content="AI Agency, Venture Building, Synthetic Media, Automated Scaling, Business Strategy, Generative AI, WebGL">
-    <meta name="author" content="Knowledge Navigators">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="We replace agency bloat with autonomous agents. We build the tech, train the models, and hand over the keys.">
     <meta name="theme-color" content="#ff5429">
-    <link rel="canonical" href="https://knowledge-navigators.com/">
-    
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://knowledge-navigators.com/">
-    <meta property="og:title" content="Knowledge Navigators | AI Venture Architects">
-    <meta property="og:description" content="Scale is a system. We build it with AI.">
-    <meta property="og:image" content="https://knowledge-navigators.com/images/og-image.jpg">
-    <meta property="twitter:card" content="summary_large_image">
-
     <link rel="icon" type="image/png" href="./images/logo.png">
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Knowledge Navigators",
-      "url": "https://knowledge-navigators.com",
-      "logo": "https://knowledge-navigators.com/images/logo.png",
-      "description": "We replace agency bloat with autonomous agents, synthetic media pipelines, and predictive strategy.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Berlin",
-        "addressCountry": "DE"
-      },
-      "priceRange": "$$$"
-    }
-    </script>
-
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    
     <style>
 /* --- 1. GLOBAL & RESET --- */
 :root {
@@ -59,15 +31,14 @@ body {
 }
 * { box-sizing: border-box; }
 
-/* THE GLOW (Desktop Only) */
 body::after {
-    content: ""; position: fixed;
-    top: -50px; left: -50px; right: -50px; bottom: -50px;
-    border-radius: 180px; 
-    border: 60px solid rgba(255, 255, 255, 0.25);
-    filter: blur(40px); pointer-events: none; z-index: 999999;
-    background: transparent;
-}
+            content: ""; position: fixed;
+            top: -50px; left: -50px; right: -50px; bottom: -50px;
+            border-radius: 180px; 
+            border: 60px solid rgba(255, 255, 255, 0.25);
+            filter: blur(40px); pointer-events: none; z-index: 999999;
+            background: transparent;
+        }
 
 /* --- 2. NAVBAR --- */
 nav {
@@ -131,12 +102,13 @@ header.hero {
 }
 
 .hero-line {
-    font-size: clamp(3.5rem, 11vw, 12rem); 
-    line-height: 0.85; font-weight: 900;
+    font-size: clamp(3rem, 11vw, 12rem); 
+    line-height: 0.9; font-weight: 900;
     letter-spacing: -0.04em; color: #000; margin: 0;
     white-space: nowrap; will-change: transform;
 }
 #hero-top { margin-right: 15vw; }
+#hero-mid { margin-left: 0; }
 #hero-bot { margin-left: 15vw; }
 
 .sub-hero { 
@@ -144,8 +116,15 @@ header.hero {
     will-change: transform, opacity; padding: 0 20px;
 }
 .sub-line { 
-    font-size: clamp(14px, 1.2vw, 18px); 
-    font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; margin: 0; text-align: center;
+    font-size: clamp(14px, 1.5vw, 22px); 
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 0; text-align: center;
+}
+.sub-line.highlight { 
+    font-weight: 900; 
+    letter-spacing: 0.2em; 
+    border-bottom: 2px solid #000; 
+    padding-bottom: 5px; 
+    margin-bottom: 5px;
 }
 
 /* --- 4. ACTION MARQUEE --- */
@@ -167,7 +146,8 @@ header.hero {
 }
 
 .action-marquee-link:hover { 
-    height: 220px; background: var(--brand-black); color: var(--brand-white);
+    height: 320px; 
+    background: var(--brand-black); color: var(--brand-white);
     transform: rotate(-3deg) scale(1.02);
     box-shadow: 20px 20px 0px rgba(0,0,0,0.4);
 }
@@ -177,7 +157,7 @@ header.hero {
     animation: scrollAction 10s linear infinite;
     opacity: 1; transition: opacity 0.3s; align-items: center; height: 100%;
 }
-.action-marquee-link:hover .action-track { opacity: 0.2; }
+.action-marquee-link:hover .action-track { opacity: 0.1; }
 
 .action-text {
     font-size: clamp(2rem, 3.5vw, 4rem); font-weight: 900; 
@@ -193,12 +173,22 @@ header.hero {
 .action-marquee-link:hover .action-explainer { opacity: 1; transform: translateY(0); }
 
 .explainer-big { 
-    font-size: clamp(20px, 3vw, 40px); color: var(--brand-orange); 
-    font-weight: 900; margin-bottom: 5px; line-height: 1;
+    font-family: 'Courier New', monospace;
+    font-size: clamp(14px, 1.5vw, 20px); 
+    color: var(--brand-orange); 
+    font-weight: 700; 
+    margin-bottom: 10px; 
+    line-height: 1.2;
+    text-transform: uppercase;
 }
-.explainer-small { font-family: 'Courier New'; color: #fff; font-size: 14px; text-transform: uppercase; }
-
-@keyframes scrollAction { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.explainer-small { 
+    font-family: 'Helvetica Neue', sans-serif; 
+    color: #fff; 
+    font-size: clamp(40px, 6vw, 90px); 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    line-height: 0.9;
+}
 
 /* --- 5. BREAKER SECTIONS --- */
 .breaker-section {
@@ -237,7 +227,7 @@ canvas#mainCanvas {
 
 /* --- 8.5. MOBILE MAP REPLACEMENT (DATA GRID) --- */
 .mobile-map-view {
-    display: none; /* Hidden on desktop */
+    display: none; 
     padding: 20px 20px 60px 20px;
     width: 100%;
     background: var(--brand-orange);
@@ -338,8 +328,8 @@ footer { background: #000; color: var(--brand-orange); padding: 100px 50px 50px 
     .menu.active a { font-size: 36px !important; color: #000 !important; }
     .menu-toggle { display: flex; }
 
-    .hero-line { margin: 0 !important; font-size: 16vw; }
-    #hero-top, #hero-bot { margin-left: 0; margin-right: 0; }
+    .hero-line { margin: 0 !important; font-size: 15vw; line-height: 1; }
+    #hero-top, #hero-bot, #hero-mid { margin-left: 0; margin-right: 0; }
     
     .breaker-section { padding: 80px 20px; }
     .statement-section { padding: 40px 20px 80px 20px; }
@@ -348,25 +338,24 @@ footer { background: #000; color: var(--brand-orange); padding: 100px 50px 50px 
     canvas#mainCanvas { display: none !important; }
     .mobile-map-view { display: block; }
     
-    /* BEZEL MOBILE ADJUSTMENTS - MOVED UP */
     .arc-sticky-view { 
         flex-direction: column; 
         justify-content: flex-start; 
-        padding-top: 50px; /* Reduced top padding */
+        padding-top: 50px; 
     }
     .bezel-container { 
         position: relative; top: auto; left: auto; 
-        width: 50vw; height: 50vw; /* Slightly smaller circle */
+        width: 50vw; height: 50vw; 
         border-right: none; border-bottom: 2px solid #000; 
-        margin-bottom: 80px; /* Space between numbers and text */
-        margin-top: -20px; /* Pull it UP */
+        margin-bottom: 80px; 
+        margin-top: -20px; 
         flex-shrink: 0;
     }
     .bezel-number { 
         right: auto; 
-        bottom: -60px; /* Push numbers further OUT from the bezel */
+        bottom: -60px; 
         font-size: 60px; 
-        transform-origin: center -25vw; /* Adjust rotation origin */
+        transform-origin: center -25vw; 
     }
     .bezel-content { 
         position: relative; left: auto; top: auto; transform: none; 
@@ -412,11 +401,12 @@ footer { background: #000; color: var(--brand-orange); padding: 100px 50px 50px 
         <div class="bg-marquee-container" aria-hidden="true"><div class="bg-marquee-text">KNOWLEDGE NAVIGATORS &mdash; KNOWLEDGE NAVIGATORS &mdash; </div></div>
         
         <div class="hero-content">
-            <h1 class="hero-line" id="hero-top">KNOWLEDGE</h1>
-            <h1 class="hero-line" id="hero-bot">NAVIGATORS</h1>
+            <h1 class="hero-line" id="hero-top">SCALE IS</h1>
+            <h1 class="hero-line" id="hero-mid">PLANNABLE</h1>
+            <h1 class="hero-line" id="hero-bot">WITH AI</h1>
             <div class="sub-hero" id="subHero">
-                <p class="sub-line">Scale is a system.</p>
-                <p class="sub-line">We build it with AI.</p>
+                <p class="sub-line highlight">KNOWLEDGE NAVIGATORS</p>
+                <p class="sub-line">VENTURE ARCHITECTS</p>
             </div>
         </div>
     </header>
@@ -431,7 +421,7 @@ footer { background: #000; color: var(--brand-orange); padding: 100px 50px 50px 
             </div>
             
             <div class="action-explainer">
-                <div class="explainer-big">WE BUILD EVERYTHING FROM ZERO TO ONE.</div>
+                <div class="explainer-big">Need a Website? Need Content? Need a Strategy?</div>
                 <div class="explainer-small">WHY NOT JUST ASK?</div>
             </div>
         </a>
@@ -439,7 +429,7 @@ footer { background: #000; color: var(--brand-orange); padding: 100px 50px 50px 
 
     <section class="statement-section">
         <article class="statement-text reveal-up">
-            We replace traditional agency bloat with autonomous agents, synthetic media pipelines, and predictive strategy. We don't just build websites; we engineer dominance.
+            We replace traditional agencies. We leverage AI to drastically cut costs and time—from content creation to web building. We don't sell hours; we engineer efficiency.
         </article>
     </section>
 
@@ -493,8 +483,8 @@ footer { background: #000; color: var(--brand-orange); padding: 100px 50px 50px 
             <div class="bezel-container" id="bezelWheel"></div>
             <div class="bezel-content">
                 <div class="bezel-label">The Process</div>
-                <h3 class="bezel-title" id="bezelTitle">01 Adaptive</h3>
-                <p class="bezel-desc" id="bezelDesc">Adapts to context, culture, and intent.</p>
+                <h3 class="bezel-title" id="bezelTitle">01 Incubate</h3>
+                <p class="bezel-desc" id="bezelDesc">We identify market gaps and deploy rapid prototypes using AI-driven insights.</p>
             </div>
         </div>
     </section>
@@ -615,12 +605,14 @@ requestAnimationFrame(raf);
 
 // --- HERO ANIMATION ---
 const heroTop = document.getElementById('hero-top');
+const heroMid = document.getElementById('hero-mid');
 const heroBot = document.getElementById('hero-bot');
 const subHero = document.getElementById('subHero');
 window.addEventListener('scroll', () => {
     const scrollVal = window.scrollY;
     if (scrollVal < window.innerHeight) {
         heroTop.style.transform = `translateX(-${scrollVal * 1.5}px)`;
+        heroMid.style.transform = `scale(${1 + scrollVal * 0.0005})`; 
         heroBot.style.transform = `translateX(${scrollVal * 1.5}px)`;
         subHero.style.opacity = 1 - (scrollVal / 500);
         subHero.style.transform = `translateY(${scrollVal * 0.5}px)`;
@@ -639,20 +631,49 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
 
 
-// --- MAP LOGIC (DESKTOP ONLY) ---
+// --- MAP LOGIC (DESKTOP ONLY) - FIXED COLLISION ---
 if (window.innerWidth > 768) {
     const canvas = document.getElementById('mainCanvas');
     const ctx = canvas.getContext('2d');
     const baseFontSize = 36; 
     const fontStyle = "900 " + baseFontSize + "px Helvetica Neue";
     const hoverScale = 1.25; 
-    const gapPadding = 15;        
     const animSpeed = 0.15;        
     const verticalOffset = 100;    
     const baseColor = "#000000"; const activeColor = "#000000"; 
-    const bigWords = ["VENTURE", "AI_CONTENT", "STRATEGY", "SYSTEMS", "SCALE", "PARTNER"];
-    const mediumWords = ["VIDEO", "IMAGES", "WEBGL", "DATA", "GROWTH", "AUTOMATION"];
-    const tinyWords = ["API", "UI", "UX", "APP", "SEO"];
+    
+    // --- MASSIVE UNIQUE WORD LISTS (ALL UPPERCASE) ---
+    // NO DUPLICATES IN LISTS
+    const bigWords = [
+        "VENTURE", "SCALE", "AI", "STRATEGY", "SYSTEMS", "AUTOMATION", "DOMINANCE", "GROWTH", "FUTURE", 
+        "PARTNER", "REVENUE", "PROFIT", "IMPACT", "GLOBAL", "UNICORN", "MARKET", "LEADER", "VISION", 
+        "EXECUTE", "DEPLOY", "LAUNCH", "EXIT", "IPO", "CAPITAL", "ASSETS", "VALUE", "EQUITY", "SHARES"
+    ].map(w => w.toUpperCase());
+    
+    const mediumWords = [
+        "PYTHON", "WEBGL", "REACT", "NEXTJS", "THREEJS", "LLM", "GPT-4", "STABLE_DIFFUSION", "TENSORFLOW", 
+        "TORCH", "CUDA", "CLOUD", "PIPELINE", "DOCKER", "KUBERNETES", "AWS", "AZURE", "GCP", "API", "REST", 
+        "GRAPHQL", "SQL", "NOSQL", "VECTOR", "RAG", "DATASET", "ANALYTICS", "INSIGHTS", "CONVERSION", "FUNNEL", 
+        "MVP", "PRODUCT", "DESIGN", "UX", "UI", "MOTION", "VIDEO", "SYNTHETIC", "CONTENT", "MOBILE", "APP", 
+        "SAAS", "B2B", "B2C", "CRM", "CMS", "SEO", "SEM", "ADS", "ROI", "KPI", "METRICS", "DASHBOARD", "REPORT", 
+        "AUDIT", "COMPLIANCE", "SECURITY", "CIPHER", "HASH", "TOKEN", "AUTH", "OAUTH", "JWT", "EDGE", "SERVER", 
+        "CLIENT", "FRONTEND", "BACKEND", "FULLSTACK", "DEVOPS", "MLOPS", "AGILE", "SCRUM", "SPRINT", "KANBAN"
+    ].map(w => w.toUpperCase());
+
+    // FILLERS
+    const tinyWords = [
+        "GIT", "PUSH", "PULL", "MERGE", "BRANCH", "COMMIT", "REPO", "FORK", "CLONE", "FETCH", "NODE", "NPM", "YARN", 
+        "PNPM", "BUN", "DENO", "RUST", "GO", "JAVA", "CPP", "C", "SWIFT", "DART", "FLUTTER", "IONIC", "CAPACITOR", 
+        "ELECTRON", "TAURI", "WASM", "HTML", "CSS", "JS", "TS", "JSON", "XML", "YAML", "TOML", "INI", "ENV", "SH", 
+        "BASH", "ZSH", "FISH", "VIM", "NANO", "CODE", "BIN", "EXE", "LIB", "SRC", "DIST", "BUILD", "TEST", "LINT", 
+        "FORMAT", "DEBUG", "LOG", "WARN", "ERROR", "INFO", "TRACE", "SPAN", "DIV", "SPAN", "IMG", "SVG", "PATH", 
+        "RECT", "CIRCLE", "LINE", "POLY", "TEXT", "FONT", "WEIGHT", "SIZE", "COLOR", "FILL", "STROKE", "RGB", "HEX", 
+        "HSL", "LAB", "LCH", "OKHTTP", "AXIOS", "FETCH", "XHR", "AJAX", "SOCKET", "WS", "WSS", "HTTP", "HTTPS", "FTP", 
+        "SSH", "SCP", "RSYNC", "CURL", "WGET", "GREP", "SED", "AWK", "FIND", "LS", "CD", "PWD", "CAT", "ECHO", "TOUCH", 
+        "MKDIR", "RM", "MV", "CP", "CHMOD", "CHOWN", "SUDO", "ROOT", "USER", "GROUP", "PID", "UID", "GID", "TTY", "PTS", 
+        "STD", "IO", "NET", "ORG", "COM", "BIZ", "INFO", "IO", "AI", "APP", "DEV", "XYZ"
+    ].map(w => w.toUpperCase());
+
     const overlayImages = [
         { src: './images/chris.png', x: 0.15, y: 0.20, width: 60 }, 
         { src: './images/matze.png', x: 0.45, y: 0.55, width: 60 },
@@ -675,9 +696,59 @@ if (window.innerWidth > 768) {
         }
         const mapData = ghostCtx.getImageData(0, 0, canvas.width, canvas.height).data;
         overlayImages.forEach(obj => { if(obj.imgElement) { obj.pixelX = canvas.width * obj.x; obj.pixelY = (canvas.height * obj.y) + verticalOffset; const ratio = obj.imgElement.width / obj.imgElement.height; obj.pixelHeight = obj.width / ratio; obj.pixelWidth = obj.width; }});
-        ctx.textBaseline = 'middle'; ctx.font = fontStyle; let bigWordIndex = 0;
-        const step = 40; 
-        for (let currentY = 0; currentY < canvas.height; currentY += step) { for (let currentX = 0; currentX < canvas.width; currentX++) { let chosenWord = null; let chosenWidth = 0; const bigWord = bigWords[bigWordIndex % bigWords.length]; const bigWidth = ctx.measureText(bigWord).width; if (doesWordFit(currentX, currentY, bigWidth, mapData, canvas.width, overlayImages)) { chosenWord = bigWord; chosenWidth = bigWidth; bigWordIndex++; } else { const mediumWord = mediumWords[Math.floor(Math.random() * mediumWords.length)]; const mediumWidth = ctx.measureText(mediumWord).width; if (doesWordFit(currentX, currentY, mediumWidth, mapData, canvas.width, overlayImages)) { chosenWord = mediumWord; chosenWidth = mediumWidth; } else { for(let t = 0; t < tinyWords.length; t++) { const tinyAttempt = tinyWords[t]; const tinyWidth = ctx.measureText(tinyAttempt).width; if (doesWordFit(currentX, currentY, tinyWidth, mapData, canvas.width, overlayImages)) { chosenWord = tinyAttempt; chosenWidth = tinyWidth; break; }}}} if (chosenWord) { const cx = currentX + (chosenWidth / 2); const cy = currentY; words.push({ text: chosenWord, ox: currentX, oy: currentY, cx: cx, cy: cy, w: chosenWidth, x: currentX, y: currentY, scale: 1, color: baseColor }); currentX += chosenWidth + 20; } else { currentX += 5; }}}
+        
+        ctx.textBaseline = 'middle'; ctx.font = fontStyle; 
+        
+        // --- LOGIC: ITERATE LISTS ONCE, NO REPEATS ---
+        let bIdx = 0, mIdx = 0, tIdx = 0;
+        const step = 10; // Tight grid scan
+        
+        for (let currentY = 0; currentY < canvas.height; currentY += step) { 
+            for (let currentX = 0; currentX < canvas.width; currentX++) { 
+                let chosenWord = null; 
+                let chosenWidth = 0; 
+                
+                // 1. Try Big Word (Once)
+                if (bIdx < bigWords.length) {
+                    const bigWord = bigWords[bIdx]; 
+                    const bigWidth = ctx.measureText(bigWord).width; 
+                    if (doesWordFit(currentX, currentY, bigWidth, mapData, canvas.width, overlayImages, words)) { 
+                        chosenWord = bigWord; chosenWidth = bigWidth; bIdx++; 
+                    }
+                }
+                
+                // 2. Try Medium Word (Once)
+                if (!chosenWord && mIdx < mediumWords.length) {
+                    // Try filling, some randomness
+                    if (Math.random() > 0.4) { 
+                        const mediumWord = mediumWords[mIdx]; 
+                        const mediumWidth = ctx.measureText(mediumWord).width; 
+                        if (doesWordFit(currentX, currentY, mediumWidth, mapData, canvas.width, overlayImages, words)) { 
+                            chosenWord = mediumWord; chosenWidth = mediumWidth; mIdx++; 
+                        }
+                    }
+                }
+
+                // 3. Try Tiny Word (Fill gaps - Once)
+                if (!chosenWord && tIdx < tinyWords.length) {
+                    const tinyWord = tinyWords[tIdx]; 
+                    const tinyWidth = ctx.measureText(tinyWord).width; 
+                    if (doesWordFit(currentX, currentY, tinyWidth, mapData, canvas.width, overlayImages, words)) { 
+                        chosenWord = tinyWord; chosenWidth = tinyWidth; tIdx++;
+                    }
+                }
+
+                if (chosenWord) { 
+                    const cx = currentX + (chosenWidth / 2); 
+                    const cy = currentY; 
+                    // Add to array for collision checking
+                    words.push({ text: chosenWord, ox: currentX, oy: currentY, cx: cx, cy: cy, w: chosenWidth, x: currentX, y: currentY, scale: 1, color: baseColor }); 
+                    currentX += chosenWidth + 4; // TIGHT PADDING (4px)
+                } else { 
+                    currentX += 5; // Scan increment
+                }
+            }
+        }
         animate();
     }
     function animate() {
@@ -691,10 +762,38 @@ if (window.innerWidth > 768) {
     }
     canvas.addEventListener('click', (e) => {
         const rect = canvas.getBoundingClientRect(); const clickX = e.clientX - rect.left; const clickY = e.clientY - rect.top;
-        for (let i = 0; i < words.length; i++) { const w = words[i]; if (clickX > w.x - 5 && clickX < w.x + w.w + 5 && clickY > w.y - 18 && clickY < w.y + 18) { if(bigWords.includes(w.text) || mediumWords.includes(w.text)) { window.location.href="services.html"; } else { window.location.href="contact.html"; } break; } }
+        for (let i = 0; i < words.length; i++) { const w = words[i]; if (clickX > w.x - 5 && clickX < w.x + w.w + 5 && clickY > w.y - 18 && clickY < w.y + 18) { window.location.href="services.html"; break; } }
     });
     canvas.addEventListener('mousemove', (e) => { const rect = canvas.getBoundingClientRect(); mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top; });
-    function doesWordFit(x, y, w, d, cW, im) { for(let i=0; i<im.length; i++) { const img = im[i]; if (!img.imgElement) continue; if (x < img.pixelX + img.pixelWidth + 5 && x + w > img.pixelX - 5 && y + (baseFontSize/2) > img.pixelY - 5 && y - (baseFontSize/2) < img.pixelY + img.pixelHeight + 5) { return false; }} if (mapImage.width > 0 && mapImage.naturalWidth !== 0) { const p1 = isLand(x, y, d, cW); const p2 = isLand(x + w, y, d, cW); const p3 = isLand(x + (w/2), y, d, cW); return p1 && p2 && p3; } return true; }
+    
+    // Updated collision check
+    function doesWordFit(x, y, w, d, cW, im, existingWords) { 
+        // 1. Check Images (Padding 4px)
+        for(let i=0; i<im.length; i++) { 
+            const img = im[i]; 
+            if (!img.imgElement) continue; 
+            if (x < img.pixelX + img.pixelWidth + 4 && x + w > img.pixelX - 4 && y + (baseFontSize/2) > img.pixelY - 4 && y - (baseFontSize/2) < img.pixelY + img.pixelHeight + 4) { 
+                return false; 
+            }
+        } 
+        
+        // 2. Check Existing Words (Padding 4px) - PREVENTS OVERLAP
+        for(let i=0; i<existingWords.length; i++) {
+            const ew = existingWords[i];
+            if (x < ew.x + ew.w + 4 && x + w > ew.x - 4 && y + (baseFontSize/2) > ew.y - 18 && y - (baseFontSize/2) < ew.y + 18) {
+                return false;
+            }
+        }
+
+        // 3. Check Map Shape
+        if (mapImage.width > 0 && mapImage.naturalWidth !== 0) { 
+            const p1 = isLand(x, y, d, cW); 
+            const p2 = isLand(x + w, y, d, cW); 
+            const p3 = isLand(x + (w/2), y, d, cW); 
+            return p1 && p2 && p3; 
+        } 
+        return true; 
+    }
     function isLand(x, y, d, w) { if (x < 0 || x >= w || y < 0 || y >= canvas.height) return false; const index = (Math.floor(y) * w + Math.floor(x)) * 4; return d[index + 3] > 100; }
 }
 
